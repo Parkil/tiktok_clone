@@ -3,7 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/birthday_screen.dart';
+import 'package:tiktok_clone/features/authentication/widgets/check_element.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/util/validation.dart';
 
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({super.key});
@@ -35,16 +37,12 @@ class _PasswordScreenState extends State<PasswordScreen> {
     super.dispose();
   }
 
-  bool _isPasswordValid() {
-    return _password.isNotEmpty && _password.length > 8;
-  }
-
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
   }
 
   void _onSubmit() {
-    if (!_isPasswordValid()) {
+    if (!isPasswordValid(_password)) {
       return;
     }
 
@@ -113,15 +111,17 @@ class _PasswordScreenState extends State<PasswordScreen> {
             Gaps.v10,
             const Text("Your password must have", style: TextStyle(fontWeight: FontWeight.w600, )),
             Gaps.v10,
-            Row(children: [
-              FaIcon(FontAwesomeIcons.circleCheck, size: Sizes.size20, color: _isPasswordValid() ? Colors.green : Colors.grey.shade400),
-              Gaps.h5,
-              const Text("8 to 20 characters"),
+            Column(children: [
+              CheckElement(completeCon: getPasswordChkMap(_password)["lengthChk"] == true, text: "8 to 20 characters"),
+              Gaps.v5,
+              CheckElement(completeCon: getPasswordChkMap(_password)["charTypeChk"] == true, text: "both alphabet and numbers"),
+              Gaps.v5,
+              CheckElement(completeCon: getPasswordChkMap(_password)["specialCharChk"] == true, text: "least one special character"),
             ]),
             Gaps.v20,
             FormButton(
-                disabled: !_isPasswordValid(),
-                onTap: _onSubmit),
+              disabled: !isPasswordValid(_password),
+              onTap: _onSubmit),
           ]),
         ),
       ),

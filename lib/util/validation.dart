@@ -28,22 +28,29 @@ String? isPasswordEmpty(String password) {
   return null;
 }
 
-String? isPasswordValid(String password) {
-  if (password.isEmpty) {
-    return null;
+bool isPasswordValid(String password) {
+  Map<String, bool>? chkMap = getPasswordChkMap(password);
+
+  if (chkMap == {}) {
+    return false;
   }
 
-  bool lengthChk = password.isNotEmpty && password.length > 8;
+  return chkMap["lengthChk"] == true && chkMap["charTypeChk"] == true && chkMap["specialCharChk"] == true;
+}
+
+Map<String, bool> getPasswordChkMap(String password) {
+  if (password.isEmpty) {
+    return {};
+  }
+
+  bool lengthChk = password.isNotEmpty && password.length >= 8;
   bool charTypeChk = passwordCharTypeExp.hasMatch(password);
   bool specialCharChk = passwordSpecialCharExp.hasMatch(password);
 
-  if (!lengthChk) {
-    return "Your password must have 8 to 20 characters";
-  } else if (!charTypeChk) {
-    return "Your password must include both alphabet and numbers";
-  } else if (!specialCharChk) {
-    return "Your password must include at least one special character";
-  } else {
-    return null;
-  }
+  Map<String, bool> result = {};
+  result["lengthChk"] = lengthChk;
+  result["charTypeChk"] = charTypeChk;
+  result["specialCharChk"] = specialCharChk;
+
+  return result;
 }
