@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/password_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/util/validation.dart';
 
 class EmailScreen extends StatefulWidget {
   const EmailScreen({super.key});
@@ -34,26 +35,12 @@ class _EmailScreenState extends State<EmailScreen> {
     super.dispose();
   }
 
-  String? _isEmailValid() {
-    if (_email.isEmpty) {
-      return null;
-    }
-
-    final regExp = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-
-    if (!regExp.hasMatch(_email)) {
-      return "Email Not Valid";
-    } else {
-      return null;
-    }
-  }
-
   void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
   }
 
   void _onSubmit() {
-    if(_email.isEmpty || _isEmailValid() != null) {
+    if(_email.isEmpty || isEmailValid(_email) != null) {
       return;
     }
 
@@ -84,7 +71,7 @@ class _EmailScreenState extends State<EmailScreen> {
               onEditingComplete: _onSubmit,
               decoration: InputDecoration(
                 hintText: "Email",
-                errorText: _isEmailValid(),
+                errorText: isEmailValid(_email),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey.shade400)),
                 focusedBorder: UnderlineInputBorder(
@@ -93,7 +80,7 @@ class _EmailScreenState extends State<EmailScreen> {
               cursorColor: Theme.of(context).primaryColor,
             ),
             Gaps.v20,
-            FormButton(disabled: _email.isEmpty || _isEmailValid() != null, onTap: _onSubmit),
+            FormButton(disabled: _email.isEmpty || isEmailValid(_email) != null, onTap: _onSubmit),
           ]),
         ),
       ),

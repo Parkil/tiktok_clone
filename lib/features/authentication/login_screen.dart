@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
+import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
@@ -21,30 +24,35 @@ class LoginScreen extends StatelessWidget {
     Navigator.of(context).pop();
   }
 
+  void _onLoginFormTap(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const LoginFormScreen()));
+  }
+
   /*
     SafeArea - 상단 (시간, 배터리, 네트 워크 상태) / 하단 (이전, 다음, 홈) 과 겹치지 않는 영역을 생성
    */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Sizes.size40),
+          padding: const EdgeInsets.symmetric(horizontal: Sizes.size40),
           child: Column(
             children: [
               Gaps.v80,
-              Text("Log in for TikTok",
+              const Text("Log in for TikTok",
                   style: TextStyle(
                       fontSize: Sizes.size24, fontWeight: FontWeight.w700)),
               Gaps.v20,
-              Text(
+              const Text(
                   "Manage your account, check notifications, comment on videos, and more",
                   style: TextStyle(fontSize: Sizes.size16, color: Colors.black54),
                   textAlign: TextAlign.center),
               Gaps.v40,
-              // AuthButton(icon: FaIcon(FontAwesomeIcons.user), text: "Use email and password"),
+              AuthButton(icon: const FaIcon(FontAwesomeIcons.user), text: "Use email and password", onTap: _onLoginFormTap),
               Gaps.v16,
-              // AuthButton(icon: FaIcon(FontAwesomeIcons.apple), text: "Continue with Apple"),
+              const AuthButton(icon: FaIcon(FontAwesomeIcons.apple), text: "Continue with Apple"),
             ],
           ),
         )

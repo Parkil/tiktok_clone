@@ -77,7 +77,9 @@ class _BirthDayScreenState extends State<BirthDayScreen> {
         ]),
       ),
       bottomNavigationBar: BottomAppBar(
-        height: 300,
+        height: 400,
+        surfaceTintColor: Colors.white, // BottomAppBar 의 background 색을 white 로 설정 하려면 surfaceTintColor, color 를 white 로 설정
+        color: Colors.white,
         child: SizedBox(
           child: CupertinoDatePicker(
             onDateTimeChanged: _setTextFieldDate,

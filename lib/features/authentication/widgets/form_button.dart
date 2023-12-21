@@ -3,13 +3,16 @@ import 'package:tiktok_clone/constants/sizes.dart';
 
 class FormButton extends StatelessWidget {
   final Function? onTap;
+  final String? buttonText;
 
-  const FormButton({super.key, required this.disabled, this.onTap});
+  const FormButton({super.key, required this.disabled, this.onTap, this.buttonText});
 
   final bool disabled;
 
   @override
   Widget build(BuildContext context) {
+    String buttonText = this.buttonText ?? "Next";
+
     return GestureDetector(
       onTap: () => onTap!(),
       child: FractionallySizedBox(
@@ -21,8 +24,8 @@ class FormButton extends StatelessWidget {
           child: AnimatedDefaultTextStyle(
             duration: const Duration(milliseconds: 300),
             style: TextStyle(color: disabled ? Colors.grey.shade400 :Colors.white, fontWeight: FontWeight.w600),
-            child: const Text(
-              "Next",
+            child: Text(
+              buttonText,
               textAlign: TextAlign.center,
             ),
           ),
