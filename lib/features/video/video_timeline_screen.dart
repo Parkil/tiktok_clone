@@ -12,19 +12,19 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
 
   final PageController _pageController = PageController();
 
-  final _scrollDuration = const Duration(milliseconds: 200);
+  final _scrollDuration = const Duration(milliseconds: 500);
   final _curve = Curves.linear;
 
-  int _itemCount = 4;
+  final int _itemCount = 10;
 
   void _onPageChanged(int page)  {
     _pageController.animateToPage(page, duration: _scrollDuration, curve: _curve);
 
-    if(page == _itemCount -1) {
-      setState(() {
-        _itemCount += 4;
-      });
-    }
+    // if(page == _itemCount -1) {
+    //   setState(() {
+    //     _itemCount += 4;
+    //   });
+    // }
   }
 
   void _onVideoFinished() {
@@ -45,7 +45,7 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
       scrollDirection: Axis.vertical,
       onPageChanged: _onPageChanged,
       itemCount: _itemCount,
-      itemBuilder: (context, index) => VideoPost(onVideoFinished: _onVideoFinished)
+      itemBuilder: (context, index) => VideoPost(onVideoFinished: _onVideoFinished, videoUrl: "assets/videos/video_$index.mp4")
     );
   }
 }

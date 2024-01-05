@@ -249,10 +249,10 @@ packages:
     dependency: transitive
     description:
       name: video_player_avfoundation
-      sha256: "08da93071ef322603839aa42e90e23d4820b03cf2db7eb6a45de5d41fe85c2aa"
+      sha256: "752b783a00748684312dd6a68e22f795281d295921e69ae5ad36f90b7fb39cdb"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.4"
+    version: "2.5.5"
   video_player_platform_interface:
     dependency: transitive
     description:
