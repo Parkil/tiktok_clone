@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/features/authentication/username_screen.dart';
-import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
+import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+
 import 'constants/sizes.dart';
-import 'features/authentication/sign_up_screen.dart';
 
 void main() {
   runApp(const TikTokApp());
@@ -29,7 +28,7 @@ class TikTokApp extends StatelessWidget {
           titleTextStyle: TextStyle(fontSize: Sizes.size20, fontWeight: FontWeight.w600, color: Colors.black),
         ),
       ),
-      home: const InterestsScreen(),
+      home: const MainNavigationScreen(),
       // home: const SignUpScreen() // home 으로 지정된 widget 의 경우 scaffold 의 뒤로 가기 버튼이 사라 진다
     );
   }
