@@ -39,6 +39,8 @@ dependencies:
   intl: ^0.18.0
   jiffy: ^6.2.1
   video_player: ^2.8.2
+  visibility_detector: ^0.4.0+2
+  readmore: ^2.1.0
 
 dev_dependencies:
   flutter_test:
