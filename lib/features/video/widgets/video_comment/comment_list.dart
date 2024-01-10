@@ -13,13 +13,13 @@ class CommentList extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(
           horizontal: Sizes.size10, vertical: Sizes.size16),
-      itemCount: 11,
+      itemCount: 10,
       itemBuilder: (context, index) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
             radius: 18,
-            child: Text("$index"),
+            child: Text("${index+1}"),
           ),
           Gaps.h10,
           Expanded(

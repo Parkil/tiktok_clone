@@ -40,14 +40,12 @@ class _VideoCommentsState extends State<VideoComments> {
                 icon: const FaIcon(FontAwesomeIcons.xmark))
           ],
         ),
-        body: Stack(
+        body: const Column(
           children: [
-            const CommentList(),
-            Positioned(
-              bottom: 0,
-              width: size.width,
-              child: const CommentInputArea(),
+            Flexible(
+              child: CommentList(),
             ),
+            CommentInputArea()
           ],
         ),
       ),
