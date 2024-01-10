@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/features/video/widgets/animated_video_button.dart';
-import 'package:tiktok_clone/features/video/widgets/video_comments.dart';
-import 'package:tiktok_clone/features/video/widgets/video_post_bottom_info.dart';
-import 'package:tiktok_clone/features/video/widgets/video_post_right_info.dart';
+import 'package:tiktok_clone/features/video/widgets/video_post/animated_video_button.dart';
+import 'package:tiktok_clone/features/video/widgets/video_comment/video_comments.dart';
+import 'package:tiktok_clone/features/video/widgets/video_post/video_post_bottom_area.dart';
+import 'package:tiktok_clone/features/video/widgets/video_post/video_post_right_area.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -104,8 +104,10 @@ class _VideoPostState extends State<VideoPost>
 
     await showModalBottomSheet(
         backgroundColor: Colors.transparent,
-        isScrollControlled: true, // bottom sheet child 가 scroll 이 가능한 widget 일때 true 로 설정
-        context: context, builder: (context) => const VideoComments());
+        isScrollControlled: true,
+        // bottom sheet child 가 scroll 이 가능한 widget 일때 true 로 설정
+        context: context,
+        builder: (context) => const VideoComments());
 
     // showModalBottomSheet 가 닫히면 await showModalBottomSheet 다음 로직이 실행 된다
     _togglePlay();
@@ -123,25 +125,30 @@ class _VideoPostState extends State<VideoPost>
       child: Stack(
         children: [
           Positioned.fill(
-              child: _videoPlayerController.value.isInitialized
-                  ? VideoPlayer(_videoPlayerController,
-                      key: Key("${widget.index}"))
-                  : Container(color: Colors.black)),
+            child: _videoPlayerController.value.isInitialized
+                ? VideoPlayer(
+                    _videoPlayerController,
+                    key: Key("${widget.index}"),
+                  )
+                : Container(color: Colors.black),
+          ),
           Positioned.fill(
             child: GestureDetector(
               onTap: _togglePlay,
             ),
           ),
           AnimatedVideoButton(
-              animationController: _animationController,
-              isPaused: _isPaused,
-              animationDuration: _animationDuration),
-          const VideoPostBottomInfo(
-              loginUser: "@로그인한 사람",
-              description: "aaabbbcccdddddddd",
-              tag:
-                  "#123, #3333333, #55555555, #444444444444, #444444444444, #444444444444"),
-          VideoPostRightInfo(commentFunction: _onTapComment),
+            animationController: _animationController,
+            isPaused: _isPaused,
+            animationDuration: _animationDuration,
+          ),
+          const VideoPostBottomArea(
+            loginUser: "@로그인한 사람",
+            description: "aaabbbcccdddddddd",
+            tag:
+                "#123, #3333333, #55555555, #444444444444, #444444444444, #444444444444",
+          ),
+          VideoPostRightArea(commentFunction: _onTapComment),
         ],
       ),
     );
