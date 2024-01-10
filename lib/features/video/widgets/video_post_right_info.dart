@@ -4,18 +4,20 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/features/video/widgets/video_button.dart';
 
 class VideoPostRightInfo extends StatelessWidget {
+  final Function commentFunction;
+
   const VideoPostRightInfo({
-    super.key,
+    super.key, required this.commentFunction,
   });
 
   @override
   Widget build(BuildContext context) {
-    return const Positioned(
+    return Positioned(
         bottom: 20,
         right: 10,
         child: Column(
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 25,
               backgroundColor: Colors.black,
               foregroundColor: Colors.white,
@@ -23,11 +25,14 @@ class VideoPostRightInfo extends StatelessWidget {
               child: Text("사용자"),
             ),
             Gaps.v24,
-            VideoButton(iconData: FontAwesomeIcons.solidHeart, subText: "2.9M"),
+            const VideoButton(iconData: FontAwesomeIcons.solidHeart, subText: "2.9M"),
             Gaps.v24,
-            VideoButton(iconData: FontAwesomeIcons.solidComment, subText: "3.3K"),
+            GestureDetector(
+                onTap: () => commentFunction(context),
+                child: const VideoButton(
+                    iconData: FontAwesomeIcons.solidComment, subText: "3.3K")),
             Gaps.v24,
-            VideoButton(iconData: FontAwesomeIcons.share, subText: "Share"),
+            const VideoButton(iconData: FontAwesomeIcons.share, subText: "Share"),
           ],
       )
     );

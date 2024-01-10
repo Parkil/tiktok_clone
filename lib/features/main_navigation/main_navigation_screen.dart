@@ -87,24 +87,25 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, // 키보드 표시시 화면 조정을 하지 않도록 설정
       body: Stack(
-          children: [
-            Offstage(
-                offstage: _selectedIndex != 0 ,
-                child: VideoTimelineScreen(),
-            ),
-            Offstage(
-                offstage: _selectedIndex != 1 ,
-                child: Container(),
-            ),Offstage(
-                offstage: _selectedIndex != 3 ,
-                child: Container(),
-            ),
-            Offstage(
-                offstage: _selectedIndex != 4 ,
-                child: Container(),
-            )
-          ]
+        children: [
+          Offstage(
+            offstage: _selectedIndex != 0 ,
+            child: VideoTimelineScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 1 ,
+            child: Container(),
+          ),Offstage(
+            offstage: _selectedIndex != 3 ,
+            child: Container(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 4 ,
+            child: Container(),
+          )
+        ]
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,

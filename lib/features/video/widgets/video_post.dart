@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/features/video/widgets/animated_video_button.dart';
+import 'package:tiktok_clone/features/video/widgets/video_comments.dart';
 import 'package:tiktok_clone/features/video/widgets/video_post_bottom_info.dart';
 import 'package:tiktok_clone/features/video/widgets/video_post_right_info.dart';
 import 'package:video_player/video_player.dart';
@@ -75,7 +76,9 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
+    if (info.visibleFraction == 1 &&
+        !_isPaused &&
+        !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
     }
   }
@@ -94,6 +97,20 @@ class _VideoPostState extends State<VideoPost>
     });
   }
 
+  void _onTapComment(BuildContext context) async {
+    if (_videoPlayerController.value.isPlaying) {
+      _togglePlay();
+    }
+
+    await showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true, // bottom sheet child 가 scroll 이 가능한 widget 일때 true 로 설정
+        context: context, builder: (context) => const VideoComments());
+
+    // showModalBottomSheet 가 닫히면 await showModalBottomSheet 다음 로직이 실행 된다
+    _togglePlay();
+  }
+
   /*
      VisibilityDetector
      widget 이 이동시 이전-현재 widget 이 이동한 정도를 체크 하는 API
@@ -107,20 +124,26 @@ class _VideoPostState extends State<VideoPost>
         children: [
           Positioned.fill(
               child: _videoPlayerController.value.isInitialized
-                  ? VideoPlayer(_videoPlayerController, key: Key("${widget.index}"))
+                  ? VideoPlayer(_videoPlayerController,
+                      key: Key("${widget.index}"))
                   : Container(color: Colors.black)),
           Positioned.fill(
             child: GestureDetector(
               onTap: _togglePlay,
             ),
           ),
-          AnimatedVideoButton(animationController: _animationController, isPaused: _isPaused, animationDuration: _animationDuration),
-          const VideoPostBottomInfo(loginUser: "@로그인한 사람", description: "aaabbbcccdddddddd", tag: "#123, #3333333, #55555555, #444444444444, #444444444444, #444444444444"),
-          const VideoPostRightInfo(),
+          AnimatedVideoButton(
+              animationController: _animationController,
+              isPaused: _isPaused,
+              animationDuration: _animationDuration),
+          const VideoPostBottomInfo(
+              loginUser: "@로그인한 사람",
+              description: "aaabbbcccdddddddd",
+              tag:
+                  "#123, #3333333, #55555555, #444444444444, #444444444444, #444444444444"),
+          VideoPostRightInfo(commentFunction: _onTapComment),
         ],
       ),
     );
   }
 }
-
-
