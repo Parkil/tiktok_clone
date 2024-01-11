@@ -81,6 +81,11 @@ class _VideoPostState extends State<VideoPost>
         !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
     }
+
+    // 동영상 이 재생 되고 있는 상태 에서 화면이 보이지 않게 되면 재생 정지 처리
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+      _togglePlay();
+    }
   }
 
   void _togglePlay() {
@@ -128,7 +133,9 @@ class _VideoPostState extends State<VideoPost>
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(
                     _videoPlayerController,
-                    key: Key("${widget.index}"),
+                    key: Key(
+                      "${widget.index}",
+                    ),
                   )
                 : Container(color: Colors.black),
           ),
