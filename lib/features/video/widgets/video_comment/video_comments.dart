@@ -12,8 +12,13 @@ class VideoComments extends StatefulWidget {
 }
 
 class _VideoCommentsState extends State<VideoComments> {
+
   void _onClosePressed() {
     Navigator.of(context).pop();
+  }
+
+  void _closeCommentKeyboard() {
+    FocusScope.of(context).unfocus();
   }
 
   @override
@@ -40,13 +45,18 @@ class _VideoCommentsState extends State<VideoComments> {
                 icon: const FaIcon(FontAwesomeIcons.xmark))
           ],
         ),
-        body: const Column(
-          children: [
-            Flexible(
-              child: CommentList(),
-            ),
-            CommentInputArea()
-          ],
+        body: GestureDetector(
+          onTap: _closeCommentKeyboard,
+          child: Column(
+            children: [
+              const Flexible(
+                child: CommentList(),
+              ),
+              CommentInputArea(
+                registerCommentCallback: _closeCommentKeyboard,
+              )
+            ],
+          ),
         ),
       ),
     );
