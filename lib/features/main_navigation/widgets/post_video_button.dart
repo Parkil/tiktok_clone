@@ -4,9 +4,12 @@ import 'package:tiktok_clone/constants/sizes.dart';
 
 class PostVideoButton extends StatelessWidget {
   final Function? onTap;
+  final int selectedIndex;
 
   const PostVideoButton({
-    super.key, this.onTap,
+    super.key,
+    this.onTap,
+    required this.selectedIndex,
   });
 
   @override
@@ -14,7 +17,9 @@ class PostVideoButton extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap!(),
       child: Padding(
-        padding: const EdgeInsets.only(bottom: Sizes.size12),
+        padding: const EdgeInsets.only(
+          bottom: Sizes.size12,
+        ),
         child: Stack(
           clipBehavior: Clip.none,
           children: [
@@ -23,10 +28,14 @@ class PostVideoButton extends StatelessWidget {
               child: Container(
                 height: 30,
                 width: 25,
-                padding: const EdgeInsets.symmetric(horizontal: Sizes.size8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Sizes.size8,
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xff61D4F0),
-                  borderRadius: BorderRadius.circular(Sizes.size8),
+                  borderRadius: BorderRadius.circular(
+                    Sizes.size8,
+                  ),
                 ),
               ),
             ),
@@ -35,21 +44,35 @@ class PostVideoButton extends StatelessWidget {
               child: Container(
                 height: 30,
                 width: 25,
-                padding: const EdgeInsets.symmetric(horizontal: Sizes.size8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Sizes.size8,
+                ),
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(Sizes.size8),
+                  borderRadius: BorderRadius.circular(
+                    Sizes.size8,
+                  ),
                 ),
               ),
             ),
             Container(
               height: 30,
-              padding: const EdgeInsets.symmetric(horizontal: Sizes.size12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(Sizes.size6),
+              padding: const EdgeInsets.symmetric(
+                horizontal: Sizes.size12,
               ),
-              child: const Center(child: FaIcon(FontAwesomeIcons.plus, color: Colors.black, size: Sizes.size16 + Sizes.size2)),
+              decoration: BoxDecoration(
+                color: selectedIndex == 0 ? Colors.white : Colors.black,
+                borderRadius: BorderRadius.circular(
+                  Sizes.size6,
+                ),
+              ),
+              child: Center(
+                child: FaIcon(
+                  FontAwesomeIcons.plus,
+                  color: selectedIndex == 0 ? Colors.black : Colors.white,
+                  size: Sizes.size16 + Sizes.size2,
+                ),
+              ),
             ),
           ],
         ),
