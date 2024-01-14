@@ -58,6 +58,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
+          // title: CupertinoSearchTextField(),
           title: SearchTextField(
             onChanged: _onSearchChanged,
             onSubmitted: _onSearchSubmitted,

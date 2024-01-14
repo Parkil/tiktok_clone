@@ -17,64 +17,9 @@ class SearchTextField extends StatefulWidget {
   prefix - TextField 가 focusing 되었을 때에만 표시 된다
   prefixIcon - 항상 표시 된다
  */
-
-/*
-  유의점
-  TextField Decorator 의 prefixIcon, suffixIcon 은 최소 size 가 48 * 48 px
-  이기 때문에 만약 TextField 의 height 를 가늘게 만들고 싶으면 TextField 가
-  아닌 다른 방식을 사용 해야 한다
- */
 class _SearchTextFieldState extends State<SearchTextField> {
   final TextEditingController _searchTextController = TextEditingController();
   late bool _currentTextNotEmpty;
-
-  InputDecoration _textFieldDecoration() {
-    return InputDecoration(
-      hintText: "Search",
-      isDense: true,
-      // input field 기본 padding 제거
-      filled: true,
-      fillColor: Colors.grey.shade200,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(Sizes.size12),
-        borderSide: BorderSide.none,
-      ),
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: Sizes.size8,
-        vertical: Sizes.size6,
-      ),
-      prefixIcon: Padding(
-        padding: const EdgeInsets.only(
-          left: Sizes.size10,
-        ),
-        child: Row(
-          // row widget 자체가 vertical center 에 정렬 하는 효과가 있음
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FaIcon(
-              FontAwesomeIcons.magnifyingGlass,
-              color: Colors.grey.shade900,
-            ),
-          ],
-        ),
-      ),
-      suffixIcon: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (_currentTextNotEmpty)
-            GestureDetector(
-              onTap: _clearSearchText,
-              child: FaIcon(
-                FontAwesomeIcons.solidCircleXmark,
-                color: Colors.grey.shade800,
-                size: Sizes.size16,
-              ),
-            ),
-        ],
-      ),
-    );
-  }
 
   void _clearSearchText() {
     _searchTextController.clear();
@@ -111,20 +56,53 @@ class _SearchTextFieldState extends State<SearchTextField> {
 
   @override
   Widget build(BuildContext context) {
+    /*
+      TextField Decorator -> Row 로 변경한 이유
+      Decorator 의 prefixIcon, suffixIcon 의 경우 최소 크기가 48 * 48 px 이기 때문에
+      다음 문제가 발생 한다
+
+      1.isDense 효과가 작동 하지 않는다
+      2.prefixIcon 과 실제 입력 하는 커서 와의 간격을 줄일수 있는 방법이 없다 ( left padding 을 줘서 눈속임 을 할수 는 있다 )
+     */
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(Sizes.size12)
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Sizes.size8),
+            child: FaIcon(
+              FontAwesomeIcons.magnifyingGlass,
+              size: Sizes.size16,
+              color: Colors.grey.shade600,
+            ),
+          ),
           Expanded(
             child: TextField(
               controller: _searchTextController,
               minLines: 1,
               maxLines: 1,
               textInputAction: TextInputAction.search,
-              decoration: _textFieldDecoration(),
               onSubmitted: onSubmitted,
               onChanged: _onChanged,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                isDense: true, // 추가 vertical padding 제거
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Sizes.size8),
+            child: GestureDetector(
+              onTap: _clearSearchText,
+              child: FaIcon(
+                FontAwesomeIcons.solidCircleXmark,
+                size: _currentTextNotEmpty ? Sizes.size16 : 0,
+                color: Colors.grey.shade600,
+              ),
             ),
           ),
         ],
