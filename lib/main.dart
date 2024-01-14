@@ -15,7 +15,13 @@ class TikTokApp extends StatelessWidget {
     // 자주 사용 하는 widget 의 경우 여기 에서 style 을 일괄 로 적용해 두는 것이 효율적
     return MaterialApp(
       title: 'TikTok Clone',
+      /*
+        Tip. 특정 widget 에서 color 를 지정 하는 옵션이 없다고 해도 main theme 에서 color 를 변경해 주면 해당 color 를 따라 간다
+       */
       theme: ThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFFE9435A),
+        ),
         scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(0xFFE9435A),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
