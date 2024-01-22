@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/inbox/activity_screen.dart';
+import 'package:tiktok_clone/features/inbox/chats_screen.dart';
 import 'package:tiktok_clone/features/inbox/widget/filled_icon.dart';
 
 import 'widget/inbox_tile.dart';
@@ -10,7 +11,10 @@ import 'widget/inbox_tile.dart';
 class InboxScreen extends StatelessWidget {
   const InboxScreen({super.key});
 
-  void _onDmPressed() {}
+  void _onDmPressed(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const ChatsScreen()));
+  }
 
   void _onActivityTap(BuildContext context) {
     Navigator.of(context)
@@ -43,7 +47,7 @@ class InboxScreen extends StatelessWidget {
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
             icon: const FaIcon(FontAwesomeIcons.paperPlane),
-            onPressed: _onDmPressed,
+            onPressed: () => _onDmPressed(context),
           ),
         ],
       ),

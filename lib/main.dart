@@ -26,6 +26,8 @@ class TikTokApp extends StatelessWidget {
         primaryColor: const Color(0xFFE9435A),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        highlightColor: Colors.transparent, // tap 가능한 영역을 tab 했을때 표시 되는 색상
+        splashColor: Colors.transparent, // tap 시 물결 효과 색상
         appBarTheme: const AppBarTheme(
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
@@ -33,7 +35,13 @@ class TikTokApp extends StatelessWidget {
           elevation: 0,
           titleTextStyle: TextStyle(fontSize: Sizes.size20, fontWeight: FontWeight.w600, color: Colors.black),
         ),
+        iconButtonTheme: const IconButtonThemeData(
+          style: ButtonStyle(
+            splashFactory: NoSplash.splashFactory
+          )
+        ),
       ),
+      // home: const ActivityScreen(),
       home: const MainNavigationScreen(),
       // home: const SignUpScreen() // home 으로 지정된 widget 의 경우 scaffold 의 뒤로 가기 버튼이 사라 진다
     );
