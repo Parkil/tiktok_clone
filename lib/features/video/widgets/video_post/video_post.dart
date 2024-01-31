@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/features/video/widgets/video_post/animated_video_button.dart';
 import 'package:tiktok_clone/features/video/widgets/video_comment/video_comments.dart';
 import 'package:tiktok_clone/features/video/widgets/video_post/video_post_bottom_area.dart';
@@ -27,6 +29,7 @@ class _VideoPostState extends State<VideoPost>
   late final AnimationController _animationController;
   late bool isOnVideoFinishedCalled;
   bool _isPaused = false;
+  bool _isMuted = false;
 
   get _animationDuration => const Duration(milliseconds: 300);
 
@@ -49,13 +52,38 @@ class _VideoPostState extends State<VideoPost>
     super.dispose();
   }
 
-  void _initVideoPlayer() {
+  /*
+    sound 가 들어가 있는 동영상 의 경우 웹에서 자동 재생을 허용 하지 않는 다고 하는데
+    이에 대해 확인해 볼 필요가 있다
+
+    실제로 sound 가 들어가 있는 동영상 으로 확인 해본 바로 는 sound 를 mute 하지 않고
+    동영상 을 재생 하면 정상적 으로 진행 되지 않는 경우가 많다
+
+    그리고 타 사이트 를 봐도 web 에서 sound 가 있는 동영상 을 재생 하는 경우 에는 mute 가 되어서 표시가 됨
+    참고 url : https://www.pexels.com/search/videos/sound/
+
+    유튜브 의 경우
+      메인 / 검색 페이지 에서 동영상 으로 넘어 가는 경우 - 바로 재생
+      동영상 화면 에서 F5를 누르 거나 url 입력 으로 바로 가는 경우 - 대기 아이콘 이 0.5초? 떴다가 동영상 이 재생됨
+
+    유튜브 의 경우를 보면 추정 이기는 한데
+    video 초기화 -> play 사이에 약간의 시간 차이를 둬서 이를 해결 하는거 같음
+   */
+  void _initVideoPlayer() async {
     isOnVideoFinishedCalled = false;
     _videoPlayerController = VideoPlayerController.asset(widget.videoUrl);
     // setState 를 선언 하는 이유 : play 가 안되 어도 video 의 첫번째 프레임 이 표시가 되도록 하기 위해서
-    _videoPlayerController.initialize().then((_) => setState(() {}));
+    await _videoPlayerController.initialize();
+    await _videoPlayerController.setLooping(true);
+
+    if (kIsWeb) {
+      await _videoPlayerController.setVolume(0);
+    }
+
     _videoPlayerController.addListener(_onVideoChange);
-    _videoPlayerController.setLooping(true);
+    setState(() {
+      _isMuted = kIsWeb;
+    });
   }
 
   /*
@@ -77,7 +105,7 @@ class _VideoPostState extends State<VideoPost>
 
   void _onVisibilityChanged(VisibilityInfo info) {
     // mounted : widget 이 mount 되었 는지 여부 반환
-    if(!mounted) return;
+    if (!mounted) return;
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
@@ -120,6 +148,19 @@ class _VideoPostState extends State<VideoPost>
     _togglePlay();
   }
 
+  void _onVolumeTap() async {
+
+    setState(() {
+      _isMuted = !_isMuted;
+    });
+
+    if (_isMuted) {
+      await _videoPlayerController.setVolume(0);
+    } else {
+      await _videoPlayerController.setVolume(100);
+    }
+  }
+
   /*
      VisibilityDetector
      widget 이 이동시 이전-현재 widget 이 이동한 정도를 체크 하는 API
@@ -150,6 +191,14 @@ class _VideoPostState extends State<VideoPost>
             animationController: _animationController,
             isPaused: _isPaused,
             animationDuration: _animationDuration,
+          ),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: GestureDetector(
+              onTap: _onVolumeTap,
+              child: _isMuted ? const FaIcon(FontAwesomeIcons.volumeOff) : const FaIcon(FontAwesomeIcons.volumeHigh),
+            ),
           ),
           const VideoPostBottomArea(
             loginUser: "@로그인한 사람",

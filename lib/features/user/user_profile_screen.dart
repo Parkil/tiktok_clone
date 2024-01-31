@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/enum/width_breakpoint.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/settings/settings_screen.dart';
@@ -159,6 +160,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    WidthBreakPoint widthBreakPoint = WidthBreakPoint.findByWidth(width);
+    debugPrint("width: $width / enum check: $widthBreakPoint");
+
     return SafeArea(
       child: DefaultTabController(
         length: 2,
@@ -213,7 +218,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: gridRatio,
                   // 1.0 (정사각형), 1.0 보다 크면 가로 길이가 길어 지고 작아 지면 세로 길이가 길어짐
-                  crossAxisCount: 3,
+                  crossAxisCount: widthBreakPoint.columnCount,
                   crossAxisSpacing: Sizes.size2,
                   //grid 세로 간격
                   mainAxisSpacing: Sizes.size2, // grid 가로 간격
