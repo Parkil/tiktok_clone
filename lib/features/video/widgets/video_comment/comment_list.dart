@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/video/widgets/video_comment/comment_like_icon_text.dart';
+import 'package:tiktok_clone/util/utils.dart';
 
 class CommentList extends StatelessWidget {
   const CommentList({
@@ -20,6 +21,7 @@ class CommentList extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 18,
+              backgroundColor: isDarkMode(context) ? Colors.grey.shade700: null,
               child: Text("${index+1}"),
             ),
             Gaps.h10,

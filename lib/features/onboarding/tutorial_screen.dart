@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/util/utils.dart';
 
 enum Direction { right, left }
 enum Page { first, second }
@@ -92,7 +93,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Colors.white,
+          color: isDarkMode(context) ? null : Colors.white,
           surfaceTintColor: Colors.white,
           height: 130,
           child: Padding(

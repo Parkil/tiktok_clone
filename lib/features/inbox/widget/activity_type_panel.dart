@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/util/utils.dart';
 
 class ActivityTypePanel extends StatefulWidget {
   final AnimationController animationController;
@@ -28,9 +28,9 @@ class _ActivityTypePanelState extends State<ActivityTypePanel> {
     return SlideTransition(
       position: _panelAnimation,
       child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: isDarkMode(context) ? Theme.of(context).appBarTheme.backgroundColor : Colors.white,
+          borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(Sizes.size4),
             bottomRight: Radius.circular(Sizes.size4),
           ),
@@ -40,10 +40,9 @@ class _ActivityTypePanelState extends State<ActivityTypePanel> {
           children: [
             for (var type in widget.typeData)
               ListTile(
-                leading: FaIcon(
+                leading: Icon(
                   type['icon'],
-                  color: Colors.black,
-                  size: Sizes.size12,
+                  size: Sizes.size16,
                 ),
                 title: Text(
                   type['title'],

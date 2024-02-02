@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/util/utils.dart';
 
 class CommentInputArea extends StatefulWidget {
   final Function registerCommentCallback;
@@ -37,7 +38,7 @@ class _CommentInputAreaState extends State<CommentInputArea> {
         borderSide: BorderSide.none,
       ),
       filled: true,
-      fillColor: Colors.grey.shade200,
+      fillColor: isDarkMode(context) ? Colors.grey.shade700 : Colors.grey.shade200,
       contentPadding: const EdgeInsets.symmetric(
         horizontal: Sizes.size12,
         vertical: Sizes.size10,
@@ -78,7 +79,7 @@ class _CommentInputAreaState extends State<CommentInputArea> {
         vertical: Sizes.size8,
       ),
       // surfaceTintColor: Colors.white,
-      color: Colors.white,
+      color: isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [

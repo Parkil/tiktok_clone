@@ -5,6 +5,7 @@ import 'package:tiktok_clone/constants/enum/width_breakpoint.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/discover/widgets/search_text_field.dart';
+import 'package:tiktok_clone/util/utils.dart';
 
 class DiscoverScreen extends StatefulWidget {
   const DiscoverScreen({super.key});
@@ -81,9 +82,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             // 미 지정시 처음탭 옆에 빈 공간이 생긴것 처럼 rendering 된다
             padding: const EdgeInsets.symmetric(horizontal: Sizes.size12),
             isScrollable: true,
-            unselectedLabelColor: Colors.grey.shade500,
-            labelColor: Colors.black,
-            indicatorColor: Colors.black,
             indicatorSize: TabBarIndicatorSize.label,
             labelStyle: const TextStyle(
               fontSize: Sizes.size16,
@@ -157,7 +155,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       if (constraints.maxWidth < 200 || constraints.maxWidth > 250)
                         DefaultTextStyle(
                           style: TextStyle(
-                            color: Colors.grey.shade600,
+                            color: isDarkMode(context) ? Colors.grey.shade300: Colors.grey.shade600,
                           ),
                           child: Row(
                             children: [

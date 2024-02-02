@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
+import 'package:tiktok_clone/util/utils.dart';
 
 import 'widgets/interest_button.dart';
 
@@ -127,7 +128,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
       bottomNavigationBar: BottomAppBar(
         height: 150, //material theme 에서는 height 가 없을 경우 80으로 고정 그외 theme 에서는 안의 contents 에 맞게 조정
         surfaceTintColor: Colors.white,
-        color: Colors.white,
+        color: isDarkMode(context) ? null : Colors.white,
         child: Padding(
           padding: const EdgeInsets.only(bottom: Sizes.size40, top: Sizes.size16, left: Sizes.size24, right: Sizes.size24),
           child: GestureDetector(

@@ -6,6 +6,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
+import 'package:tiktok_clone/util/utils.dart';
 
 class BirthDayScreen extends StatefulWidget {
   const BirthDayScreen({super.key});
@@ -77,9 +78,9 @@ class _BirthDayScreenState extends State<BirthDayScreen> {
         ]),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: isDarkMode(context) ? null : Colors.white,
         height: 400,
         surfaceTintColor: Colors.white, // BottomAppBar 의 background 색을 white 로 설정 하려면 surfaceTintColor, color 를 white 로 설정
-        color: Colors.white,
         child: SizedBox(
           child: CupertinoDatePicker(
             onDateTimeChanged: _setTextFieldDate,

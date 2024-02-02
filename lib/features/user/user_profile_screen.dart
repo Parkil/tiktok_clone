@@ -8,6 +8,7 @@ import 'package:tiktok_clone/features/user/widgets/custom_divider.dart';
 import 'package:tiktok_clone/features/user/widgets/following_info.dart';
 import 'package:tiktok_clone/features/user/widgets/persistent_tabbar.dart';
 import 'package:tiktok_clone/features/user/widgets/user_profile_grid.dart';
+import 'package:tiktok_clone/util/utils.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -129,8 +130,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
               decoration: BoxDecoration(
                 border:
-                    Border.all(color: Colors.grey.shade300, width: Sizes.size1),
-                color: Colors.white,
+                    Border.all(color: Colors.grey.shade300, width: Sizes.size1,),
+                color: isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
               ),
               child: const Center(
                 child: FaIcon(FontAwesomeIcons.youtube),
@@ -142,8 +143,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
               decoration: BoxDecoration(
                 border:
-                    Border.all(color: Colors.grey.shade300, width: Sizes.size1),
-                color: Colors.white,
+                    Border.all(color: Colors.grey.shade300, width: Sizes.size1,),
+                color: isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
               ),
               child: const Center(
                 child: FaIcon(FontAwesomeIcons.angleDown),
@@ -171,6 +172,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
               SliverAppBar(
+                backgroundColor: isDarkMode(context) ? Colors.black : null,
                 title: const Text("사용자"),
                 centerTitle: true,
                 actions: [
@@ -186,6 +188,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               SliverToBoxAdapter(
                 child: Column(
                   children: [
+                    Gaps.v20,
                     _userIcon(),
                     Gaps.v20,
                     _userIdArea(),

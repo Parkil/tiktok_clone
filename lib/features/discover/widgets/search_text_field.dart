@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/util/utils.dart';
 
 class SearchTextField extends StatefulWidget {
   final Function? onSubmitted;
@@ -66,7 +67,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
      */
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
+        color: isDarkMode(context) ? Colors.grey.shade700 : Colors.grey.shade200,
         borderRadius: BorderRadius.circular(Sizes.size12)
       ),
       child: Row(
@@ -77,7 +78,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
             child: FaIcon(
               FontAwesomeIcons.magnifyingGlass,
               size: Sizes.size16,
-              color: Colors.grey.shade600,
+              color: isDarkMode(context) ? Colors.white54 : Colors.grey.shade600,
             ),
           ),
           Expanded(
@@ -88,6 +89,9 @@ class _SearchTextFieldState extends State<SearchTextField> {
               textInputAction: TextInputAction.search,
               onSubmitted: onSubmitted,
               onChanged: _onChanged,
+              style: TextStyle(
+                color: isDarkMode(context) ? Colors.white54 : Colors.black,
+              ),
               decoration: const InputDecoration(
                 border: InputBorder.none,
                 isDense: true, // 추가 vertical padding 제거

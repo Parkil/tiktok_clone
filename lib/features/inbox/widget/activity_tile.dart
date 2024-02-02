@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/util/utils.dart';
 
 class ActivityTile extends StatelessWidget {
   final Function? onTap;
@@ -30,24 +31,25 @@ class ActivityTile extends StatelessWidget {
         text: TextSpan(
           // text: "Account Updates:",
           text: activityType,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w600,
-            color: Colors.black,
+            color: isDarkMode(context) ? Colors.grey.shade400 : Colors.black,
             fontSize: Sizes.size16,
           ),
           children: [
             // children 에서는 상위의 style 을 상속 받는다
             TextSpan(
               text: ' $content',
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.normal,
+                color: isDarkMode(context) ? Colors.grey.shade400 : Colors.black,
               ),
             ),
             TextSpan(
               text: ' $time',
               style: TextStyle(
                 fontWeight: FontWeight.normal,
-                color: Colors.grey.shade400,
+                color: isDarkMode(context) ? Colors.grey.shade400 : Colors.black,
               ),
             ),
           ],
