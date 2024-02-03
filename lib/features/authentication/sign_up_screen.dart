@@ -39,7 +39,6 @@ class SignUpScreen extends StatelessWidget {
                   Gaps.v52,
                   Text(
                     "Sign up for TikTok",
-                    // style: GoogleFonts.aBeeZee(fontSize: Sizes.size24),
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: Sizes.size24, fontWeight: FontWeight.bold), // main.dart 에서 style 을 설정 하고 이를 가져 오는 방식 copyWith - 기존 style 에 특정 속성만 추가 하는 경우
                   ),
                   Gaps.v20,
@@ -98,7 +97,7 @@ class SignUpScreen extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: BottomAppBar(
-            color: isDarkMode(context) ? null : Colors.grey.shade50, // null 을 대입 하면 해당 property 를 적용 하지 않겠 다는 의미
+            // color: isDarkMode(context) ? null : Colors.grey.shade50, // null 을 대입 하면 해당 property 를 적용 하지 않겠 다는 의미
             elevation: 2,
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -116,7 +115,8 @@ class SignUpScreen extends StatelessWidget {
                     child: Text(
                       "Log in",
                       style: TextStyle(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.tertiary,
+                        // color: Color(0xFFE9435A),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
