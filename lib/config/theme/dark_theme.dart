@@ -2,26 +2,19 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tiktok_clone/config/theme/brand_theme.dart';
 
-final FlexSchemeColor _schemeLight = FlexSchemeColor.from(
-  primary: const Color(0xFF00296B),
-  secondary: const Color(0xFFFF7B00),
+
+final FlexSchemeColor _schemeDark = FlexSchemeColor.from(
+  primary: Colors.grey.shade500,
+  secondary: Colors.red,
+  tertiary: const Color(0xFFE9435A),
   brightness: Brightness.light,
 );
 
-final FlexSchemeColor _schemeDark = FlexSchemeColor.from(
-  primary: const Color(0xFF6B8BC3),
-  secondary: const Color(0xffff7155),
-  brightness: Brightness.dark,
-);
 
-const FlexScheme _scheme = FlexScheme.flutterDash;
-
-const bool _useScheme = true;
 const double _appBarElevation = 0.5;
 const double _appBarOpacity = 0.94;
-const bool _computeDarkTheme = false;
-const int _toDarkLevel = 30;
 const bool _swapColors = false;
 const int _usedColors = 6;
 
@@ -85,53 +78,20 @@ const int _blendLevel = 20;
 const FlexSurfaceMode _surfaceMode = FlexSurfaceMode.highBackgroundLowScaffold;
 const FlexTabBarStyle _tabBarForAppBar = FlexTabBarStyle.forAppBar;
 const bool _transparentStatusBar = true;
+
 const BrandTheme darkBrandTheme = BrandTheme(
   brandColor: Color.fromARGB(255, 167, 227, 218),
 );
 
-class BrandTheme extends ThemeExtension<BrandTheme> {
-  const BrandTheme({
-    this.brandColor,
-  });
-
-  final Color? brandColor;
-
-  // You must override the copyWith method.
-  @override
-  BrandTheme copyWith({
-    Color? brandColor,
-  }) =>
-      BrandTheme(
-        brandColor: brandColor ?? this.brandColor,
-      );
-
-  // You must override the lerp method.
-  @override
-  BrandTheme lerp(ThemeExtension<BrandTheme>? other, double t) {
-    if (other is! BrandTheme) {
-      return this;
-    }
-    return BrandTheme(
-      brandColor: Color.lerp(brandColor, other.brandColor, t),
-    );
-  }
-}
 
 ThemeData darkTheme() {
   return FlexThemeData.dark(
     useMaterial3: true,
-    colors: (_useScheme && _computeDarkTheme)
-        ? FlexColor.schemes[_scheme]!.light.toDark(_toDarkLevel)
-        : _useScheme
-            ? null
-            : _computeDarkTheme
-                ? _schemeLight.toDark(_toDarkLevel, true)
-                : _schemeDark,
-    scheme: _scheme,
+    colors: _schemeDark,
     swapColors: _swapColors,
     usedColors: _usedColors,
     darkIsTrueBlack: false,
-    appBarStyle: null, // Try styles like: FlexAppBarStyle.background,
+    appBarStyle: FlexAppBarStyle.primary, // Try styles like: FlexAppBarStyle.background,
     appBarElevation: _appBarElevation,
     appBarOpacity: _appBarOpacity,
     transparentStatusBar: _transparentStatusBar,

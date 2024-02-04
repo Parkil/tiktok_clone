@@ -5,13 +5,43 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'brand_theme.dart';
 
+final String? _fontFamily = GoogleFonts.poppins().fontFamily;
 
+/*
+  FlexSchemeColor / FlexScheme
+  2개다 color 를 사전 정의 해서 이를 사용 하기 위함
+  차이점 은 FlexScheme 은 사전에 정의 된 scheme 을 가져다 쓰는 거고
+  FlexSchemeColor 는 사용자 가 color 를 직접 정의할 수 있는 정도?
 
+  2개를 동시에 사용은 안됨
 
+  bottomAppBar 처럼 기본적 으로 color 를 가지는 widget 에 해당 색상이 적용됨
 
+  cursorColor: Color(0xFFE9435A), -> Tiktok Primary Color
+ */
+final FlexSchemeColor _schemeLight = FlexSchemeColor.from(
+  primary: Colors.grey.shade500,
+  secondary: Colors.red,
+  tertiary: const Color(0xFFE9435A),
+  brightness: Brightness.light,
+);
+
+// 색상을 섞을때 사용
+const int _usedColors = 6;
+const bool _swapColors = false;
 const double _appBarElevation = 0.5;
-const double _appBarOpacity = 0.94;
+const double _appBarOpacity = 0.0;
+const bool _transparentStatusBar = true; // status bar ( battery, network ) 창을 투명 하게 처리
+const FlexTabBarStyle _tabBarForAppBar = FlexTabBarStyle.forAppBar;
+const FlexSurfaceMode _surfaceMode = FlexSurfaceMode.levelSurfacesLowScaffoldVariantDialog;
+const int _blendLevel = 0;
+const bool _tooltipsMatchBackground = true;
 
+const TextTheme _textTheme = TextTheme(
+  displayMedium: TextStyle(fontSize: 41),
+  displaySmall: TextStyle(fontSize: 36),
+  labelSmall: TextStyle(fontSize: 11, letterSpacing: 0.5),
+);
 
 
 const FlexKeyColors _keyColors = FlexKeyColors(
@@ -30,21 +60,7 @@ const FlexKeyColors _keyColors = FlexKeyColors(
 
 final FlexTones _flexTonesLight = FlexTones.material(Brightness.light);
 
-const TextTheme _textTheme = TextTheme(
-  displayMedium: TextStyle(fontSize: 41),
-  displaySmall: TextStyle(fontSize: 36),
-  labelSmall: TextStyle(fontSize: 11, letterSpacing: 0.5),
-);
-
-const BrandTheme lightBrandTheme = BrandTheme(
-  brandColor: Color.fromARGB(255, 8, 79, 71),
-);
-
-final TargetPlatform _platform = defaultTargetPlatform;
-
 const bool _useSubThemes = true;
-final VisualDensity _visualDensity =
-    FlexColorScheme.comfortablePlatformDensity;
 
 const FlexSubThemesData _subThemesData = FlexSubThemesData(
   interactionEffects: true,
@@ -54,7 +70,7 @@ const FlexSubThemesData _subThemesData = FlexSubThemesData(
 
   useTextTheme: true,
 
-  inputDecoratorBorderType: FlexInputBorderType.outline,
+  inputDecoratorBorderType: FlexInputBorderType.underline,
   inputDecoratorIsFilled: true,
   inputDecoratorUnfocusedHasBorder: false,
   inputDecoratorSchemeColor: SchemeColor.primary,
@@ -73,41 +89,13 @@ const FlexSubThemesData _subThemesData = FlexSubThemesData(
   bottomNavigationBarBackgroundSchemeColor: SchemeColor.background,
 );
 
-const bool _tooltipsMatchBackground = true;
-const int _blendLevel = 20;
-const FlexSurfaceMode _surfaceMode = FlexSurfaceMode.highBackgroundLowScaffold;
-const FlexTabBarStyle _tabBarForAppBar = FlexTabBarStyle.forAppBar;
-const bool _transparentStatusBar = true;
+final VisualDensity _visualDensity = FlexColorScheme.comfortablePlatformDensity;
 
-// ==============================================
-
-final String? _fontFamily = GoogleFonts.poppins().fontFamily;
-
-/*
-  FlexSchemeColor / FlexScheme
-  2개다 color 를 사전 정의 해서 이를 사용 하기 위함
-  차이점 은 FlexScheme 은 사전에 정의 된 scheme 을 가져다 쓰는 거고
-  FlexSchemeColor 는 사용자 가 color 를 직접 정의할 수 있는 정도?
-
-  2개를 동시에 사용은 안됨
-
-  bottomAppBar 처럼 기본적 으로 color 를 가지는 widget 에 해당 색상이 적용됨
-
-  cursorColor: Color(0xFFE9435A), -> Tiktok Primary Color
- */
-const bool _useSchemeColor = true;
-final FlexSchemeColor _schemeLight = FlexSchemeColor.from(
-  primary: Colors.grey.shade500,
-  secondary: Colors.red,
-  tertiary: const Color(0xFFE9435A),
-  brightness: Brightness.light,
+const BrandTheme lightBrandTheme = BrandTheme(
+  brandColor: Color.fromARGB(255, 8, 79, 71),
 );
 
-const FlexScheme _scheme = FlexScheme.flutterDash;
-
-// 색상을 섞을때 사용
-const int _usedColors = 6;
-const bool _swapColors = false;
+final TargetPlatform _platform = defaultTargetPlatform;
 
 ThemeData lightTheme() {
   return FlexThemeData.light(
@@ -117,20 +105,19 @@ ThemeData lightTheme() {
     swapColors: _swapColors, // If true, swap primary and secondaries.
     usedColors: _usedColors,
     lightIsWhite: true, // light mode 에서 흰색을 선명 하게 표시
-
-    appBarStyle: null,
-    // Try different style, e.g.FlexAppBarStyle.primary,
+    appBarStyle: FlexAppBarStyle.primary, // Try different style, e.g.FlexAppBarStyle.primary
     appBarElevation: _appBarElevation,
     appBarOpacity: _appBarOpacity,
     transparentStatusBar: _transparentStatusBar,
     tabBarStyle: _tabBarForAppBar,
-    surfaceMode: _surfaceMode,
+    surfaceMode: _surfaceMode, // app bar surfaceTintColor 조정?
     blendLevel: _blendLevel,
-    tooltipsMatchBackground: _tooltipsMatchBackground,
+    tooltipsMatchBackground: _tooltipsMatchBackground, //툴팁 색상을 background 와 같게 조정
     textTheme: _textTheme,
     primaryTextTheme: _textTheme,
-    keyColors: _keyColors,
+    keyColors: _keyColors, // 색상과 관련된 설정 인듯
     tones: _flexTonesLight,
+
     subThemesData: _useSubThemes ? _subThemesData : null,
     visualDensity: _visualDensity,
     platform: _platform,

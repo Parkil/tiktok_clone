@@ -4,8 +4,6 @@ import 'package:tiktok_clone/config/theme/dark_theme.dart';
 import 'package:tiktok_clone/config/theme/light_theme.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
 
-import 'features/main_navigation/main_navigation_screen.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -13,7 +11,8 @@ void main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   // 배터리, Network 상태 아이콘 색상 설정
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
 
   runApp(const TikTokApp());
 }
