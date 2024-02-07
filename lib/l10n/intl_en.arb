@@ -1,0 +1,60 @@
+{
+  "signUpTitle": "Sign up for {appName} {when}",
+  "@signUpTitle": {
+    "description": "The title people see when they open the app for the first time (이부분 이 docs 부분에 표시됨)",
+    "placeholders" : {
+      "appName": {
+        "type": "String",
+        "example": "TikTok"
+      },
+      "when": {
+        "type": "DateTime",
+        "format": "yQQQQ"
+      }
+    }
+  },
+  "loginTitle": "Login to your {appName} account",
+  "@loginTitle": {
+    "description": "The title people see when they open the login screen",
+    "placeholders" : {
+      "appName": {
+        "type": "String",
+        "example": "TikTok"
+      }
+    }
+  },
+  "signUpSubTitle": "Create a profile, follow other accounts make your own {videoCount, plural, =0{no videos} =1{video} other{videos}}, and more.",
+  "singUpEmailTitle": "Use email and password",
+  "signUpAppleTitle": "Continue with Apple",
+  "subLogin": "Log in {gender, select, male{sir} female{madam} other{human}}",
+  "likeCount": "{value}",
+  "@likeCount": {
+    "description": "Anything you want",
+    "placeholders" : {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "commentCount": "{value}",
+  "@commentCount": {
+    "description": "Anything you want",
+    "placeholders" : {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  },
+  "commentTitle": "{count} {count, plural, =0{no Comments} =1{{count} Comment} other{{count} Comments}}",
+  "@commentTitle": {
+    "description": "Anything you want",
+    "placeholders" : {
+      "count": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
+  }
+}

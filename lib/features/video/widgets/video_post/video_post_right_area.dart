@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/features/video/widgets/video_post/icon_text.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 
 class VideoPostRightArea extends StatelessWidget {
   final Function commentFunction;
@@ -27,16 +28,16 @@ class VideoPostRightArea extends StatelessWidget {
             child: Text("사용자"),
           ),
           Gaps.v24,
-          const IconText(
+          IconText(
             iconData: FontAwesomeIcons.solidHeart,
-            subText: "2.9M",
+            subText: S.of(context).likeCount(1500),
           ),
           Gaps.v24,
           GestureDetector(
             onTap: () => commentFunction(context),
-            child: const IconText(
+            child: IconText(
               iconData: FontAwesomeIcons.solidComment,
-              subText: "3.3K",
+              subText: S.of(context).commentCount(55000),
             ),
           ),
           Gaps.v24,

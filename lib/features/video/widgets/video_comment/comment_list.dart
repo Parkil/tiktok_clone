@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/video/widgets/video_comment/comment_like_icon_text.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/util/utils.dart';
 
 class CommentList extends StatelessWidget {
@@ -46,7 +47,7 @@ class CommentList extends StatelessWidget {
               ),
             ),
             Gaps.v10,
-            const CommentLikeIconText(likeCnt: "2.2K"),
+            CommentLikeIconText(likeCnt: S.of(context).likeCount(1500)),
           ],
         ),
         separatorBuilder: (context, index) => Gaps.v20,

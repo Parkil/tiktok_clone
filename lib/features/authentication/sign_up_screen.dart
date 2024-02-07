@@ -5,6 +5,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 
+import '../../generated/l10n.dart';
 import 'login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -37,15 +38,15 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   Gaps.v52,
                   Text(
-                    "Sign up for TikTok",
+                    S.of(context).signUpTitle("TikTok", DateTime.now(),),
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: Sizes.size24, fontWeight: FontWeight.bold), // main.dart 에서 style 을 설정 하고 이를 가져 오는 방식 copyWith - 기존 style 에 특정 속성만 추가 하는 경우
                   ),
                   Gaps.v20,
-                  const Opacity(
+                  Opacity(
                     opacity: 0.7,
                     child: Text(
-                      "Create a profile, follow other accounts make your own videos, and more.",
-                      style: TextStyle(
+                      S.of(context).signUpSubTitle(2),
+                      style: const TextStyle(
                         fontSize: Sizes.size16,
                       ),
                       textAlign: TextAlign.center,
@@ -57,15 +58,15 @@ class SignUpScreen extends StatelessWidget {
                       icon: const FaIcon(
                         FontAwesomeIcons.user,
                       ),
-                      text: "Use email and password",
+                      text: S.of(context).singUpEmailTitle,
                       onTap: _onUserNameTap,
                     ),
                     Gaps.v16,
-                    const AuthButton(
-                      icon: FaIcon(
+                    AuthButton(
+                      icon: const FaIcon(
                         FontAwesomeIcons.apple,
                       ),
-                      text: "Continue with Apple",
+                      text: S.of(context).signUpAppleTitle,
                     ),
                   ],
                   if (orientation == Orientation.landscape)
@@ -76,17 +77,17 @@ class SignUpScreen extends StatelessWidget {
                             icon: const FaIcon(
                               FontAwesomeIcons.user,
                             ),
-                            text: "Use email and password",
+                            text: S.of(context).singUpEmailTitle,
                             onTap: _onUserNameTap,
                           ),
                         ),
                         Gaps.h16,
-                        const Expanded(
+                        Expanded(
                           child: AuthButton(
-                            icon: FaIcon(
+                            icon: const FaIcon(
                               FontAwesomeIcons.apple,
                             ),
-                            text: "Continue with Apple",
+                            text: S.of(context).signUpAppleTitle,
                           ),
                         ),
                       ],
@@ -112,7 +113,7 @@ class SignUpScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () => _onLoginTap(context),
                     child: Text(
-                      "Log in",
+                      S.of(context).subLogin("male"),
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.tertiary,
                         // color: Color(0xFFE9435A),
