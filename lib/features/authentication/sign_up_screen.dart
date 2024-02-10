@@ -9,16 +9,52 @@ import '../../generated/l10n.dart';
 import 'login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
+  static const routeName = "/signup";
+
   const SignUpScreen({super.key});
 
-  void _onLoginTap(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
+  void _onLoginTap(BuildContext context) async {
+    final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
+    debugPrint("$result");
+    // final aaa = await Navigator.of(context)
+    //     .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
+    //
+    // debugPrint(aaa);
+  }
+
+  Widget pageBuilder(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
+    return const UserNameScreen();
   }
 
   void _onUserNameTap(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const UserNameScreen()));
+    Navigator.of(context).pushNamed(UserNameScreen.routeName);
+    /*
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        transitionDuration: const Duration(seconds: 1),
+        reverseTransitionDuration: const Duration(seconds: 1),
+        pageBuilder: pageBuilder,
+        transitionsBuilder: _transitionsBuilder,
+      ),
+    );*/
+    // Navigator.of(context)
+    //     .push(MaterialPageRoute(builder: (context) => const UserNameScreen()));
+  }
+
+  Widget _transitionsBuilder(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    final offset = Tween(begin: const Offset(0, -1), end: Offset.zero).animate(animation);
+    return SlideTransition(
+      position: offset,
+      child: FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+    );
   }
 
   /*
@@ -38,8 +74,14 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   Gaps.v52,
                   Text(
-                    S.of(context).signUpTitle("TikTok", DateTime.now(),),
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: Sizes.size24, fontWeight: FontWeight.bold), // main.dart 에서 style 을 설정 하고 이를 가져 오는 방식 copyWith - 기존 style 에 특정 속성만 추가 하는 경우
+                    S.of(context).signUpTitle(
+                          "TikTok",
+                          DateTime.now(),
+                        ),
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontSize: Sizes.size24,
+                          fontWeight: FontWeight.bold,
+                        ), // main.dart 에서 style 을 설정 하고 이를 가져 오는 방식 copyWith - 기존 style 에 특정 속성만 추가 하는 경우
                   ),
                   Gaps.v20,
                   Opacity(
