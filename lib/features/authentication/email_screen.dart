@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/password_screen.dart';
-import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/util/validation.dart';
 
 class EmailScreen extends StatefulWidget {
   static const routeName = "/email";
+  final String userName;
 
   const EmailScreen({
     super.key,
+    required this.userName,
   });
 
   @override
@@ -55,7 +56,7 @@ class _EmailScreenState extends State<EmailScreen> {
   @override
   Widget build(BuildContext context) {
     // pushNamed 에서 넘긴 데이터 를 가져 오는 방법
-    final args = ModalRoute.of(context)!.settings.arguments as EmailScreenArgs;
+    // final args = ModalRoute.of(context)!.settings.arguments as EmailScreenArgs;
 
     return GestureDetector(
       onTap: _onScaffoldTap,
@@ -73,7 +74,7 @@ class _EmailScreenState extends State<EmailScreen> {
             children: [
               Gaps.v40,
               Text(
-                "What is your email? ${args.username}",
+                "What is your email? ${widget.userName}",
                 style: const TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,

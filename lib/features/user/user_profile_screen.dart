@@ -11,7 +11,10 @@ import 'package:tiktok_clone/features/user/widgets/user_profile_grid.dart';
 import 'package:tiktok_clone/util/utils.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+  final String userName;
+  final String tab;
+
+  const UserProfileScreen({super.key, required this.userName, required this.tab});
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -35,9 +38,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          "@user_id",
-          style: TextStyle(
+        Text(
+          "@${widget.userName}",
+          style: const TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: Sizes.size18,
           ),
@@ -168,12 +171,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return SafeArea(
       child: DefaultTabController(
         length: 2,
+        initialIndex: widget.tab == "likes" ? 1 : 0,
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
               SliverAppBar(
                 backgroundColor: isDarkMode(context) ? Colors.black : null,
-                title: const Text("사용자"),
+                title: Text(widget.userName),
                 centerTitle: true,
                 actions: [
                   IconButton(

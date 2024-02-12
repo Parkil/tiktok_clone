@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok_clone/util/utils.dart';
@@ -23,7 +24,7 @@ class LoginScreen extends StatelessWidget {
       앱 설계시 이전 페이지 를 봐야 하는지 아니면 단발성 페이지(이전 페이지 볼 필요 없음) 인지를 확인 해서 페이지 이동 수단을 선정할 필요가 있다
       -> 앱 흐름 설계가 필요 하다
      */
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   void _onLoginFormTap(BuildContext context) {

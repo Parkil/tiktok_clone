@@ -3,10 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone/config/theme/dark_theme.dart';
 import 'package:tiktok_clone/config/theme/light_theme.dart';
-import 'package:tiktok_clone/features/authentication/email_screen.dart';
-import 'package:tiktok_clone/features/authentication/login_screen.dart';
-import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
-import 'package:tiktok_clone/features/authentication/username_screen.dart';
+import 'package:tiktok_clone/router.dart';
 
 import 'generated/l10n.dart';
 
@@ -29,7 +26,7 @@ class TikTokApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     S.load(const Locale("ko"));
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'TikTok Clone',
       localizationsDelegates: const [
         S.delegate,
@@ -45,13 +42,7 @@ class TikTokApp extends StatelessWidget {
       debugShowCheckedModeBanner: true,
       theme: lightTheme(),
       darkTheme: darkTheme(),
-      initialRoute: UserNameScreen.routeName,
-      routes: {
-        SignUpScreen.routeName: (context) => const SignUpScreen(),
-        UserNameScreen.routeName: (context) => const UserNameScreen(),
-        LoginScreen.routeName: (context) => const LoginScreen(),
-        EmailScreen.routeName: (context) => const EmailScreen(),
-      },
+      routerConfig: router,
       // home: const SignUpScreen(),
       // home: const MainNavigationScreen(),
     );

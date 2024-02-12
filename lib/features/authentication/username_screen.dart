@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/features/authentication/email_screen.dart';
@@ -37,7 +38,8 @@ class _UserNameScreenState extends State<UserNameScreen> {
   //StatefulWidget 내부 에서는 context 를 받지 않아도 사용이 가능
   void _onNextTab() {
     if (_username.isNotEmpty) {
-      Navigator.of(context).pushNamed(EmailScreen.routeName, arguments: EmailScreenArgs(username: _username));
+      context.push(EmailScreen.routeName, extra: EmailScreenArgs(username: _username));
+      // Navigator.of(context).pushNamed(EmailScreen.routeName, arguments: EmailScreenArgs(username: _username));
       // Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmailScreen()));
     }
   }

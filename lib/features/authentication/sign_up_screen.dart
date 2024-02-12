@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
@@ -14,8 +15,10 @@ class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
-    final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
-    debugPrint("$result");
+    // go 는 push 와 다르게 기존 stack 을 무시 하고 바로 해당 widget 으로 이동 한다 (web 의 history.replace 와 비슷)
+    context.push(LoginScreen.routeName);
+    // final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
+    // debugPrint("$result");
     // final aaa = await Navigator.of(context)
     //     .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
     //
@@ -31,7 +34,9 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onUserNameTap(BuildContext context) {
-    Navigator.of(context).pushNamed(UserNameScreen.routeName);
+    context.push(UserNameScreen.routeName);
+    // context.push("/users/test?show=likes111");
+    // context.go(UserNameScreen.routeName);
     /*
     Navigator.of(context).push(
       PageRouteBuilder(
