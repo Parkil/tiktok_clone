@@ -38,7 +38,8 @@ class _UserNameScreenState extends State<UserNameScreen> {
   //StatefulWidget 내부 에서는 context 를 받지 않아도 사용이 가능
   void _onNextTab() {
     if (_username.isNotEmpty) {
-      context.push(EmailScreen.routeName, extra: EmailScreenArgs(username: _username));
+      context.pushNamed("email_screen", extra: EmailScreenArgs(username: _username));
+      // context.push(EmailScreen.routeName, extra: EmailScreenArgs(username: _username));
       // Navigator.of(context).pushNamed(EmailScreen.routeName, arguments: EmailScreenArgs(username: _username));
       // Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmailScreen()));
     }
