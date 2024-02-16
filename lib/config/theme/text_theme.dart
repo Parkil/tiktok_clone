@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
+String? fontFamily() {
+  return GoogleFonts.poppins().fontFamily;
+}
+
 TextTheme textTheme() {
   return TextTheme(
     displaySmall: GoogleFonts.poppins(
@@ -19,12 +23,12 @@ TextTheme textTheme() {
       letterSpacing: 0.15
     ),
     titleMedium: GoogleFonts.poppins(
-      fontSize: Sizes.size16,
+      fontSize: Sizes.size20,
+      fontWeight: FontWeight.w600,
       letterSpacing: 0.15,
     ),
     titleSmall: GoogleFonts.poppins(
-      fontSize: Sizes.size18,
-      fontWeight: FontWeight.w500,
+      fontSize: Sizes.size16,
       letterSpacing: 0.1
     ),
     bodyLarge: GoogleFonts.poppins(

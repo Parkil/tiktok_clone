@@ -33,7 +33,8 @@ final router = GoRouter(
       },
     ),
     GoRoute(
-      path: EmailScreen.routeName,
+      name: EmailScreen.routeName,
+      path: EmailScreen.routeUrl,
       builder: (context, state) {
         final args =
             state.extra as EmailScreenArgs; // as 를 선언 하면 일종의 casting 역할을 한다

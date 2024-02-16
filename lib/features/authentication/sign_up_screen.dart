@@ -29,7 +29,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onUserNameTap(BuildContext context) {
-    context.pushNamed("username_screen");
+    context.pushNamed(UserNameScreen.routeName);
   }
 
   /*
@@ -57,7 +57,7 @@ class SignUpScreen extends StatelessWidget {
                     opacity: 0.7,
                     child: Text(
                       S.of(context).signUpSubTitle(2),
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleSmall,
                       textAlign: TextAlign.center,
                     ),
                   ),

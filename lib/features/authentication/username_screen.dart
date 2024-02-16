@@ -69,6 +69,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
             controller: _userNameController,
             decoration: InputDecoration(
               hintText: "Username",
+              hintStyle: const TextStyle(fontSize: Sizes.size16, fontWeight: FontWeight.bold),
               enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey.shade400)),
               focusedBorder: UnderlineInputBorder(

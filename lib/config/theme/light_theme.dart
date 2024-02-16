@@ -9,10 +9,26 @@ BottomAppBarTheme _bottomAppBarTheme() {
   );
 }
 
+AppBarTheme _appBarTheme() {
+  return AppBarTheme(
+    foregroundColor: Colors.black,
+    backgroundColor: Colors.white,
+    surfaceTintColor: Colors.white,
+    elevation: 0,
+    titleTextStyle: TextStyle(
+      fontSize: Sizes.size20,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+      fontFamily: fontFamily(),
+    ),
+  );
+}
+
 ThemeData lightTheme() {
   return ThemeData(
     useMaterial3: true,
     textTheme: textTheme(),
+    appBarTheme: _appBarTheme(),
     bottomAppBarTheme: _bottomAppBarTheme(),
 
 
@@ -31,17 +47,6 @@ ThemeData lightTheme() {
     // tap 가능한 영역을 tab 했을때 표시 되는 색상
     splashColor: Colors.transparent,
     // tap 시 물결 효과 색상
-    appBarTheme: const AppBarTheme(
-      foregroundColor: Colors.black,
-      backgroundColor: Colors.white,
-      surfaceTintColor: Colors.white,
-      elevation: 0,
-      titleTextStyle: TextStyle(
-        fontSize: Sizes.size20,
-        fontWeight: FontWeight.w600,
-        color: Colors.black,
-      ),
-    ),
     iconButtonTheme: const IconButtonThemeData(
       style: ButtonStyle(splashFactory: NoSplash.splashFactory),
     ),

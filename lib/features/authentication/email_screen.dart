@@ -6,7 +6,9 @@ import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 import 'package:tiktok_clone/util/validation.dart';
 
 class EmailScreen extends StatefulWidget {
-  static const routeName = "/email";
+  static const routeUrl = "/email";
+  static const routeName = "email";
+
   final String userName;
 
   const EmailScreen({
