@@ -1,5 +1,5 @@
 {
-  "signUpTitle": "{appName} 에 가입 하세요 {when}",
+  "signUpTitle": "{appName} 에 가입 하세요",
   "loginTitle": "{appName} 로그인",
   "subLogin": "로그인",
   "commentCount": "{value}",

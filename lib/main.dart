@@ -3,9 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone/config/theme/dark_theme.dart';
 import 'package:tiktok_clone/config/theme/light_theme.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/router.dart';
-
-import 'generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,8 +13,7 @@ void main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   // 배터리, Network 상태 아이콘 색상 설정
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
   runApp(const TikTokApp());
 }
@@ -25,9 +23,13 @@ class TikTokApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    S.load(const Locale("ko"));
+    // 자주 사용 하는 widget 의 경우 여기 에서 style 을 일괄 로 적용해 두는 것이 효율적
     return MaterialApp.router(
       title: 'TikTok Clone',
+      themeMode: ThemeMode.system,
+      debugShowCheckedModeBanner: true,
+      theme: lightTheme(),
+      darkTheme: darkTheme(),
       localizationsDelegates: const [
         S.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -38,14 +40,7 @@ class TikTokApp extends StatelessWidget {
         Locale("en"),
         Locale("ko"),
       ],
-      themeMode: ThemeMode.system,
-      debugShowCheckedModeBanner: true,
-      theme: lightTheme(),
-      darkTheme: darkTheme(),
       routerConfig: router,
-      // home: const SignUpScreen(),
-      // home: const MainNavigationScreen(),
     );
   }
 }
-
