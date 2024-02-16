@@ -10,7 +10,7 @@ import '../../generated/l10n.dart';
 import 'login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static const routeUrl = "/";
+  static const routeUrl = "/signup";
   static const routeName = "signup";
 
   const SignUpScreen({super.key});

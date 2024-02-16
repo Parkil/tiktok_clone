@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/features/authentication/email_screen.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/features/user/user_profile_screen.dart';
+import 'package:tiktok_clone/features/video/video_recording_screen.dart';
 
 final router = GoRouter(
   routes: [
@@ -12,26 +13,10 @@ final router = GoRouter(
       name: SignUpScreen.routeName,
       path: SignUpScreen.routeUrl,
       builder: (context, state) => const SignUpScreen(),
-      routes: [
-        GoRoute(
-          name: "username_screen",
-          path: "username",
-          builder: (context, state) => const UserNameScreen(),
-        ),
-        GoRoute(
-          name: "email_screen",
-          path: "email",
-          builder: (context, state) {
-            final args = state.extra as EmailScreenArgs; // as 를 선언 하면 일종의 casting 역할을 한다
-            return EmailScreen(userName: args.username,);
-          },
-        ),
-      ],
     ),
-    /*
     GoRoute(
-      name: "username_screen",
-      path: UserNameScreen.routeName,
+      name: UserNameScreen.routeName,
+      path: UserNameScreen.routeUrl,
       pageBuilder: (context, state) {
         return CustomTransitionPage(
           child: const UserNameScreen(),
@@ -56,7 +41,7 @@ final router = GoRouter(
           userName: args.username,
         );
       },
-    ),*/
+    ),
     GoRoute(
       path: LoginScreen.routeName,
       builder: (context, state) => const LoginScreen(),
@@ -72,6 +57,11 @@ final router = GoRouter(
           tab: tab!,
         );
       },
-    )
+    ),
+    GoRoute(
+      path: VideoRecordingScreen.routeUrl,
+      name: VideoRecordingScreen.routeName,
+      builder: (context, state) => const VideoRecordingScreen(),
+    ),
   ],
 );
