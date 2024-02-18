@@ -8,9 +8,13 @@ String? fontFamily() {
 
 TextTheme textTheme() {
   return TextTheme(
+    displayMedium: GoogleFonts.poppins(
+      fontSize: Sizes.size40,
+      fontWeight: FontWeight.w600
+    ),
     displaySmall: GoogleFonts.poppins(
-      fontSize: Sizes.size48,
-      fontWeight: FontWeight.w400
+      fontSize: Sizes.size20,
+      fontWeight: FontWeight.w300
     ),
     headlineMedium: GoogleFonts.poppins(
       fontSize: Sizes.size28,

@@ -4,6 +4,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/features/authentication/email_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/authentication/widgets/input_field.dart';
 
 class UserNameScreen extends StatefulWidget {
   static const routeUrl = "/username";
@@ -69,25 +70,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
             style: textTheme.titleSmall,
           ),
           Gaps.v16,
-          TextField(
-            controller: _userNameController,
-            decoration: InputDecoration(
-              hintText: "Username",
-              hintStyle: const TextStyle(
-                fontSize: Sizes.size14,
-              ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.grey.shade400,
-                ),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.grey.shade400,
-                ),
-              ),
-            ),
-          ),
+          InputField(textEditingController: _userNameController, hintText: "Username"),
           Gaps.v20,
           FormButton(disabled: _username.isEmpty, onTap: _onNextTab),
         ]),

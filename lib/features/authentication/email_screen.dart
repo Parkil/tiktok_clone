@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/password_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/authentication/widgets/input_field.dart';
 import 'package:tiktok_clone/util/validation.dart';
 
 class EmailScreen extends StatefulWidget {
@@ -51,8 +53,7 @@ class _EmailScreenState extends State<EmailScreen> {
       return;
     }
 
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const PasswordScreen()));
+    context.pushNamed(PasswordScreen.routeName);
   }
 
   @override
@@ -77,35 +78,16 @@ class _EmailScreenState extends State<EmailScreen> {
               Gaps.v40,
               Text(
                 "What is your email? ${widget.userName}",
-                style: const TextStyle(
-                  fontSize: Sizes.size24,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               Gaps.v16,
-              TextField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
+              InputField(
+                textEditingController: _emailController,
+                hintText: "Email",
+                keyBoardType: TextInputType.emailAddress,
                 autocorrect: false,
+                errorText: isEmailValid(_email),
                 onEditingComplete: _onSubmit,
-                decoration: InputDecoration(
-                  hintText: "Email",
-                  hintStyle: const TextStyle(
-                    fontSize: Sizes.size14,
-                  ),
-                  errorText: isEmailValid(_email),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400,
-                    ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400,
-                    ),
-                  ),
-                ),
-                cursorColor: Theme.of(context).primaryColor,
               ),
               Gaps.v20,
               FormButton(
