@@ -90,6 +90,9 @@ class _EmailScreenState extends State<EmailScreen> {
                 onEditingComplete: _onSubmit,
                 decoration: InputDecoration(
                   hintText: "Email",
+                  hintStyle: const TextStyle(
+                    fontSize: Sizes.size14,
+                  ),
                   errorText: isEmailValid(_email),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
