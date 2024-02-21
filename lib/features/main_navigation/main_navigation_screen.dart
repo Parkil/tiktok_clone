@@ -44,8 +44,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
    */
   @override
   Widget build(BuildContext context) {
-    final isDark = isDarkMode(context);
-
     return Scaffold(
       resizeToAvoidBottomInset: false, // 키보드 표시시 화면 조정을 하지 않도록 설정
       body: Stack(
