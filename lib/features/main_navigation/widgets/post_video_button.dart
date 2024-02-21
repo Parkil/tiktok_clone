@@ -62,7 +62,11 @@ class PostVideoButton extends StatelessWidget {
                 horizontal: Sizes.size12,
               ),
               decoration: BoxDecoration(
-                color: isDarkMode(context) || selectedIndex == 0 ? Colors.white : Colors.black,
+                color: switchColor(
+                  condition: isNavTabDarkMode(context, selectedIndex),
+                  matchedColor: Colors.white,
+                  altColor: Colors.black,
+                ),
                 borderRadius: BorderRadius.circular(
                   Sizes.size6,
                 ),
@@ -70,7 +74,11 @@ class PostVideoButton extends StatelessWidget {
               child: Center(
                 child: FaIcon(
                   FontAwesomeIcons.plus,
-                  color: isDarkMode(context) || selectedIndex == 0 ? Colors.black : Colors.white,
+                  color: switchColor(
+                    condition: isNavTabDarkMode(context, selectedIndex),
+                    matchedColor: Colors.black,
+                    altColor: Colors.white,
+                  ),
                   size: Sizes.size16 + Sizes.size2,
                 ),
               ),

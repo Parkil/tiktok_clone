@@ -10,6 +10,9 @@ import 'package:tiktok_clone/features/video/video_timeline_screen.dart';
 import 'package:tiktok_clone/util/utils.dart';
 
 class MainNavigationScreen extends StatefulWidget {
+  static const routeUrl = "/";
+  static const routeName = "main";
+
   const MainNavigationScreen({super.key});
 
   @override
@@ -19,7 +22,7 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
-  void _onTap(int index) {
+  void _goOffStage(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -29,56 +32,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   void dispose() {
     super.dispose();
   }
-
-  /*
-  material v2 - google 에서 만든 오픈 소스 디자인 프레임 워크
-  BottomNavigationBar(
-    type: BottomNavigationBarType.shifting,
-    onTap: _onTap,
-    currentIndex: _selectedIndex,
-    // selectedItemColor: Theme.of(context).primaryColor,
-
-    // item 이 4개 이상일 경우 item 클릭 시 background color animation 이 활성화 된다
-    items: [
-      BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.house), label: "Home", tooltip: "What are you?", backgroundColor: Colors.amber),
-      BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.magnifyingGlass), label: "Search", tooltip: "What are you?", backgroundColor: Colors.blue),
-      BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.house), label: "Home1", tooltip: "What are you?", backgroundColor: Colors.pink),
-      BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.magnifyingGlass), label: "Search1", tooltip: "What are you?",  backgroundColor: Colors.yellow),
-      BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.magnifyingGlass), label: "Search1", tooltip: "What are you?", backgroundColor: Colors.teal)
-    ],
-  )
-   */
-
-  /*
-  cupertino - IOS 기반 의 theme
-  CupertinoTabScaffold(
-        tabBar: CupertinoTabBar(
-          items: const [
-            BottomNavigationBarItem(icon: Icon(CupertinoIcons.house, color: Colors.teal), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(CupertinoIcons.search, color: Colors.teal), label: "Search"),
-          ],
-        ),
-        tabBuilder: (context, index) => screens[index])
-   */
-
-  /*
-    material v3
-    Scaffold(
-      body: screens[_selectedIndex],
-      bottomNavigationBar: NavigationBar(
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-        selectedIndex: _selectedIndex,
-        onDestinationSelected: _onTap,
-        destinations: const [
-          NavigationDestination(icon: FaIcon(FontAwesomeIcons.house, color: Colors.teal), label: "Home", tooltip: "What are you?"),
-          NavigationDestination(icon: FaIcon(FontAwesomeIcons.magnifyingGlass, color: Colors.amber), label: "Search", tooltip: "What are you?"),
-          NavigationDestination(icon: FaIcon(FontAwesomeIcons.house), label: "Home1", tooltip: "What are you?"),
-          NavigationDestination(icon: FaIcon(FontAwesomeIcons.magnifyingGlass), label: "Search1", tooltip: "What are you?"),
-          NavigationDestination(icon: FaIcon(FontAwesomeIcons.magnifyingGlass), label: "Search1", tooltip: "What are you?")
-        ],
-      ),
-    )
-   */
 
   void _onPostVideoTap() {
     Navigator.of(context).push(MaterialPageRoute(
@@ -116,8 +69,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
-        surfaceTintColor: _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
+        color: switchColor(
+            condition: isNavTabDarkMode(context, _selectedIndex),
+            matchedColor: Colors.black,
+            altColor: Colors.white),
+        surfaceTintColor: switchColor(
+            condition: isNavTabDarkMode(context, _selectedIndex),
+            matchedColor: Colors.black,
+            altColor: Colors.white),
         height: 73,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,7 +86,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               nonSelectedIcon: FontAwesomeIcons.house,
               text: "Home",
               isSelected: _selectedIndex == 0,
-              onTab: () => _onTap(0),
+              onTab: () => _goOffStage(0),
               selectedIndex: _selectedIndex,
             ),
             NavTab(
@@ -135,7 +94,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               nonSelectedIcon: FontAwesomeIcons.compass,
               text: "Discover",
               isSelected: _selectedIndex == 1,
-              onTab: () => _onTap(1),
+              onTab: () => _goOffStage(1),
               selectedIndex: _selectedIndex,
             ),
             Gaps.h24,
@@ -149,7 +108,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               nonSelectedIcon: FontAwesomeIcons.message,
               text: "InBox",
               isSelected: _selectedIndex == 3,
-              onTab: () => _onTap(3),
+              onTab: () => _goOffStage(3),
               selectedIndex: _selectedIndex,
             ),
             NavTab(
@@ -157,7 +116,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               nonSelectedIcon: FontAwesomeIcons.user,
               text: "Profile",
               isSelected: _selectedIndex == 4,
-              onTab: () => _onTap(4),
+              onTab: () => _goOffStage(4),
               selectedIndex: _selectedIndex,
             ),
           ],

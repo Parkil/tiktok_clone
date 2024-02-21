@@ -27,8 +27,11 @@ class NavTab extends StatelessWidget {
       child: GestureDetector(
         onTap: () => onTab(),
         child: Container(
-          color: isDarkMode(context) || selectedIndex == 0 ? Colors.black : Colors.white,
-          // todo 이런 식으로 조건을 걸어서 하나씩 바꾸지 않고 Theme 를 지정 해서 한번에 바꾸는 방법은 없는지 확인해 볼것
+          color: switchColor(
+            condition: isNavTabDarkMode(context, selectedIndex),
+            matchedColor: Colors.black,
+            altColor: Colors.white,
+          ),
           child: AnimatedOpacity(
             opacity: isSelected ? 1 : 0.6,
             duration: const Duration(milliseconds: 300),
@@ -36,13 +39,21 @@ class NavTab extends StatelessWidget {
               children: [
                 FaIcon(
                   isSelected ? selectedIcon : nonSelectedIcon,
-                  color:  isDarkMode(context) || selectedIndex == 0 ? Colors.white : Colors.black,
+                  color: switchColor(
+                    condition: isNavTabDarkMode(context, selectedIndex),
+                    matchedColor: Colors.white,
+                    altColor: Colors.black,
+                  ),
                 ),
                 Gaps.v5,
                 Text(
                   text,
                   style: TextStyle(
-                    color:  isDarkMode(context) || selectedIndex == 0 ? Colors.white : Colors.black,
+                    color: switchColor(
+                      condition: isNavTabDarkMode(context, selectedIndex),
+                      matchedColor: Colors.white,
+                      altColor: Colors.black,
+                    ),
                   ),
                 ),
               ],
