@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -12,7 +13,7 @@ import 'package:tiktok_clone/features/video/video_preview_screen.dart';
 import 'widgets/video_recording/camera_icon.dart';
 
 class VideoRecordingScreen extends StatefulWidget {
-  static const routeUrl = "/";
+  static const routeUrl = "/video_record";
   static const routeName = "video_record";
 
   const VideoRecordingScreen({super.key});
@@ -27,6 +28,9 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
   bool _isSelfieMode = false;
+
+  late final bool _noCamera = kDebugMode && Platform.isIOS;
+
   late FlashMode _flashMode;
   late double cameraMinZoomLevel;
   late double cameraMaxZoomLevel;
@@ -103,7 +107,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
     debugPrint("$state");
 
-    if (state == AppLifecycleState.inactive) { // 권한 신청 때도 동일 하게 적용됨
+    if (state == AppLifecycleState.inactive) {
+      // 권한 신청 때도 동일 하게 적용됨
       _cameraController.dispose();
     } else if (state == AppLifecycleState.resumed) {
       await initCamera();
@@ -205,16 +210,21 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   }
 
   Future<void> _changeZoom(DragUpdateDetails details) async {
-    CameraZoom zoom = details.primaryDelta! < 0 ? CameraZoom.zoomUp : CameraZoom.zoomOut;
+    CameraZoom zoom =
+        details.primaryDelta! < 0 ? CameraZoom.zoomUp : CameraZoom.zoomOut;
 
     if (zoom == CameraZoom.zoomUp) {
       currentZoomLevel += _modifier;
-      currentZoomLevel = currentZoomLevel > cameraMaxZoomLevel ? cameraMaxZoomLevel : currentZoomLevel;
+      currentZoomLevel = currentZoomLevel > cameraMaxZoomLevel
+          ? cameraMaxZoomLevel
+          : currentZoomLevel;
     } else {
       currentZoomLevel -= _modifier;
-      currentZoomLevel = currentZoomLevel < cameraMinZoomLevel ? cameraMinZoomLevel : currentZoomLevel;
+      currentZoomLevel = currentZoomLevel < cameraMinZoomLevel
+          ? cameraMinZoomLevel
+          : currentZoomLevel;
     }
-    
+
     // zoom 기능은 안드로이드 시뮬레이터 에서는 동작하지 않음
     debugPrint("currentZoomLevel: $currentZoomLevel");
     await _cameraController.setZoomLevel(currentZoomLevel);
@@ -246,7 +256,15 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
             )
           : Stack(
               children: [
-                CameraPreview(_cameraController),
+                if (!_noCamera && _cameraController.value.isInitialized)
+                  CameraPreview(_cameraController),
+                const Positioned(
+                  top: Sizes.size20,
+                  left: Sizes.size6,
+                  child: CloseButton(
+                    color: Colors.white,
+                  ),
+                ),
                 Positioned(
                   top: Sizes.size20,
                   right: Sizes.size6,

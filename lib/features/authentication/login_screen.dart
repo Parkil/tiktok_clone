@@ -8,7 +8,9 @@ import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
 
 class LoginScreen extends StatelessWidget {
-  static const routeName = "/login";
+  static const routeUrl = "/login";
+  static const routeName = "login";
+
   const LoginScreen({super.key});
 
   void _onSignUpTap(BuildContext context) {
@@ -27,8 +29,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _onLoginFormTap(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const LoginFormScreen()));
+    context.pushNamed(LoginFormScreen.routeName);
   }
 
   /*

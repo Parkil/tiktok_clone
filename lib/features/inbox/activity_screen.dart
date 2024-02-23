@@ -7,6 +7,9 @@ import 'package:tiktok_clone/features/inbox/widget/activity_type_panel.dart';
 import 'package:tiktok_clone/features/inbox/widget/dismissible_modal_barrier.dart';
 
 class ActivityScreen extends StatefulWidget {
+  static const routeUrl = "/activity";
+  static const routeName = "activity";
+
   const ActivityScreen({super.key});
 
   @override

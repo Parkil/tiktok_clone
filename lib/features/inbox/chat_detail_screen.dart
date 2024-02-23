@@ -4,7 +4,15 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({super.key});
+  static const routeUrl = ":id";
+  static const routeName = "chat_detail";
+
+  final String id;
+
+  const ChatDetailScreen({
+    super.key,
+    required this.id,
+  });
 
   @override
   State<ChatDetailScreen> createState() => _ChatDetailScreenState();
@@ -57,29 +65,28 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                 bottom: 0,
                 width: 74,
                 child: Container(
-                  width: Sizes.size14,
-                  height: Sizes.size14,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Container(
-                      width: Sizes.size10,
-                      height: Sizes.size10,
-                      decoration: BoxDecoration(
-                        color: Colors.green.shade300,
-                        shape: BoxShape.circle,
-                      ),
+                    width: Sizes.size14,
+                    height: Sizes.size14,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
                     ),
-                  )
-                ),
+                    child: Center(
+                      child: Container(
+                        width: Sizes.size10,
+                        height: Sizes.size10,
+                        decoration: BoxDecoration(
+                          color: Colors.green.shade300,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    )),
               )
             ],
           ),
-          title: const Text(
-            "사용자",
-            style: TextStyle(
+          title: Text(
+            "사용자(${widget.id})",
+            style: const TextStyle(
               fontWeight: FontWeight.w600,
             ),
           ),

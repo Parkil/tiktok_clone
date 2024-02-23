@@ -47,7 +47,7 @@ class _BirthDayScreenState extends State<BirthDayScreen> {
 
   //StatefulWidget 내부 에서는 context 를 받지 않아도 사용이 가능
   void _onNextTab() {
-    context.pushNamed(InterestsScreen.routeName);
+    context.goNamed(InterestsScreen.routeName);
   }
 
   @override

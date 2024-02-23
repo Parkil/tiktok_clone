@@ -1,41 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/features/discover/discover_screen.dart';
 import 'package:tiktok_clone/features/inbox/inbox_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/post_video_button.dart';
 import 'package:tiktok_clone/features/user/user_profile_screen.dart';
+import 'package:tiktok_clone/features/video/video_recording_screen.dart';
 import 'package:tiktok_clone/features/video/video_timeline_screen.dart';
 import 'package:tiktok_clone/util/utils.dart';
 
 class MainNavigationScreen extends StatefulWidget {
-  static const routeUrl = "/";
+  static const routeUrl = "/:tab(home|discover|inbox|profile)";
   static const routeName = "main";
 
-  const MainNavigationScreen({super.key});
+
+  final String tabName;
+
+  const MainNavigationScreen({
+    super.key,
+    required this.tabName,
+  });
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 0;
+  final List<String> _tabNameList = ['home','discover','_','inbox','profile'];
+  late int _selectedIndex;
 
   void _goOffStage(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    context.go("/${_tabNameList[index]}");
   }
 
   void _onPostVideoTap() {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => Container(), fullscreenDialog: true));
+    context.pushNamed(VideoRecordingScreen.routeName);
   }
 
   /*
@@ -44,6 +45,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
    */
   @override
   Widget build(BuildContext context) {
+    // todo 나중에는 index가 아닌 tabname 으로 변경하도록 수정
+    _selectedIndex = _tabNameList.indexOf(widget.tabName);
     return Scaffold(
       resizeToAvoidBottomInset: false, // 키보드 표시시 화면 조정을 하지 않도록 설정
       body: Stack(

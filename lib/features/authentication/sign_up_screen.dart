@@ -17,7 +17,7 @@ class SignUpScreen extends StatelessWidget {
 
   void _onLoginTap(BuildContext context) async {
     // go 는 push 와 다르게 기존 stack 을 무시 하고 바로 해당 widget 으로 이동 한다 (web 의 history.replace 와 비슷)
-    context.push(LoginScreen.routeName);
+    context.pushNamed(LoginScreen.routeName);
   }
 
   Widget pageBuilder(
@@ -29,6 +29,11 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onUserNameTap(BuildContext context) {
+    /*
+      goNamed, pushNamed 의 차이점
+      goNamed - web mode 시 url 창에 url 이 변경 된다
+      pushNamed -web mode 시 url 창에 url 이 변경 되지 않음
+     */
     context.pushNamed(UserNameScreen.routeName);
   }
 

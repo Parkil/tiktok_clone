@@ -7,6 +7,9 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPreviewScreen extends StatefulWidget {
+  static const routeUrl = "/video_preview";
+  static const routeName = "video_preview";
+
   final XFile videoFile;
   final bool isPicked;
 
