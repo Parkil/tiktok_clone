@@ -4,6 +4,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/features/authentication/email_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/authentication/widgets/input_field.dart';
 
 class UserNameScreen extends StatefulWidget {
   static const routeUrl = "/username";
@@ -22,7 +23,7 @@ class _UserNameScreenState extends State<UserNameScreen> {
   @override
   void initState() {
     super.initState();
-    
+
     _userNameController.addListener(() {
       setState(() {
         _username = _userNameController.text;
@@ -36,19 +37,20 @@ class _UserNameScreenState extends State<UserNameScreen> {
     _userNameController.dispose();
     super.dispose();
   }
-  
+
   //StatefulWidget 내부 에서는 context 를 받지 않아도 사용이 가능
   void _onNextTab() {
     if (_username.isNotEmpty) {
-      context.pushNamed("email_screen", extra: EmailScreenArgs(username: _username));
-      // context.push(EmailScreen.routeName, extra: EmailScreenArgs(username: _username));
-      // Navigator.of(context).pushNamed(EmailScreen.routeName, arguments: EmailScreenArgs(username: _username));
-      // Navigator.of(context).push(MaterialPageRoute(builder: (context) => EmailScreen()));
+      context.pushNamed(
+        EmailScreen.routeName,
+        extra: EmailScreenArgs(username: _username),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -58,24 +60,17 @@ class _UserNameScreenState extends State<UserNameScreen> {
         padding: const EdgeInsets.symmetric(horizontal: Sizes.size36),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Gaps.v40,
-          const Text("Create username",
-              style: TextStyle(
-                  fontSize: Sizes.size24, fontWeight: FontWeight.w700)),
-          Gaps.v8,
-          const Text("You can always change this later",
-              style: TextStyle(fontSize: Sizes.size16, color: Colors.black54)),
-          Gaps.v16,
-          TextField(
-            controller: _userNameController,
-            decoration: InputDecoration(
-              hintText: "Username",
-              enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey.shade400)),
-              focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey.shade400)),
-            ),
-            cursorColor: Theme.of(context).primaryColor,
+          Text(
+            "Create username",
+            style: textTheme.titleMedium,
           ),
+          Gaps.v8,
+          Text(
+            "You can always change this later",
+            style: textTheme.titleSmall,
+          ),
+          Gaps.v16,
+          InputField(textEditingController: _userNameController, hintText: "Username"),
           Gaps.v20,
           FormButton(disabled: _username.isEmpty, onTap: _onNextTab),
         ]),

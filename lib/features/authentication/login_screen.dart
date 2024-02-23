@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/features/authentication/login_form_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
-import 'package:tiktok_clone/util/utils.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
@@ -47,16 +46,13 @@ class LoginScreen extends StatelessWidget {
             children: [
               Gaps.v80,
               Text("Log in for TikTok",
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: Sizes.size24, fontWeight: FontWeight.bold)),
+                  style: Theme.of(context).textTheme.titleLarge,),
               Gaps.v20,
-              const Opacity(
+              Opacity(
                 opacity: 0.7,
                 child: Text(
                   "Manage your account, check notifications, comment on videos, and more",
-                  style: TextStyle(
-                    fontSize: Sizes.size16,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -76,7 +72,6 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: isDarkMode(context) ? null : Colors.grey.shade50,
         // null 을 대입 하면 해당 property 를 적용 하지 않겠 다는 의미
         elevation: 2,
         child: Padding(
@@ -92,9 +87,7 @@ class LoginScreen extends StatelessWidget {
                 onTap: () => _onSignUpTap(context),
                 child: Text(
                   "Sign up",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w600),
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
               ),
             ],

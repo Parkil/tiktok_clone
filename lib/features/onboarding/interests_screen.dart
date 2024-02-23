@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
-import 'package:tiktok_clone/util/utils.dart';
 
 import 'widgets/interest_button.dart';
 
@@ -49,6 +48,9 @@ const interests = [
 ];
 
 class InterestsScreen extends StatefulWidget {
+  static const routeUrl = "/interests";
+  static const routeName = "interests";
+
   const InterestsScreen({super.key});
 
   @override
@@ -56,7 +58,6 @@ class InterestsScreen extends StatefulWidget {
 }
 
 class _InterestsScreenState extends State<InterestsScreen> {
-
   final ScrollController _scrollController = ScrollController();
   bool _showTitle = false;
 
@@ -83,17 +84,24 @@ class _InterestsScreenState extends State<InterestsScreen> {
   }
 
   void _onNextTab() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const TutorialScreen()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const TutorialScreen()));
   }
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: AnimatedOpacity(
-            opacity: _showTitle ? 1 : 0,
-            duration: const Duration(milliseconds: 300),
-            child: const Text("Choose Your interests")),
+          opacity: _showTitle ? 1 : 0,
+          duration: const Duration(milliseconds: 300),
+          child: const Text(
+            "Choose Your interests",
+          ),
+        ),
         centerTitle: true,
       ),
       body: Scrollbar(
@@ -106,12 +114,18 @@ class _InterestsScreenState extends State<InterestsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Gaps.v32,
-                const Text("Choose Your interests",
-                    style: TextStyle(
-                        fontSize: Sizes.size40, fontWeight: FontWeight.bold)),
+                Text(
+                  "Choose Your interests",
+                  style: textTheme.displayMedium,
+                ),
                 Gaps.v20,
-                const Text("Get better video recommendations",
-                    style: TextStyle(fontSize: Sizes.size20)),
+                Opacity(
+                  opacity: 0.7,
+                  child: Text(
+                    "Get better video recommendations",
+                    style: textTheme.displaySmall,
+                  ),
+                ),
                 Gaps.v64,
                 Wrap(
                   runSpacing: 15, // 각 component 간 세로 간격
@@ -119,25 +133,30 @@ class _InterestsScreenState extends State<InterestsScreen> {
                   children: [
                     for (var interest in interests)
                       InterestButton(interest: interest)
-                ],)
+                  ],
+                )
               ],
             ),
           ),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        height: 150, //material theme 에서는 height 가 없을 경우 80으로 고정 그외 theme 에서는 안의 contents 에 맞게 조정
-        surfaceTintColor: Colors.white,
-        color: isDarkMode(context) ? null : Colors.white,
+        height: 150,
+        //material theme 에서는 height 가 없을 경우 80으로 고정 그외 theme 에서는 안의 contents 에 맞게 조정
         child: Padding(
-          padding: const EdgeInsets.only(bottom: Sizes.size40, top: Sizes.size16, left: Sizes.size24, right: Sizes.size24),
+          padding: const EdgeInsets.only(
+            bottom: Sizes.size40,
+            top: Sizes.size16,
+            left: Sizes.size24,
+            right: Sizes.size24,
+          ),
           child: GestureDetector(
             child: CupertinoButton(
               onPressed: _onNextTab,
               color: Theme.of(context).primaryColor,
               child: const Text("Next"),
             ),
-          )
+          ),
         ),
       ),
     );

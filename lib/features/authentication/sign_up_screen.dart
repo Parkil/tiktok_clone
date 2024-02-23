@@ -18,12 +18,6 @@ class SignUpScreen extends StatelessWidget {
   void _onLoginTap(BuildContext context) async {
     // go 는 push 와 다르게 기존 stack 을 무시 하고 바로 해당 widget 으로 이동 한다 (web 의 history.replace 와 비슷)
     context.push(LoginScreen.routeName);
-    // final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
-    // debugPrint("$result");
-    // final aaa = await Navigator.of(context)
-    //     .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
-    //
-    // debugPrint(aaa);
   }
 
   Widget pageBuilder(
@@ -35,33 +29,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onUserNameTap(BuildContext context) {
-    context.pushNamed("username_screen");
-    // context.push(UserNameScreen.routeName);
-    // context.push("/users/test?show=likes111");
-    // context.go(UserNameScreen.routeName);
-    /*
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        transitionDuration: const Duration(seconds: 1),
-        reverseTransitionDuration: const Duration(seconds: 1),
-        pageBuilder: pageBuilder,
-        transitionsBuilder: _transitionsBuilder,
-      ),
-    );*/
-    // Navigator.of(context)
-    //     .push(MaterialPageRoute(builder: (context) => const UserNameScreen()));
-  }
-
-  Widget _transitionsBuilder(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    final offset = Tween(begin: const Offset(0, -1), end: Offset.zero).animate(animation);
-    return SlideTransition(
-      position: offset,
-      child: FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
-    );
+    context.pushNamed(UserNameScreen.routeName);
   }
 
   /*
@@ -81,23 +49,15 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   Gaps.v52,
                   Text(
-                    S.of(context).signUpTitle(
-                          "TikTok",
-                          DateTime.now(),
-                        ),
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontSize: Sizes.size24,
-                          fontWeight: FontWeight.bold,
-                        ), // main.dart 에서 style 을 설정 하고 이를 가져 오는 방식 copyWith - 기존 style 에 특정 속성만 추가 하는 경우
+                    S.of(context).signUpTitle("TikTok"),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Gaps.v20,
                   Opacity(
                     opacity: 0.7,
                     child: Text(
                       S.of(context).signUpSubTitle(2),
-                      style: const TextStyle(
-                        fontSize: Sizes.size16,
-                      ),
+                      style: Theme.of(context).textTheme.titleSmall,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -146,7 +106,6 @@ class SignUpScreen extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: BottomAppBar(
-            // color: isDarkMode(context) ? null : Colors.grey.shade50, // null 을 대입 하면 해당 property 를 적용 하지 않겠 다는 의미
             elevation: 2,
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -163,11 +122,7 @@ class SignUpScreen extends StatelessWidget {
                     onTap: () => _onLoginTap(context),
                     child: Text(
                       S.of(context).subLogin("male"),
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.tertiary,
-                        // color: Color(0xFFE9435A),
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall,
                     ),
                   )
                 ],

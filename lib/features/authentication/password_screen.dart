@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/birthday_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/check_element.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/authentication/widgets/input_field.dart';
 import 'package:tiktok_clone/util/validation.dart';
 
 class PasswordScreen extends StatefulWidget {
+
+  static const routeUrl = "/password";
+  static const routeName = "password";
+
   const PasswordScreen({super.key});
 
   @override
@@ -46,8 +52,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
       return;
     }
 
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const BirthDayScreen()));
+    context.pushNamed(BirthDayScreen.routeName);
   }
 
   void _onClearTab() {
@@ -57,6 +62,31 @@ class _PasswordScreenState extends State<PasswordScreen> {
   void _toggleObscureText() {
     _obscureText = !_obscureText;
     setState(() {}); // setState 에 값이 지정 되지 않아도 re-rendering 이 수행됨
+  }
+
+  Widget _suffix() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        GestureDetector(
+          onTap: _onClearTab,
+          child: FaIcon(
+            FontAwesomeIcons.solidCircleXmark,
+            color: Colors.grey.shade500,
+            size: Sizes.size20,
+          ),
+        ),
+        Gaps.h20,
+        GestureDetector(
+          onTap: _toggleObscureText,
+          child: FaIcon(
+            _obscureText ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash,
+            color: Colors.grey.shade500,
+            size: Sizes.size20,
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -70,59 +100,58 @@ class _PasswordScreenState extends State<PasswordScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: Sizes.size36),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Gaps.v40,
-            const Text("Password",
-                style: TextStyle(
-                    fontSize: Sizes.size24, fontWeight: FontWeight.w700)),
-            Gaps.v16,
-            TextField(
-              controller: _passwordController,
-              autocorrect: false,
-              onEditingComplete: _onSubmit,
-              obscureText: _obscureText,
-              maxLength: 20,
-              decoration: InputDecoration(
-                // prefixIcon, suffixIcon : Icon 자체를 넣는 경우
-                // prefix, suffix : widget 을 넣는 경우
-                // FractionallySizedBox 를 이용 하여 row 의 일부를 표시 하려고 하는 경우 가로 화면 표시시 size 가 생각 했던 것보다 커질수 있다
-                suffix: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    GestureDetector(
-                      onTap: _onClearTab,
-                      child: FaIcon(FontAwesomeIcons.solidCircleXmark,
-                            color: Colors.grey.shade500, size: Sizes.size20)),
-                    Gaps.h20,
-                    GestureDetector(
-                      onTap: _toggleObscureText,
-                      child: FaIcon(_obscureText ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash,
-                            color: Colors.grey.shade500, size: Sizes.size20)),
-                  ],
-                ),
-                hintText: "Make it strong",
-                enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.shade400)),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.shade400)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Gaps.v40,
+              Text(
+                "Create Password",
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-              cursorColor: Theme.of(context).primaryColor,
-            ),
-            Gaps.v10,
-            const Text("Your password must have", style: TextStyle(fontWeight: FontWeight.w600, )),
-            Gaps.v10,
-            Column(children: [
-              CheckElement(completeCon: getPasswordChkMap(_password)["lengthChk"] == true, text: "8 to 20 characters"),
-              Gaps.v5,
-              CheckElement(completeCon: getPasswordChkMap(_password)["charTypeChk"] == true, text: "both alphabet and numbers"),
-              Gaps.v5,
-              CheckElement(completeCon: getPasswordChkMap(_password)["specialCharChk"] == true, text: "least one special character"),
-            ]),
-            Gaps.v20,
-            FormButton(
-              disabled: !isPasswordValid(_password),
-              onTap: _onSubmit),
-          ]),
+              Gaps.v16,
+              InputField(
+                textEditingController: _passwordController,
+                hintText: "Make it strong",
+                autocorrect: false,
+                onEditingComplete: _onSubmit,
+                obscureText: _obscureText,
+                maxLength: 20,
+                suffix: _suffix(),
+              ),
+              Gaps.v10,
+              const Text(
+                "Your password must have",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Gaps.v10,
+              Column(children: [
+                CheckElement(
+                  completeCon:
+                      getPasswordChkMap(_password)["lengthChk"] == true,
+                  text: "8 to 20 characters",
+                ),
+                Gaps.v5,
+                CheckElement(
+                  completeCon:
+                      getPasswordChkMap(_password)["charTypeChk"] == true,
+                  text: "both alphabet and numbers",
+                ),
+                Gaps.v5,
+                CheckElement(
+                  completeCon:
+                      getPasswordChkMap(_password)["specialCharChk"] == true,
+                  text: "least one special character",
+                ),
+              ]),
+              Gaps.v20,
+              FormButton(
+                disabled: !isPasswordValid(_password),
+                onTap: _onSubmit,
+              ),
+            ],
+          ),
         ),
       ),
     );

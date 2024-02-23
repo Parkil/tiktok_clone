@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tiktok_clone/features/authentication/birthday_screen.dart';
 import 'package:tiktok_clone/features/authentication/email_screen.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
+import 'package:tiktok_clone/features/authentication/password_screen.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
+import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 import 'package:tiktok_clone/features/user/user_profile_screen.dart';
 import 'package:tiktok_clone/features/video/video_recording_screen.dart';
 
 final router = GoRouter(
   routes: [
     GoRoute(
-      name: SignUpScreen.routeName,
+      path: MainNavigationScreen.routeUrl,
+      name: MainNavigationScreen.routeName,
+      builder: (context, state) => const MainNavigationScreen(),
+    ),
+    GoRoute(
       path: SignUpScreen.routeUrl,
+      name: SignUpScreen.routeName,
       builder: (context, state) => const SignUpScreen(),
     ),
     GoRoute(
-      name: UserNameScreen.routeName,
       path: UserNameScreen.routeUrl,
+      name: UserNameScreen.routeName,
       pageBuilder: (context, state) {
         return CustomTransitionPage(
           child: const UserNameScreen(),
@@ -33,7 +42,8 @@ final router = GoRouter(
       },
     ),
     GoRoute(
-      path: EmailScreen.routeName,
+      path: EmailScreen.routeUrl,
+      name: EmailScreen.routeName,
       builder: (context, state) {
         final args =
             state.extra as EmailScreenArgs; // as 를 선언 하면 일종의 casting 역할을 한다
@@ -41,6 +51,21 @@ final router = GoRouter(
           userName: args.username,
         );
       },
+    ),
+    GoRoute(
+      path: PasswordScreen.routeUrl,
+      name: PasswordScreen.routeName,
+      builder: (context, state) => const PasswordScreen(),
+    ),
+    GoRoute(
+      path: BirthDayScreen.routeUrl,
+      name: BirthDayScreen.routeName,
+      builder: (context, state) => const BirthDayScreen(),
+    ),
+    GoRoute(
+      path: InterestsScreen.routeUrl,
+      name: InterestsScreen.routeName,
+      builder: (context, state) => const InterestsScreen(),
     ),
     GoRoute(
       path: LoginScreen.routeName,

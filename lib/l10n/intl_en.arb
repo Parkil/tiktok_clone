@@ -1,15 +1,11 @@
 {
-  "signUpTitle": "Sign up for {appName} {when}",
+  "signUpTitle": "Sign up for {appName}",
   "@signUpTitle": {
     "description": "The title people see when they open the app for the first time (이부분 이 docs 부분에 표시됨)",
     "placeholders" : {
       "appName": {
         "type": "String",
         "example": "TikTok"
-      },
-      "when": {
-        "type": "DateTime",
-        "format": "yQQQQ"
       }
     }
   },

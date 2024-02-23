@@ -28,7 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(appName) => "${appName} 로그인";
 
-  static String m5(appName, when) => "${appName} 에 가입 하세요 ${when}";
+  static String m5(appName) => "${appName} 에 가입 하세요";
 
   static String m6(gender) => "로그인";
 
