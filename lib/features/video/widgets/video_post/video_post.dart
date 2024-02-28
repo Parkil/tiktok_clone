@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/video_config/video_config.dart';
 import 'package:tiktok_clone/features/video/widgets/video_post/animated_video_button.dart';
 import 'package:tiktok_clone/features/video/widgets/video_comment/video_comments.dart';
 import 'package:tiktok_clone/features/video/widgets/video_post/video_post_bottom_area.dart';
@@ -149,7 +150,6 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVolumeTap() async {
-
     setState(() {
       _isMuted = !_isMuted;
     });
@@ -167,6 +167,9 @@ class _VideoPostState extends State<VideoPost>
    */
   @override
   Widget build(BuildContext context) {
+    final videoConfig = VideoConfigData.of(context);
+    debugPrint("videoConfig : ${videoConfig.autoMute}");
+
     return VisibilityDetector(
       key: Key("${widget.index}"),
       onVisibilityChanged: _onVisibilityChanged,
@@ -193,11 +196,19 @@ class _VideoPostState extends State<VideoPost>
             animationDuration: _animationDuration,
           ),
           Positioned(
-            top: 10,
-            right: 10,
+            top: 25,
+            left: 10,
             child: GestureDetector(
               onTap: _onVolumeTap,
-              child: _isMuted ? const FaIcon(FontAwesomeIcons.volumeOff) : const FaIcon(FontAwesomeIcons.volumeHigh),
+              child: VideoConfigData.of(context).autoMute
+                  ? const FaIcon(
+                      FontAwesomeIcons.volumeOff,
+                      color: Colors.white,
+                    )
+                  : const FaIcon(
+                      FontAwesomeIcons.volumeHigh,
+                      color: Colors.white,
+                    ),
             ),
           ),
           const VideoPostBottomArea(

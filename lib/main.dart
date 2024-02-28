@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tiktok_clone/common/video_config/video_config.dart';
 import 'package:tiktok_clone/config/theme/dark_theme.dart';
 import 'package:tiktok_clone/config/theme/light_theme.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
@@ -24,23 +25,25 @@ class TikTokApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 자주 사용 하는 widget 의 경우 여기 에서 style 을 일괄 로 적용해 두는 것이 효율적
-    return MaterialApp.router(
-      title: 'TikTok Clone',
-      themeMode: ThemeMode.system,
-      debugShowCheckedModeBanner: true,
-      theme: lightTheme(),
-      darkTheme: darkTheme(),
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale("en"),
-        Locale("ko"),
-      ],
-      routerConfig: router,
+    return VideoConfig(
+      child: MaterialApp.router(
+        title: 'TikTok Clone',
+        themeMode: ThemeMode.system,
+        debugShowCheckedModeBanner: true,
+        theme: lightTheme(),
+        darkTheme: darkTheme(),
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale("en"),
+          Locale("ko"),
+        ],
+        routerConfig: router,
+      ),
     );
   }
 }
