@@ -2,8 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/common/video_config/video_config.dart';
-import 'package:tiktok_clone/features/video/widgets/video_post/animated_video_button.dart';
+import 'package:tiktok_clone/common/video_config/video_config_vn.dart';
 import 'package:tiktok_clone/features/video/widgets/video_comment/video_comments.dart';
+import 'package:tiktok_clone/features/video/widgets/video_post/animated_video_button.dart';
 import 'package:tiktok_clone/features/video/widgets/video_post/video_post_bottom_area.dart';
 import 'package:tiktok_clone/features/video/widgets/video_post/video_post_right_area.dart';
 import 'package:video_player/video_player.dart';
@@ -31,6 +32,7 @@ class _VideoPostState extends State<VideoPost>
   late bool isOnVideoFinishedCalled;
   bool _isPaused = false;
   bool _isMuted = false;
+  bool _autoMute = videoConfigVn.value;
 
   get _animationDuration => const Duration(milliseconds: 300);
 
@@ -45,6 +47,12 @@ class _VideoPostState extends State<VideoPost>
         upperBound: 1.5,
         value: 1.5,
         duration: _animationDuration);
+
+    videoConfigVn.addListener(() {
+      setState(() {
+        _autoMute = videoConfigVn.value;
+      });
+    });
   }
 
   @override
@@ -200,7 +208,7 @@ class _VideoPostState extends State<VideoPost>
             left: 10,
             child: GestureDetector(
               onTap: _onVolumeTap,
-              child: VideoConfigData.of(context).autoMute
+              child: _autoMute
                   ? const FaIcon(
                       FontAwesomeIcons.volumeOff,
                       color: Colors.white,

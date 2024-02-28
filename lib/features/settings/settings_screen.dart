@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/common/video_config/video_config.dart';
 
+import '../../common/video_config/video_config_vn.dart';
+
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
@@ -96,12 +98,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
+            //AnimatedBuilder + Notifier 를 결합 하면 해당 부분만 rendering 된다
+            AnimatedBuilder(
+              animation: videoConfigVn,
+              builder: (context, child) => SwitchListTile.adaptive(
+                value: videoConfigVn.value,
+                onChanged: (value) {
+                  videoConfigVn.value = !videoConfigVn.value;
+                },
+                title: const Text("Auto Mute Videos(change notifier)"),
+                subtitle: const Text("Videos will be muted by default"),
+                activeColor: Colors.black,
+              ),
+            ),
             SwitchListTile.adaptive(
               value: VideoConfigData.of(context).autoMute,
               onChanged: (value) {
                 VideoConfigData.of(context).toggleMuted();
               },
-              title: const Text("Auto Mute Videos"),
+              title: const Text("Auto Mute Videos(normal)"),
               subtitle: const Text("Videos will be muted by default"),
               activeColor: Colors.black,
             ),
