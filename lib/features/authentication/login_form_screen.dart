@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/authentication/widgets/form_input_field.dart';
 import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
 import '../../util/validation.dart';
@@ -51,21 +52,33 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
             key: _formKey,
             child: Column(children: [
               Gaps.v28,
-              TextFormField(
+              FormInputField(
                 maxLength: 40,
-                decoration: const InputDecoration(hintText: "Email"),
-                validator: (val) => isEmailEmpty(val!),
-                onSaved: (newVal) => put(key: "email", value: newVal)),
+                hintText: "Email",
+                validate: (val) => isEmailEmpty(val!),
+                onSaved: (newVal) => put(
+                  key: "email",
+                  value: newVal,
+                ),
+              ),
+              // buildTextFormField(),
               Gaps.v16,
-              TextFormField(
+              FormInputField(
                 obscureText: true,
                 maxLength: 20,
-                decoration: const InputDecoration(hintText: "Password"),
-                validator: (val) => isPasswordEmpty(val!),
-                onSaved: (newVal) => put(key: "password", value: newVal)),
+                hintText: "Password",
+                validate: (val) => isPasswordEmpty(val!),
+                onSaved: (newVal) => put(
+                  key: "password",
+                  value: newVal,
+                ),
+              ),
               Gaps.v28,
               FormButton(
-                  disabled: false, onTap: _onSubmitTab, buttonText: "Log in")
+                disabled: false,
+                onTap: _onSubmitTab,
+                buttonText: "Log in",
+              ),
             ]),
           ),
         ));
