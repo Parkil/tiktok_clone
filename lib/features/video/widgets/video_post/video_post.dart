@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/video_config/video_config.dart';
+import 'package:tiktok_clone/common/video_config/video_config_cn_provider.dart';
 import 'package:tiktok_clone/common/video_config/video_config_vn.dart';
 import 'package:tiktok_clone/features/video/widgets/video_comment/video_comments.dart';
 import 'package:tiktok_clone/features/video/widgets/video_post/animated_video_button.dart';
@@ -32,7 +34,6 @@ class _VideoPostState extends State<VideoPost>
   late bool isOnVideoFinishedCalled;
   bool _isPaused = false;
   bool _isMuted = false;
-  bool _autoMute = videoConfigVn.value;
 
   get _animationDuration => const Duration(milliseconds: 300);
 
@@ -47,12 +48,14 @@ class _VideoPostState extends State<VideoPost>
         upperBound: 1.5,
         value: 1.5,
         duration: _animationDuration);
-
+    /*
+    ChangeNotifier 단독 으로 사용시 설정
     videoConfigVn.addListener(() {
       setState(() {
         _autoMute = videoConfigVn.value;
       });
     });
+     */
   }
 
   @override
@@ -158,10 +161,12 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVolumeTap() async {
-    setState(() {
-      _isMuted = !_isMuted;
-    });
+    // setState(() {
+    //   _isMuted = !_isMuted;
+    // });
 
+    context.read<VideoConfigCnProvider>().toggleIsMuted();
+    _isMuted = context.read<VideoConfigCnProvider>().isMuted;
     if (_isMuted) {
       await _videoPlayerController.setVolume(0);
     } else {
@@ -175,8 +180,8 @@ class _VideoPostState extends State<VideoPost>
    */
   @override
   Widget build(BuildContext context) {
-    final videoConfig = VideoConfigData.of(context);
-    debugPrint("videoConfig : ${videoConfig.autoMute}");
+    // final videoConfig = VideoConfigData.of(context);
+    // debugPrint("videoConfig : ${videoConfig.autoMute}");
 
     return VisibilityDetector(
       key: Key("${widget.index}"),
@@ -208,7 +213,7 @@ class _VideoPostState extends State<VideoPost>
             left: 10,
             child: GestureDetector(
               onTap: _onVolumeTap,
-              child: _autoMute
+              child: context.watch<VideoConfigCnProvider>().isMuted
                   ? const FaIcon(
                       FontAwesomeIcons.volumeOff,
                       color: Colors.white,

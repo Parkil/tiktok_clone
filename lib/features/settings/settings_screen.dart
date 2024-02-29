@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/video_config/video_config.dart';
 
+import '../../common/video_config/video_config_cn_provider.dart';
 import '../../common/video_config/video_config_vn.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -99,18 +101,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             //AnimatedBuilder + Notifier 를 결합 하면 해당 부분만 rendering 된다
-            AnimatedBuilder(
-              animation: videoConfigVn,
-              builder: (context, child) => SwitchListTile.adaptive(
-                value: videoConfigVn.value,
-                onChanged: (value) {
-                  videoConfigVn.value = !videoConfigVn.value;
-                },
-                title: const Text("Auto Mute Videos(change notifier)"),
-                subtitle: const Text("Videos will be muted by default"),
-                activeColor: Colors.black,
-              ),
+            SwitchListTile.adaptive(
+              value: context.watch<VideoConfigCnProvider>().isMuted,
+              onChanged: (value) {
+                context.read<VideoConfigCnProvider>().toggleIsMuted();
+              },
+              title: const Text("Auto Mute Videos(change notifier)"),
+              subtitle: const Text("Videos will be muted by default"),
+              activeColor: Colors.black,
             ),
+            /*
             SwitchListTile.adaptive(
               value: VideoConfigData.of(context).autoMute,
               onChanged: (value) {
@@ -119,7 +119,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               title: const Text("Auto Mute Videos(normal)"),
               subtitle: const Text("Videos will be muted by default"),
               activeColor: Colors.black,
-            ),
+            ),*/
             SwitchListTile(
               value: _notifications,
               onChanged: _onNotificationChanged,
