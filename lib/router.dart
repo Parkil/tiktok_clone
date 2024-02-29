@@ -14,7 +14,7 @@ import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dar
 import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
 import 'package:tiktok_clone/features/user/user_profile_screen.dart';
-import 'package:tiktok_clone/features/video/video_recording_screen.dart';
+import 'package:tiktok_clone/features/video/views/video_recording_screen.dart';
 
 final router = GoRouter(
   routes: [
@@ -144,5 +144,5 @@ final router = GoRouter(
       ],
     ),
   ],
-  initialLocation: "/inbox",
+  initialLocation: "/home",
 );

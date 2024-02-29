@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/video/widgets/video_comment/comment_input_area.dart';
-import 'package:tiktok_clone/features/video/widgets/video_comment/comment_list.dart';
+import 'package:tiktok_clone/features/video/views/widgets/video_comment/comment_input_area.dart';
+import 'package:tiktok_clone/features/video/views/widgets/video_comment/comment_list.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/util/utils.dart';
 

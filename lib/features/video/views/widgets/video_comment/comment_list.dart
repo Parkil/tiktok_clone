@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/video/widgets/video_comment/comment_like_icon_text.dart';
+import 'package:tiktok_clone/features/video/views/widgets/video_comment/comment_like_icon_text.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/util/utils.dart';
 

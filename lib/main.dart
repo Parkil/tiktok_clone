@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:tiktok_clone/common/video_config/video_config.dart';
-import 'package:tiktok_clone/common/video_config/video_config_cn_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok_clone/config/theme/dark_theme.dart';
 import 'package:tiktok_clone/config/theme/light_theme.dart';
+import 'package:tiktok_clone/features/video/repos/playback_config_repo.dart';
+import 'package:tiktok_clone/features/video/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/router.dart';
 
@@ -18,7 +19,20 @@ void main() async {
   // 배터리, Network 상태 아이콘 색상 설정
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
-  runApp(const TikTokApp());
+  final preferences = await SharedPreferences.getInstance();
+  final repository = PlayBackConfigRepo(preferences);
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => PlayBackConfigVm(repository),
+        ),
+      ],
+      child: const TikTokApp(),
+    ),
+  );
+  // runApp(const TikTokApp());
 }
 
 class TikTokApp extends StatelessWidget {
@@ -27,28 +41,23 @@ class TikTokApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 자주 사용 하는 widget 의 경우 여기 에서 style 을 일괄 로 적용해 두는 것이 효율적
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => VideoConfigCnProvider()),
+    return MaterialApp.router(
+      title: 'TikTok Clone',
+      themeMode: ThemeMode.system,
+      debugShowCheckedModeBanner: true,
+      theme: lightTheme(),
+      darkTheme: darkTheme(),
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
       ],
-      child: MaterialApp.router(
-        title: 'TikTok Clone',
-        themeMode: ThemeMode.system,
-        debugShowCheckedModeBanner: true,
-        theme: lightTheme(),
-        darkTheme: darkTheme(),
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale("en"),
-          Locale("ko"),
-        ],
-        routerConfig: router,
-      ),
+      supportedLocales: const [
+        Locale("en"),
+        Locale("ko"),
+      ],
+      routerConfig: router,
     );
   }
 }

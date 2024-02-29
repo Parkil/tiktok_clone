@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
-import 'package:tiktok_clone/features/video/widgets/video_post/icon_text.dart';
+import 'package:tiktok_clone/features/video/views/widgets/video_post/icon_text.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 
 class VideoPostRightArea extends StatelessWidget {

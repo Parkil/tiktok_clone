@@ -2,10 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:tiktok_clone/common/video_config/video_config.dart';
-
-import '../../common/video_config/video_config_cn_provider.dart';
-import '../../common/video_config/video_config_vn.dart';
+import 'package:tiktok_clone/features/video/view_models/playback_config_vm.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -102,24 +99,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             //AnimatedBuilder + Notifier 를 결합 하면 해당 부분만 rendering 된다
             SwitchListTile.adaptive(
-              value: context.watch<VideoConfigCnProvider>().isMuted,
+              value: context.watch<PlayBackConfigVm>().muted,
               onChanged: (value) {
-                context.read<VideoConfigCnProvider>().toggleIsMuted();
+                context.read<PlayBackConfigVm>().setMuted(value);
               },
               title: const Text("Auto Mute Videos(change notifier)"),
               subtitle: const Text("Videos will be muted by default"),
               activeColor: Colors.black,
             ),
-            /*
             SwitchListTile.adaptive(
-              value: VideoConfigData.of(context).autoMute,
+              value: context.watch<PlayBackConfigVm>().autoplay,
               onChanged: (value) {
-                VideoConfigData.of(context).toggleMuted();
+                context.read<PlayBackConfigVm>().setAutoPlay(value);
               },
-              title: const Text("Auto Mute Videos(normal)"),
-              subtitle: const Text("Videos will be muted by default"),
+              title: const Text("Auto Play"),
+              subtitle: const Text("Videos will play automatically"),
               activeColor: Colors.black,
-            ),*/
+            ),
             SwitchListTile(
               value: _notifications,
               onChanged: _onNotificationChanged,
