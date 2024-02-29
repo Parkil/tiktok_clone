@@ -12,6 +12,6 @@ Color switchColor({
   return condition ? matchedColor : altColor;
 }
 
-bool isNavTabDarkMode(BuildContext context, int selIdx) {
-  return selIdx == 0 || isDarkMode(context);
+bool checkNavTabDarkMode(BuildContext context, String tabName) {
+  return tabName == 'home' || isDarkMode(context);
 }

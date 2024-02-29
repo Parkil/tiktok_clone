@@ -1,34 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/features/main_navigation/view_models/tab_name_vn.dart';
 import 'package:tiktok_clone/util/utils.dart';
 
 class NavTab extends StatelessWidget {
   final IconData selectedIcon;
   final IconData nonSelectedIcon;
-  final String text;
-  final bool isSelected;
+  final String tabText;
+  final String tabName;
   final Function onTab;
-  final int selectedIndex;
 
   const NavTab({
     super.key,
-    required this.nonSelectedIcon,
-    required this.text,
-    required this.isSelected,
-    required this.onTab,
     required this.selectedIcon,
-    required this.selectedIndex,
+    required this.nonSelectedIcon,
+    required this.tabText,
+    required this.tabName,
+    required this.onTab,
   });
 
   @override
   Widget build(BuildContext context) {
+   String currentTabName = tabNameVn.value;
+   bool isSelected = currentTabName == tabName;
+
     return Expanded(
       child: GestureDetector(
         onTap: () => onTab(),
         child: Container(
           color: switchColor(
-            condition: isNavTabDarkMode(context, selectedIndex),
+            condition: checkNavTabDarkMode(context, currentTabName),
             matchedColor: Colors.black,
             altColor: Colors.white,
           ),
@@ -40,17 +42,17 @@ class NavTab extends StatelessWidget {
                 FaIcon(
                   isSelected ? selectedIcon : nonSelectedIcon,
                   color: switchColor(
-                    condition: isNavTabDarkMode(context, selectedIndex),
+                    condition: checkNavTabDarkMode(context, currentTabName),
                     matchedColor: Colors.white,
                     altColor: Colors.black,
                   ),
                 ),
                 Gaps.v5,
                 Text(
-                  text,
+                  tabText,
                   style: TextStyle(
                     color: switchColor(
-                      condition: isNavTabDarkMode(context, selectedIndex),
+                      condition: checkNavTabDarkMode(context, currentTabName),
                       matchedColor: Colors.white,
                       altColor: Colors.black,
                     ),

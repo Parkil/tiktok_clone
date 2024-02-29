@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/main_navigation/view_models/tab_name_vn.dart';
 import 'package:tiktok_clone/util/utils.dart';
 
 class PostVideoButton extends StatelessWidget {
   final Function? onTap;
-  final int selectedIndex;
 
   const PostVideoButton({
     super.key,
     this.onTap,
-    required this.selectedIndex,
   });
 
   @override
   Widget build(BuildContext context) {
+    String currentTabName = tabNameVn.value;
+
     return GestureDetector(
       onTap: () => onTap!(),
       child: Padding(
@@ -63,7 +64,7 @@ class PostVideoButton extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 color: switchColor(
-                  condition: isNavTabDarkMode(context, selectedIndex),
+                  condition: checkNavTabDarkMode(context, currentTabName),
                   matchedColor: Colors.white,
                   altColor: Colors.black,
                 ),
@@ -75,7 +76,7 @@ class PostVideoButton extends StatelessWidget {
                 child: FaIcon(
                   FontAwesomeIcons.plus,
                   color: switchColor(
-                    condition: isNavTabDarkMode(context, selectedIndex),
+                    condition: checkNavTabDarkMode(context, currentTabName),
                     matchedColor: Colors.black,
                     altColor: Colors.white,
                   ),
