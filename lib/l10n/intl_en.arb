@@ -43,13 +43,12 @@
       }
     }
   },
-  "commentTitle": "{count} {count, plural, =0{no Comments} =1{{count} Comment} other{{count} Comments}}",
+  "commentTitle": "{count, plural, =0{no Comments} =1{{count} Comment} other{{count} Comments}}",
   "@commentTitle": {
     "description": "Anything you want",
     "placeholders" : {
       "count": {
-        "type": "int",
-        "format": "compact"
+        "type": "int"
       }
     }
   }

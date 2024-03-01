@@ -23,7 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m0(value) => "${value}";
 
   static String m1(count) =>
-      "${count} ${Intl.plural(count, zero: 'no Comments', one: '${count} Comment', other: '${count} Comments')}";
+      "${Intl.plural(count, zero: 'no Comments', one: '${count} Comment', other: '${count} Comments')}";
 
   static String m2(value) => "${value}";
 

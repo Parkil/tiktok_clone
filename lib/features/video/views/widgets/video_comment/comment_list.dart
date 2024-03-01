@@ -41,7 +41,6 @@ class CommentList extends StatelessWidget {
                   Gaps.v3,
                   const Text(
                     "Reply Contents, Reply Contents, Reply Contents, Reply Contents, Reply Contents",
-                    style: TextStyle(),
                   ),
                 ],
               ),

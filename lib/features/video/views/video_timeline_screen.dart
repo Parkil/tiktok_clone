@@ -19,12 +19,6 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
 
   void _onPageChanged(int page)  {
     _pageController.animateToPage(page, duration: _scrollDuration, curve: _curve);
-
-    // if(page == _itemCount -1) {
-    //   setState(() {
-    //     _itemCount += 4;
-    //   });
-    // }
   }
 
   void _onVideoFinished() {

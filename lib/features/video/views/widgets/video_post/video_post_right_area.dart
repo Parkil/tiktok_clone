@@ -19,13 +19,16 @@ class VideoPostRightArea extends StatelessWidget {
       right: 10,
       child: Column(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 25,
             backgroundColor: Colors.black,
             foregroundColor: Colors.white,
-            foregroundImage: NetworkImage(
+            foregroundImage: const NetworkImage(
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png"),
-            child: Text("사용자"),
+            child: Text(
+              "사용자",
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Colors.white),
+            ),
           ),
           Gaps.v24,
           IconText(

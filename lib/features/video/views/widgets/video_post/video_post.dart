@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tiktok_clone/features/video/view_models/playback_config_vm.dart';
+import 'package:tiktok_clone/features/video/view_models/video_play_vn.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_comment/video_comments.dart';
-import 'package:tiktok_clone/features/video/views/widgets/video_post/animated_video_button.dart';
+import 'package:tiktok_clone/features/video/views/widgets/video_post/video_play_button.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_post/video_post_bottom_area.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_post/video_post_right_area.dart';
+import 'package:tiktok_clone/features/video/views/widgets/video_post/video_volume_button.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -25,36 +26,16 @@ class VideoPost extends StatefulWidget {
   State<VideoPost> createState() => _VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost>
-    with SingleTickerProviderStateMixin {
+class _VideoPostState extends State<VideoPost> {
   late VideoPlayerController _videoPlayerController;
-  late final AnimationController _animationController;
   late bool isOnVideoFinishedCalled;
-  bool _isPaused = false;
-
-  get _animationDuration => const Duration(milliseconds: 300);
 
   @override
   void initState() {
     super.initState();
     _initVideoPlayer();
-    // lowerBound: animation 최소 크기, upperBound: animation 최대 크기, value: animation 기본값
-    _animationController = AnimationController(
-        vsync: this,
-        lowerBound: 1.0,
-        upperBound: 1.5,
-        value: 1.5,
-        duration: _animationDuration);
 
     context.read<PlayBackConfigVm>().addListener(_onPlayBackConfigChanged);
-    /*
-    ChangeNotifier 단독 으로 사용시 설정
-    videoConfigVn.addListener(() {
-      setState(() {
-        _autoMute = videoConfigVn.value;
-      });
-    });
-     */
   }
 
   @override
@@ -83,18 +64,16 @@ class _VideoPostState extends State<VideoPost>
   void _initVideoPlayer() async {
     isOnVideoFinishedCalled = false;
     _videoPlayerController = VideoPlayerController.asset(widget.videoUrl);
-    // setState 를 선언 하는 이유 : play 가 안되 어도 video 의 첫번째 프레임 이 표시가 되도록 하기 위해서
     await _videoPlayerController.initialize();
-    await _videoPlayerController.setLooping(true);
+    await _videoPlayerController.setLooping(false);
 
     if (kIsWeb) {
       await _videoPlayerController.setVolume(0);
     }
 
     _videoPlayerController.addListener(_onVideoChange);
-    // setState(() {
-    //   _isMuted = kIsWeb;
-    // });
+    // setState 를 선언 하는 이유 : play 가 안되 어도 video 의 첫번째 프레임 이 표시가 되도록 하기 위해서
+    setState(() {});
   }
 
   /*
@@ -115,11 +94,8 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    // mounted : widget 이 mount 되었 는지 여부 반환
     if (!mounted) return;
-    if (info.visibleFraction == 1 &&
-        !_isPaused &&
-        !_videoPlayerController.value.isPlaying) {
+    if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
       // watch 의 경우 widget tree 외부 에서 호출 하면 오류가 발생함
       bool autoplay = context.read<PlayBackConfigVm>().autoplay;
       if (autoplay) {
@@ -133,23 +109,22 @@ class _VideoPostState extends State<VideoPost>
     }
   }
 
-  void _togglePlay() {
+  // video player 가 dispose -> init 되는 구조 이기 때문에 ValueNotifier 를 사용 해도 별 문제는 없을듯
+  Future<void> _togglePlay() async {
     if (_videoPlayerController.value.isPlaying) {
-      _videoPlayerController.pause();
-      _animationController.reverse(); // value -> lowerBound
+      await _videoPlayerController.pause();
+      videoPlayVn.value = false;
     } else {
-      _videoPlayerController.play();
-      _animationController.forward(); // lowerBound -> value
+      await _videoPlayerController.play();
+      videoPlayVn.value = true;
     }
-
-    setState(() {
-      _isPaused = !_isPaused;
-    });
   }
 
-  void _onTapComment(BuildContext context) async {
+  Future<void> _onTapComment(BuildContext context) async {
+    if (!mounted) return;
+
     if (_videoPlayerController.value.isPlaying) {
-      _togglePlay();
+      await _togglePlay();
     }
 
     await showModalBottomSheet(
@@ -160,7 +135,7 @@ class _VideoPostState extends State<VideoPost>
         builder: (context) => const VideoComments());
 
     // showModalBottomSheet 가 닫히면 await showModalBottomSheet 다음 로직이 실행 된다
-    _togglePlay();
+    await _togglePlay();
   }
 
   Future<void> _onPlayBackConfigChanged() async {
@@ -172,7 +147,7 @@ class _VideoPostState extends State<VideoPost>
     }
   }
 
-  void _onVolumeTap() async {
+  void _onVolumeTap() {
     bool currentValue = context.read<PlayBackConfigVm>().muted;
     context.read<PlayBackConfigVm>().setMuted(!currentValue);
   }
@@ -183,11 +158,10 @@ class _VideoPostState extends State<VideoPost>
    */
   @override
   Widget build(BuildContext context) {
-    // final videoConfig = VideoConfigData.of(context);
-    // debugPrint("videoConfig : ${videoConfig.autoMute}");
+    Key videoKey = Key("${widget.index}");
 
     return VisibilityDetector(
-      key: Key("${widget.index}"),
+      key: videoKey,
       onVisibilityChanged: _onVisibilityChanged,
       child: Stack(
         children: [
@@ -195,9 +169,7 @@ class _VideoPostState extends State<VideoPost>
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(
                     _videoPlayerController,
-                    key: Key(
-                      "${widget.index}",
-                    ),
+                    key: videoKey,
                   )
                 : Container(color: Colors.black),
           ),
@@ -206,25 +178,13 @@ class _VideoPostState extends State<VideoPost>
               onTap: _togglePlay,
             ),
           ),
-          AnimatedVideoButton(
-            animationController: _animationController,
-            isPaused: _isPaused,
-            animationDuration: _animationDuration,
-          ),
+          VideoPlayButton(key: videoKey),
           Positioned(
             top: 25,
             left: 10,
-            child: GestureDetector(
+            child: VideoVolumeButton(
+              key: videoKey,
               onTap: _onVolumeTap,
-              child: context.watch<PlayBackConfigVm>().muted
-                  ? const FaIcon(
-                      FontAwesomeIcons.volumeOff,
-                      color: Colors.white,
-                    )
-                  : const FaIcon(
-                      FontAwesomeIcons.volumeHigh,
-                      color: Colors.white,
-                    ),
             ),
           ),
           const VideoPostBottomArea(

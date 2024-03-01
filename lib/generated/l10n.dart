@@ -141,18 +141,16 @@ class S {
     );
   }
 
-  /// `{count} {count, plural, =0{no Comments} =1{{count} Comment} other{{count} Comments}}`
+  /// `{count, plural, =0{no Comments} =1{{count} Comment} other{{count} Comments}}`
   String commentTitle(int count) {
-    final NumberFormat countNumberFormat = NumberFormat.compact(
-      locale: Intl.getCurrentLocale(),
-    );
-    final String countString = countNumberFormat.format(count);
-
-    return Intl.message(
-      '$countString ${Intl.plural(count, zero: 'no Comments', one: '$countString Comment', other: '$countString Comments')}',
+    return Intl.plural(
+      count,
+      zero: 'no Comments',
+      one: '$count Comment',
+      other: '$count Comments',
       name: 'commentTitle',
       desc: 'Anything you want',
-      args: [countString],
+      args: [count],
     );
   }
 }

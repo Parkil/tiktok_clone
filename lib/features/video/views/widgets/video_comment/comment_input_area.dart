@@ -33,12 +33,14 @@ class _CommentInputAreaState extends State<CommentInputArea> {
   InputDecoration _textFieldDecoration() {
     return InputDecoration(
       hintText: "Write a comment...",
+      hintStyle: Theme.of(context).textTheme.labelSmall?.copyWith(color: Colors.grey.shade800),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(Sizes.size12),
         borderSide: BorderSide.none,
       ),
       filled: true,
-      fillColor: isDarkMode(context) ? Colors.grey.shade700 : Colors.grey.shade200,
+      fillColor:
+          isDarkMode(context) ? Colors.grey.shade700 : Colors.grey.shade200,
       contentPadding: const EdgeInsets.symmetric(
         horizontal: Sizes.size12,
         vertical: Sizes.size10,
@@ -87,7 +89,13 @@ class _CommentInputAreaState extends State<CommentInputArea> {
             radius: 18,
             backgroundColor: Colors.grey.shade500,
             foregroundColor: Colors.white,
-            child: const Text("User"),
+            child: Text(
+              "User",
+              style: Theme.of(context)
+                  .textTheme
+                  .labelSmall
+                  ?.copyWith(color: Colors.white),
+            ),
           ),
           Gaps.h10,
           Expanded(
