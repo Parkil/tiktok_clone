@@ -24,12 +24,23 @@ AppBarTheme _appBarTheme() {
   );
 }
 
+TabBarTheme tabBarTheme() {
+  return TabBarTheme(
+    labelColor: Colors.black,
+    labelStyle: textTheme().labelMedium,
+    unselectedLabelColor: Colors.grey.shade500,
+    unselectedLabelStyle: textTheme().labelMedium,
+    indicatorColor: Colors.black,
+  );
+}
+
 ThemeData lightTheme() {
   return ThemeData(
     useMaterial3: true,
     textTheme: textTheme(),
     appBarTheme: _appBarTheme(),
     bottomAppBarTheme: _bottomAppBarTheme(),
+    tabBarTheme: tabBarTheme(),
 
 
 
@@ -49,11 +60,6 @@ ThemeData lightTheme() {
     // tap 시 물결 효과 색상
     iconButtonTheme: const IconButtonThemeData(
       style: ButtonStyle(splashFactory: NoSplash.splashFactory),
-    ),
-    tabBarTheme: TabBarTheme(
-      unselectedLabelColor: Colors.grey.shade500,
-      labelColor: Colors.black,
-      indicatorColor: Colors.black,
     ),
   );
 }

@@ -67,8 +67,12 @@ class _SearchTextFieldState extends State<SearchTextField> {
      */
     return Container(
       decoration: BoxDecoration(
-        color: isDarkMode(context) ? Colors.grey.shade700 : Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(Sizes.size12)
+        color: switchColor(
+          condition: isDarkMode(context),
+          matchedColor: Colors.grey.shade700,
+          altColor: Colors.grey.shade200,
+        ),
+        borderRadius: BorderRadius.circular(Sizes.size12),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -78,7 +82,11 @@ class _SearchTextFieldState extends State<SearchTextField> {
             child: FaIcon(
               FontAwesomeIcons.magnifyingGlass,
               size: Sizes.size16,
-              color: isDarkMode(context) ? Colors.white54 : Colors.grey.shade600,
+              color: switchColor(
+                condition: isDarkMode(context),
+                matchedColor: Colors.white54,
+                altColor: Colors.grey.shade600,
+              ),
             ),
           ),
           Expanded(
@@ -90,7 +98,11 @@ class _SearchTextFieldState extends State<SearchTextField> {
               onSubmitted: onSubmitted,
               onChanged: _onChanged,
               style: TextStyle(
-                color: isDarkMode(context) ? Colors.white54 : Colors.black,
+                color: switchColor(
+                  condition: isDarkMode(context),
+                  matchedColor: Colors.white54,
+                  altColor: Colors.grey.shade600,
+                ),
               ),
               decoration: const InputDecoration(
                 border: InputBorder.none,

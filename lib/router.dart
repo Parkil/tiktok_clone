@@ -144,5 +144,5 @@ final router = GoRouter(
       ],
     ),
   ],
-  initialLocation: "/home",
+  initialLocation: "/discover",
 );

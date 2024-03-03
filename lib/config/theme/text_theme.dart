@@ -45,6 +45,11 @@ TextTheme textTheme() {
       fontWeight: FontWeight.w400,
       letterSpacing: 0.25
     ),
+    bodySmall: GoogleFonts.poppins(
+      fontSize: Sizes.size12,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.25
+    ),
     labelMedium: GoogleFonts.poppins(
       fontSize: Sizes.size16,
       fontWeight: FontWeight.w600,

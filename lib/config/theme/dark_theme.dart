@@ -17,11 +17,22 @@ AppBarTheme _appBarTheme() {
   );
 }
 
+TabBarTheme tabBarTheme() {
+  return TabBarTheme(
+    labelColor: Colors.white54,
+    labelStyle: textTheme().labelMedium,
+    unselectedLabelColor: Colors.grey.shade700,
+    unselectedLabelStyle: textTheme().labelMedium,
+    indicatorColor: Colors.white,
+  );
+}
+
 ThemeData darkTheme() {
   return ThemeData(
     useMaterial3: true,
     textTheme: textTheme(),
     appBarTheme: _appBarTheme(),
+    tabBarTheme: tabBarTheme(),
 
 
 
@@ -36,11 +47,6 @@ ThemeData darkTheme() {
     bottomAppBarTheme: BottomAppBarTheme(
       color: Colors.grey.shade900,
       surfaceTintColor: Colors.grey.shade900,
-    ),
-    tabBarTheme: TabBarTheme(
-      unselectedLabelColor: Colors.grey.shade700,
-      labelColor: Colors.white54,
-      indicatorColor: Colors.white,
     ),
     // iconTheme: IconThemeData( //FontAwsome Icon 추가 필요
     //   color: Colors.yellow,
