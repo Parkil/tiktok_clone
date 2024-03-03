@@ -6,6 +6,9 @@ String? fontFamily() {
   return GoogleFonts.poppins().fontFamily;
 }
 
+/*
+  TextTheme 을 사용 하니까 발생되는 문제중 하나가 copyWith 로 FontWeight 를 조절하려고 하면 조절이 되지 않는 문제가 발생함
+ */
 TextTheme textTheme() {
   return TextTheme(
     displayMedium: GoogleFonts.poppins(

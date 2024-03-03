@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/inbox/chat_detail_screen.dart';
+import 'package:tiktok_clone/util/utils.dart';
 
 class ChatsScreen extends StatefulWidget {
   static const routeUrl = "/chat";
@@ -103,11 +104,18 @@ class _ChatsScreenState extends State<ChatsScreen> {
   }
 
   void _onChatTap(int index) {
-    context.pushNamed(ChatDetailScreen.routeName, pathParameters: {"id": "$index"});
+    context.pushNamed(ChatDetailScreen.routeName,
+        pathParameters: {"id": "$index"});
   }
 
   @override
   Widget build(BuildContext context) {
+    Color addIconColor = switchColor(
+      condition: isDarkMode(context),
+      matchedColor: Colors.white,
+      altColor: Colors.black,
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Direct messages"),
@@ -116,9 +124,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
         shadowColor: Colors.grey,
         actions: [
           IconButton(
-            icon: const FaIcon(
+            icon: FaIcon(
               FontAwesomeIcons.plus,
-              color: Colors.black,
+              color: addIconColor,
             ),
             onPressed: _addItem,
           )
