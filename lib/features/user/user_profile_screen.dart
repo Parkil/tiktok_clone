@@ -166,7 +166,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     WidthBreakPoint widthBreakPoint = WidthBreakPoint.findByWidth(width);
-    debugPrint("width: $width / enum check: $widthBreakPoint");
 
     return SafeArea(
       child: DefaultTabController(
