@@ -1,18 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok_clone/features/video/view_models/playback_config_vm.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
-
-  @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  bool _notifications = false;
 
   void _dateRangePicker(BuildContext context) {
     showDateRangePicker(
@@ -51,25 +44,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ).then((value) => debugPrint("date : $value"));
   }
 
-  void _onNotificationChanged(bool? value) {
-    if (value == null) return;
-
-    setState(() {
-      _notifications = value;
-    });
-  }
-
   /*
     실제 제품 또는 prototype 을 개발 하고자 할때 에는 IOS / Android 전부 대응이
     될 수 있도록 adaptive 를 사용 해야 할거 같은데.. 문제는 단일 widget 은 이렇게 대응이
     가능 하다고 쳐도 Scaffold 나 기타 Container 성 widget 은 어떻게 설정을 해야 하나?
 
     현재 까지 지식을 기반 으로 판단해 보면 현재 OS 정보를 가져 와서 분기를 태우는 식으로 widget 을 작성 해야 할거 같은데....
-    
+
     그리고 거의 모든 widget 을 공통 으로 만들어 놓고 개발 해야 나중에 잡음이 없을듯
    */
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -78,47 +63,45 @@ class _SettingsScreenState extends State<SettingsScreen> {
         body: ListView(
           children: [
             Switch.adaptive(
-              value: _notifications,
-              onChanged: _onNotificationChanged,
+              value: false,
+              onChanged: (value) {},
             ),
             CupertinoSwitch(
-              value: _notifications,
-              onChanged: _onNotificationChanged,
+              value: false,
+              onChanged: (value) {},
             ),
             GestureDetector(
-              onTap: () {
-                _onNotificationChanged(!_notifications);
-              },
+              onTap: () {},
               child: ListTile(
                 title: const Text("Notifications"),
                 trailing: CupertinoSwitch(
-                  value: _notifications,
-                  onChanged: _onNotificationChanged,
+                  value: false,
+                  onChanged: (value) {},
                 ),
               ),
             ),
             //AnimatedBuilder + Notifier 를 결합 하면 해당 부분만 rendering 된다
             SwitchListTile.adaptive(
-              value: context.watch<PlayBackConfigVm>().muted,
+              value: ref.watch(playBackConfigProvider).muted,
               onChanged: (value) {
-                context.read<PlayBackConfigVm>().setMuted(value);
+                ref.read(playBackConfigProvider.notifier).setMuted(value);
               },
-              title: const Text("Auto Mute Videos(change notifier)"),
+              title: const Text("Auto Mute Videos"),
               subtitle: const Text("Videos will be muted by default"),
               activeColor: Colors.black,
             ),
             SwitchListTile.adaptive(
-              value: context.watch<PlayBackConfigVm>().autoplay,
+              value: ref.watch(playBackConfigProvider).autoplay,
               onChanged: (value) {
-                context.read<PlayBackConfigVm>().setAutoPlay(value);
+                ref.read(playBackConfigProvider.notifier).setAutoPlay(value);
               },
               title: const Text("Auto Play"),
               subtitle: const Text("Videos will play automatically"),
               activeColor: Colors.black,
             ),
             SwitchListTile(
-              value: _notifications,
-              onChanged: _onNotificationChanged,
+              value: false,
+              onChanged: (value) {},
               title: const Text("Notifications"),
               activeColor: Colors.black,
             ),
@@ -204,8 +187,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             CheckboxListTile(
-              value: _notifications,
-              onChanged: _onNotificationChanged,
+              value: false,
+              onChanged: (value) {},
               title: const Text("Notifications"),
               activeColor: Colors.black,
             ),

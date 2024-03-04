@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/features/video/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/features/video/view_models/video_play_vn.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_comment/video_comments.dart';
@@ -11,7 +11,7 @@ import 'package:tiktok_clone/features/video/views/widgets/video_post/video_volum
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
-class VideoPost extends StatefulWidget {
+class VideoPost extends ConsumerStatefulWidget {
   final Function onVideoFinished;
   final String videoUrl;
   final int index;
@@ -23,10 +23,10 @@ class VideoPost extends StatefulWidget {
       required this.index});
 
   @override
-  State<VideoPost> createState() => _VideoPostState();
+  VideoPostState createState() => VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost> {
+class VideoPostState extends ConsumerState<VideoPost> {
   late VideoPlayerController _videoPlayerController;
   late bool isOnVideoFinishedCalled;
 
@@ -34,8 +34,6 @@ class _VideoPostState extends State<VideoPost> {
   void initState() {
     super.initState();
     _initVideoPlayer();
-
-    context.read<PlayBackConfigVm>().addListener(_onPlayBackConfigChanged);
   }
 
   @override
@@ -97,8 +95,7 @@ class _VideoPostState extends State<VideoPost> {
     if (!mounted) return;
     if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
       // watch 의 경우 widget tree 외부 에서 호출 하면 오류가 발생함
-      bool autoplay = context.read<PlayBackConfigVm>().autoplay;
-      if (autoplay) {
+      if (ref.read(playBackConfigProvider).autoplay) {
         _videoPlayerController.play();
       }
     }
@@ -138,18 +135,15 @@ class _VideoPostState extends State<VideoPost> {
     await _togglePlay();
   }
 
-  Future<void> _onPlayBackConfigChanged() async {
-    final muted = context.read<PlayBackConfigVm>().muted;
-    if (muted) {
+  void _onVolumeTap() async {
+    bool muted = ref.watch(playBackConfigProvider).muted;
+    ref.read(playBackConfigProvider.notifier).setMuted(!muted);
+
+    if (ref.watch(playBackConfigProvider).muted) {
       await _videoPlayerController.setVolume(0);
     } else {
       await _videoPlayerController.setVolume(100);
     }
-  }
-
-  void _onVolumeTap() {
-    bool currentValue = context.read<PlayBackConfigVm>().muted;
-    context.read<PlayBackConfigVm>().setMuted(!currentValue);
   }
 
   /*

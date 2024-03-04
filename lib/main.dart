@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok_clone/config/theme/dark_theme.dart';
 import 'package:tiktok_clone/config/theme/light_theme.dart';
@@ -23,16 +23,13 @@ void main() async {
   final repository = PlayBackConfigRepo(preferences);
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => PlayBackConfigVm(repository),
-        ),
+    ProviderScope(
+      overrides: [
+        playBackConfigProvider.overrideWith(() => PlayBackConfigVm(repository))
       ],
       child: const TikTokApp(),
     ),
   );
-  // runApp(const TikTokApp());
 }
 
 class TikTokApp extends StatelessWidget {
