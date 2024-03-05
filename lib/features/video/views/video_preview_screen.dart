@@ -1,12 +1,13 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:tiktok_clone/features/video/view_models/video_timeline_vm.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoPreviewScreen extends StatefulWidget {
+class VideoPreviewScreen extends ConsumerStatefulWidget {
   static const routeUrl = "/video_preview";
   static const routeName = "video_preview";
 
@@ -20,10 +21,10 @@ class VideoPreviewScreen extends StatefulWidget {
   });
 
   @override
-  State<VideoPreviewScreen> createState() => _VideoPreviewScreenState();
+  VideoPreviewScreenState createState() => VideoPreviewScreenState();
 }
 
-class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
+class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
   late final VideoPlayerController _videoPlayerController;
   bool _isSaveVideo = false;
 
@@ -55,11 +56,15 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
     }
 
     final result = await ImageGallerySaver.saveFile(widget.videoFile.path,
-        name: "test111");
-    print(result);
+        name: "My Video");
+    debugPrint(result);
 
     _isSaveVideo = true;
     setState(() {});
+  }
+
+  void _onUploadPressed() {
+    ref.read(videoTimeLineProvider.notifier).uploadVideo();
   }
 
   @override
@@ -75,6 +80,14 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
         ),
         centerTitle: true,
         actions: [
+          IconButton(
+            onPressed: ref.watch(videoTimeLineProvider).isLoading ? () {} : _onUploadPressed,
+            icon: ref.watch(videoTimeLineProvider).isLoading
+                ? const CircularProgressIndicator()
+                : const FaIcon(
+                    FontAwesomeIcons.cloudArrowUp,
+                  ),
+          ),
           if (!widget.isPicked)
             IconButton(
               onPressed: _saveToGallery,
