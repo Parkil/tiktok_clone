@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
-import 'package:tiktok_clone/features/authentication/widgets/form_input_field.dart';
+import 'package:tiktok_clone/features/authentication/views/widgets/form_button.dart';
+import 'package:tiktok_clone/features/authentication/views/widgets/form_input_field.dart';
 import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
+import 'package:tiktok_clone/util/validation.dart';
 
-import '../../util/validation.dart';
 
 class LoginFormScreen extends StatefulWidget {
   static const routeUrl = "/login_form";

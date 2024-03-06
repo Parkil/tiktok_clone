@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
-import 'package:tiktok_clone/features/authentication/email_screen.dart';
-import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
-import 'package:tiktok_clone/features/authentication/widgets/input_field.dart';
+import 'package:tiktok_clone/features/authentication/views/email_screen.dart';
+import 'package:tiktok_clone/features/authentication/views/widgets/form_button.dart';
+import 'package:tiktok_clone/features/authentication/views/widgets/input_field.dart';
 
 class UserNameScreen extends StatefulWidget {
   static const routeUrl = "/username";
