@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/view_models/signup_vm.dart';
 import 'package:tiktok_clone/features/authentication/views/birthday_screen.dart';
 import 'package:tiktok_clone/features/authentication/views/widgets/check_element.dart';
 import 'package:tiktok_clone/features/authentication/views/widgets/form_button.dart';
 import 'package:tiktok_clone/features/authentication/views/widgets/input_field.dart';
 import 'package:tiktok_clone/util/validation.dart';
 
-class PasswordScreen extends StatefulWidget {
-
+class PasswordScreen extends ConsumerStatefulWidget {
   static const routeUrl = "/password";
   static const routeName = "password";
 
   const PasswordScreen({super.key});
 
   @override
-  State<PasswordScreen> createState() => _PasswordScreenState();
+  PasswordScreenState createState() => PasswordScreenState();
 }
 
-class _PasswordScreenState extends State<PasswordScreen> {
+class PasswordScreenState extends ConsumerState<PasswordScreen> {
   final TextEditingController _passwordController = TextEditingController();
   String _password = "";
   bool _obscureText = true;
@@ -51,7 +52,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
     if (!isPasswordValid(_password)) {
       return;
     }
-
+    final state = ref.read(signUpStateProvider.notifier).state;
+    ref.read(signUpStateProvider.notifier).state = {
+      ...state,
+      "password": _password,
+    };
     context.pushNamed(BirthDayScreen.routeName);
   }
 

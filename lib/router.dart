@@ -18,15 +18,26 @@ import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
 import 'package:tiktok_clone/features/user/user_profile_screen.dart';
 import 'package:tiktok_clone/features/video/views/video_recording_screen.dart';
 
+final anonUrl = [
+  SignUpScreen.routeUrl,
+  UserNameScreen.routeUrl,
+  EmailScreen.routeUrl,
+  PasswordScreen.routeUrl,
+  BirthDayScreen.routeUrl,
+  LoginScreen.routeUrl,
+  LoginFormScreen.routeUrl,
+];
+
 final routerProvider = Provider((ref) {
   return GoRouter(
     initialLocation: "/home",
     redirect: (context, state) {
-      final isLoggedIn = ref.read(authRepo).isLoggedIn;
-      debugPrint("$isLoggedIn");
-      if (!isLoggedIn &&
-          state.matchedLocation != SignUpScreen.routeUrl &&
-          state.matchedLocation != LoginScreen.routeUrl) {
+      debugPrint(state.matchedLocation);
+
+      String currentUrl = state.matchedLocation;
+      final isLoggedIn = ref.read(authRepoProvider).isLoggedIn;
+
+      if (!isLoggedIn && !anonUrl.contains(currentUrl)) {
         return SignUpScreen.routeUrl;
       }
 

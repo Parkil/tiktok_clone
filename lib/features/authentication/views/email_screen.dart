@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/view_models/signup_vm.dart';
 import 'package:tiktok_clone/features/authentication/views/password_screen.dart';
 import 'package:tiktok_clone/features/authentication/views/widgets/form_button.dart';
 import 'package:tiktok_clone/features/authentication/views/widgets/input_field.dart';
 import 'package:tiktok_clone/util/validation.dart';
 
-class EmailScreen extends StatefulWidget {
+class EmailScreen extends ConsumerStatefulWidget {
   static const routeUrl = "/email";
   static const routeName = "email";
 
@@ -19,10 +21,10 @@ class EmailScreen extends StatefulWidget {
   });
 
   @override
-  State<EmailScreen> createState() => _EmailScreenState();
+  EmailScreenState createState() => EmailScreenState();
 }
 
-class _EmailScreenState extends State<EmailScreen> {
+class EmailScreenState extends ConsumerState<EmailScreen> {
   final TextEditingController _emailController = TextEditingController();
   String _email = "";
 
@@ -53,6 +55,7 @@ class _EmailScreenState extends State<EmailScreen> {
       return;
     }
 
+    ref.read(signUpStateProvider.notifier).state = {"email" : _email};
     context.pushNamed(PasswordScreen.routeName);
   }
 

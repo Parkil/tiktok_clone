@@ -1,27 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/view_models/signup_vm.dart';
 import 'package:tiktok_clone/features/authentication/views/widgets/form_button.dart';
 import 'package:tiktok_clone/features/authentication/views/widgets/input_field.dart';
-import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 import 'package:tiktok_clone/util/utils.dart';
 
-class BirthDayScreen extends StatefulWidget {
-
+class BirthDayScreen extends ConsumerStatefulWidget {
   static const routeUrl = "/birthday";
   static const routeName = "birthday";
 
   const BirthDayScreen({super.key});
 
   @override
-  State<BirthDayScreen> createState() => _BirthDayScreenState();
+  BirthDayScreenState createState() => BirthDayScreenState();
 }
 
-class _BirthDayScreenState extends State<BirthDayScreen> {
+class BirthDayScreenState extends ConsumerState<BirthDayScreen> {
   final TextEditingController _birthDayController = TextEditingController();
   final DateTime _initialDate =
       Jiffy.parseFromDateTime(DateTime.now()).subtract(years: 12).dateTime;
@@ -46,8 +45,14 @@ class _BirthDayScreenState extends State<BirthDayScreen> {
   }
 
   //StatefulWidget 내부 에서는 context 를 받지 않아도 사용이 가능
-  void _onNextTab() {
-    context.goNamed(InterestsScreen.routeName);
+  void _onNextTab() async {
+    final state = ref.read(signUpStateProvider.notifier).state;
+    ref.read(signUpStateProvider.notifier).state = {
+      ...state,
+      "birthday": _birthDayController.value,
+    };
+
+    await ref.read(signUpAsyncProvider.notifier).signUp(context);
   }
 
   @override
@@ -84,7 +89,7 @@ class _BirthDayScreenState extends State<BirthDayScreen> {
             ),
             Gaps.v20,
             FormButton(
-              disabled: false,
+              disabled: ref.watch(signUpAsyncProvider).isLoading,
               onTap: _onNextTab,
             ),
           ],

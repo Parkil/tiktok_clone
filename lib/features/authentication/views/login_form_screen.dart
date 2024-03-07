@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/view_models/login_vm.dart';
 import 'package:tiktok_clone/features/authentication/views/widgets/form_button.dart';
 import 'package:tiktok_clone/features/authentication/views/widgets/form_input_field.dart';
-import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 import 'package:tiktok_clone/util/validation.dart';
 
-
-class LoginFormScreen extends StatefulWidget {
+class LoginFormScreen extends ConsumerStatefulWidget {
   static const routeUrl = "/login_form";
   static const routeName = "login_form";
 
   const LoginFormScreen({super.key});
 
   @override
-  State<LoginFormScreen> createState() => _LoginFormScreenState();
+  LoginFormScreenState createState() => LoginFormScreenState();
 }
 
-class _LoginFormScreenState extends State<LoginFormScreen> {
+class LoginFormScreenState extends ConsumerState<LoginFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final Map<String, String> _formDataMap = {};
 
@@ -28,7 +27,11 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
 
       if (chkResult) {
         _formKey.currentState!.save();
-        context.goNamed(InterestsScreen.routeName);
+        ref.read(loginStateAsyncProvider.notifier).login(
+            _formDataMap['email']!,
+            _formDataMap['password']!,
+            context);
+        // context.goNamed(InterestsScreen.routeName);
       }
     }
   }
@@ -75,7 +78,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
               ),
               Gaps.v28,
               FormButton(
-                disabled: false,
+                disabled: ref.watch(loginStateAsyncProvider).isLoading,
                 onTap: _onSubmitTab,
                 buttonText: "Log in",
               ),
