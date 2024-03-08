@@ -29,6 +29,9 @@ final anonUrl = [
 ];
 
 final routerProvider = Provider((ref) {
+  // authStateProvider 에 변화가 생기면 이 부분이 전부 re rendering 된다
+  // ref.watch(authStateProvider);
+
   return GoRouter(
     initialLocation: "/home",
     redirect: (context, state) {
