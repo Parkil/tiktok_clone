@@ -52,7 +52,7 @@ class BirthDayScreenState extends ConsumerState<BirthDayScreen> {
       "birthday": _birthDayController.value,
     };
 
-    await ref.read(signUpAsyncProvider.notifier).signUp();
+    await ref.read(signUpAsyncProvider.notifier).signUp(context);
   }
 
   @override
