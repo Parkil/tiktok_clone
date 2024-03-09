@@ -101,6 +101,16 @@ class S {
     );
   }
 
+  /// `Continue with Github`
+  String get signUpGithubTitle {
+    return Intl.message(
+      'Continue with Github',
+      name: 'signUpGithubTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Log in {gender, select, male{sir} female{madam} other{human}}`
   String subLogin(String gender) {
     return Intl.message(

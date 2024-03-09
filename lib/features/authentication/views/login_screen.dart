@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/view_models/social_auth_vm.dart';
 import 'package:tiktok_clone/features/authentication/views/login_form_screen.dart';
 import 'package:tiktok_clone/features/authentication/views/widgets/auth_button.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerWidget {
   static const routeUrl = "/login";
   static const routeName = "login";
 
@@ -31,11 +33,15 @@ class LoginScreen extends StatelessWidget {
     context.pushNamed(LoginFormScreen.routeName);
   }
 
+  _onGithubSignInTap(BuildContext context, WidgetRef ref) {
+    ref.read(socialAuthAsyncProvider.notifier).githubSignIn(context);
+  }
+
   /*
     SafeArea - 상단 (시간, 배터리, 네트 워크 상태) / 하단 (이전, 다음, 홈) 과 겹치지 않는 영역을 생성
    */
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -62,12 +68,13 @@ class LoginScreen extends StatelessWidget {
               AuthButton(
                 icon: const FaIcon(FontAwesomeIcons.user),
                 text: "Use email and password",
-                onTap: _onLoginFormTap,
+                onTap: () => _onLoginFormTap(context),
               ),
               Gaps.v16,
-              const AuthButton(
-                icon: FaIcon(FontAwesomeIcons.apple),
-                text: "Continue with Apple",
+              AuthButton(
+                icon: const FaIcon(FontAwesomeIcons.github),
+                text: "Continue with Github",
+                onTap: () => _onGithubSignInTap(context, ref),
               ),
             ],
           ),

@@ -5,7 +5,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 class AuthButton extends StatelessWidget {
   final String text;
   final FaIcon icon;
-  final Function? onTap;
+  final void Function()? onTap;
 
   const AuthButton(
       {super.key, required this.text, required this.icon, this.onTap});
@@ -13,7 +13,7 @@ class AuthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap!(context),
+      onTap: onTap ?? () {},
       child: FractionallySizedBox(
         // 부모 widget 의 공간 만큼 사용
         widthFactor: 1, // 1 (부모 공간의 100%), 0.5 (부모 공간의 50%)

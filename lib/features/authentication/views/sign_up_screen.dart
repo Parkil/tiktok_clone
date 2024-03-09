@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/authentication/view_models/social_auth_vm.dart';
 import 'package:tiktok_clone/features/authentication/views/username_screen.dart';
 import 'package:tiktok_clone/features/authentication/views/widgets/auth_button.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
 import 'login_screen.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends ConsumerWidget {
   static const routeUrl = "/signup";
   static const routeName = "signup";
 
@@ -36,11 +38,15 @@ class SignUpScreen extends StatelessWidget {
     context.pushNamed(UserNameScreen.routeName);
   }
 
+  _onGithubSignUpTap(BuildContext context, WidgetRef ref) {
+    ref.read(socialAuthAsyncProvider.notifier).githubSignIn(context);
+  }
+
   /*
     SafeArea - 상단 (시간, 배터리, 네트워크 상태) / 하단 ( 이전, 다음, 홈) 을 제외한 영역을 생성
    */
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return OrientationBuilder(
       builder: (context, orientation) {
         return Scaffold(
@@ -72,14 +78,15 @@ class SignUpScreen extends StatelessWidget {
                         FontAwesomeIcons.user,
                       ),
                       text: S.of(context).singUpEmailTitle,
-                      onTap: _onUserNameTap,
+                      onTap: () => _onUserNameTap(context),
                     ),
                     Gaps.v16,
                     AuthButton(
                       icon: const FaIcon(
-                        FontAwesomeIcons.apple,
+                        FontAwesomeIcons.github,
                       ),
-                      text: S.of(context).signUpAppleTitle,
+                      text: S.of(context).signUpGithubTitle,
+                      onTap: () => _onGithubSignUpTap(context, ref),
                     ),
                   ],
                   if (orientation == Orientation.landscape)
@@ -91,16 +98,17 @@ class SignUpScreen extends StatelessWidget {
                               FontAwesomeIcons.user,
                             ),
                             text: S.of(context).singUpEmailTitle,
-                            onTap: _onUserNameTap,
+                            onTap: () => _onUserNameTap(context),
                           ),
                         ),
                         Gaps.h16,
                         Expanded(
                           child: AuthButton(
                             icon: const FaIcon(
-                              FontAwesomeIcons.apple,
+                              FontAwesomeIcons.github,
                             ),
-                            text: S.of(context).signUpAppleTitle,
+                            text: S.of(context).signUpGithubTitle,
+                            onTap: () => _onGithubSignUpTap(context, ref),
                           ),
                         ),
                       ],

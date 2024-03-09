@@ -45,6 +45,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginTitle": m3,
         "signUpAppleTitle":
             MessageLookupByLibrary.simpleMessage("Continue with Apple"),
+        "signUpGithubTitle":
+            MessageLookupByLibrary.simpleMessage("Continue with Github"),
         "signUpSubTitle": m4,
         "signUpTitle": m5,
         "singUpEmailTitle":
