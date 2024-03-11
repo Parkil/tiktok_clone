@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../constants/sizes.dart';
+import '../../../constants/sizes.dart';
 
 class SliverSample extends StatefulWidget {
   const SliverSample({super.key});

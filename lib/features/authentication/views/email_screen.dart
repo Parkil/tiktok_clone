@@ -55,7 +55,11 @@ class EmailScreenState extends ConsumerState<EmailScreen> {
       return;
     }
 
-    ref.read(signUpStateProvider.notifier).state = {"email" : _email};
+    final state = ref.read(signUpStateProvider.notifier).state;
+    ref.read(signUpStateProvider.notifier).state = {
+      ...state,
+      "email" : _email,
+    };
     context.pushNamed(PasswordScreen.routeName);
   }
 

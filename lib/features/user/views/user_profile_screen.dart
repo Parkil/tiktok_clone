@@ -4,10 +4,10 @@ import 'package:tiktok_clone/constants/enum/width_breakpoint.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/settings/settings_screen.dart';
-import 'package:tiktok_clone/features/user/widgets/custom_divider.dart';
-import 'package:tiktok_clone/features/user/widgets/following_info.dart';
-import 'package:tiktok_clone/features/user/widgets/persistent_tabbar.dart';
-import 'package:tiktok_clone/features/user/widgets/user_profile_grid.dart';
+import 'package:tiktok_clone/features/user/views/widgets/custom_divider.dart';
+import 'package:tiktok_clone/features/user/views/widgets/following_info.dart';
+import 'package:tiktok_clone/features/user/views/widgets/persistent_tabbar.dart';
+import 'package:tiktok_clone/features/user/views/widgets/user_profile_grid.dart';
 import 'package:tiktok_clone/util/utils.dart';
 
 class UserProfileScreen extends StatefulWidget {

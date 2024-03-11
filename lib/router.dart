@@ -15,7 +15,7 @@ import 'package:tiktok_clone/features/inbox/chats_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/views/main_navigation_screen.dart';
 import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
-import 'package:tiktok_clone/features/user/user_profile_screen.dart';
+import 'package:tiktok_clone/features/user/views/user_profile_screen.dart';
 import 'package:tiktok_clone/features/video/views/video_recording_screen.dart';
 
 final anonUrl = [

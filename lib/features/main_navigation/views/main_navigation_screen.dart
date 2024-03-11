@@ -7,7 +7,7 @@ import 'package:tiktok_clone/features/inbox/inbox_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/view_models/tab_name_vn.dart';
 import 'package:tiktok_clone/features/main_navigation/views/widgets/nav_tab.dart';
 import 'package:tiktok_clone/features/main_navigation/views/widgets/post_video_button.dart';
-import 'package:tiktok_clone/features/user/user_profile_screen.dart';
+import 'package:tiktok_clone/features/user/views/user_profile_screen.dart';
 import 'package:tiktok_clone/features/video/views/video_recording_screen.dart';
 import 'package:tiktok_clone/features/video/views/video_timeline_screen.dart';
 import 'package:tiktok_clone/util/utils.dart';
