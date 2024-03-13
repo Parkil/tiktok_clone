@@ -29,18 +29,19 @@ class UserProfileVm extends AsyncNotifier<UserProfileModel> {
     }
   }
 
-  Future<void> createProfile(UserCredential credential, Map<dynamic, dynamic> signInState) async {
+  Future<void> createProfile(UserCredential credential, Map<dynamic, dynamic> signUpState) async {
     if (credential.user == null) {
       throw Exception("Account not created");
     }
     state = const AsyncValue.loading();
     final user = credential.user!;
     final profile = UserProfileModel(
+      hasAvatar: false,
       bio: 'undefined',
       link: 'undefined',
       uid: user.uid,
-      name: signInState['username'] ?? "Anon",
-      email: signInState['email'] ?? 'anon@anon.com'
+      name: signUpState['username'] ?? "Anon",
+      email: signUpState['email'] ?? 'anon@anon.com'
     );
     await _userRepo.createProfile(profile);
     state = AsyncValue.data(profile);
@@ -48,7 +49,12 @@ class UserProfileVm extends AsyncNotifier<UserProfileModel> {
 
   Future<void> findProfile(String uid) async {
     state = const AsyncValue.loading();
+  }
 
+  Future<void> onAvatarUpload() async {
+    UserProfileModel model = state.value!;
+    state = AsyncValue.data(model.copyWith(hasAvatar: true));
+    await _userRepo.updateUser(model.uid, {"hasAvatar": true});
   }
 }
 

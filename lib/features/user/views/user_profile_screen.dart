@@ -1,45 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/enum/width_breakpoint.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/settings/settings_screen.dart';
+import 'package:tiktok_clone/features/user/models/user_profile_model.dart';
+import 'package:tiktok_clone/features/user/view_models/user_profile_vm.dart';
+import 'package:tiktok_clone/features/user/views/widgets/avatar.dart';
 import 'package:tiktok_clone/features/user/views/widgets/custom_divider.dart';
 import 'package:tiktok_clone/features/user/views/widgets/following_info.dart';
 import 'package:tiktok_clone/features/user/views/widgets/persistent_tabbar.dart';
 import 'package:tiktok_clone/features/user/views/widgets/user_profile_grid.dart';
 import 'package:tiktok_clone/util/utils.dart';
 
-class UserProfileScreen extends StatefulWidget {
+class UserProfileScreen extends ConsumerStatefulWidget {
   final String userName;
   final String tab;
 
-  const UserProfileScreen({super.key, required this.userName, required this.tab});
+  const UserProfileScreen(
+      {super.key, required this.userName, required this.tab});
 
   @override
-  State<UserProfileScreen> createState() => _UserProfileScreenState();
+  UserProfileScreenState createState() => UserProfileScreenState();
 }
 
-class _UserProfileScreenState extends State<UserProfileScreen> {
+class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   final double gridRatio = 9 / 13; // 가로 길이 / 세로 길이
   final double imageRatio = 9 / 13;
 
-  CircleAvatar _userIcon() {
-    return const CircleAvatar(
-      radius: 50,
-      foregroundImage: NetworkImage(
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png",
-      ),
-      child: Text("사용자"),
+  Avatar _userIcon(UserProfileModel model) {
+    return Avatar(
+      hasAvatar: model.hasAvatar,
+      name: model.name,
+      uid: model.uid,
     );
   }
 
-  Row _userIdArea() {
+  Row _userIdArea(UserProfileModel model) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "@${widget.userName}",
+          "@${model.name}",
           style: const TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: Sizes.size18,
@@ -132,9 +135,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 horizontal: Sizes.size12,
               ),
               decoration: BoxDecoration(
-                border:
-                    Border.all(color: Colors.grey.shade300, width: Sizes.size1,),
-                color: isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
+                border: Border.all(
+                  color: Colors.grey.shade300,
+                  width: Sizes.size1,
+                ),
+                color:
+                    isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
               ),
               child: const Center(
                 child: FaIcon(FontAwesomeIcons.youtube),
@@ -145,9 +151,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 horizontal: Sizes.size14,
               ),
               decoration: BoxDecoration(
-                border:
-                    Border.all(color: Colors.grey.shade300, width: Sizes.size1,),
-                color: isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
+                border: Border.all(
+                  color: Colors.grey.shade300,
+                  width: Sizes.size1,
+                ),
+                color:
+                    isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
               ),
               child: const Center(
                 child: FaIcon(FontAwesomeIcons.angleDown),
@@ -167,6 +176,92 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     final width = MediaQuery.of(context).size.width;
     WidthBreakPoint widthBreakPoint = WidthBreakPoint.findByWidth(width);
 
+    return ref.watch(userProfileProvider).when(
+          error: (error, stackTrace) => Center(
+            child: Text(error.toString()),
+          ),
+          loading: () => const Center(
+            child: CircularProgressIndicator.adaptive(),
+          ),
+          data: (data) {
+            return SafeArea(
+              child: DefaultTabController(
+                length: 2,
+                initialIndex: widget.tab == "likes" ? 1 : 0,
+                child: NestedScrollView(
+                  headerSliverBuilder: (context, innerBoxIsScrolled) {
+                    return [
+                      SliverAppBar(
+                        backgroundColor:
+                            isDarkMode(context) ? Colors.black : null,
+                        title: Text(widget.userName),
+                        centerTitle: true,
+                        actions: [
+                          IconButton(
+                            onPressed: _onSettingTap,
+                            icon: const FaIcon(
+                              FontAwesomeIcons.gear,
+                              size: Sizes.size20,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SliverToBoxAdapter(
+                        child: Column(
+                          children: [
+                            Gaps.v20,
+                            _userIcon(data),
+                            Gaps.v20,
+                            _userIdArea(data),
+                            Gaps.v24,
+                            _followingInfoArea(),
+                            Gaps.v14,
+                            _buttonArea(),
+                            Gaps.v14,
+                            _userDescriptionArea(),
+                            Gaps.v14,
+                            _userPageLinkArea(),
+                          ],
+                        ),
+                      ),
+                      //Sliver ~ widget 은 다른 Sliver widget 의 child 가 될수 없음
+                      SliverPersistentHeader(
+                        delegate: PersistentTabBar(),
+                        pinned: true,
+                      ),
+                    ];
+                  },
+                  body: TabBarView(
+                    children: [
+                      GridView.builder(
+                          itemCount: 20,
+                          padding: EdgeInsets.zero,
+                          keyboardDismissBehavior:
+                              ScrollViewKeyboardDismissBehavior.onDrag,
+                          // 드래그 를 수행 하면 키보드 가 사라짐
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: gridRatio,
+                            // 1.0 (정사각형), 1.0 보다 크면 가로 길이가 길어 지고 작아 지면 세로 길이가 길어짐
+                            crossAxisCount: widthBreakPoint.columnCount,
+                            crossAxisSpacing: Sizes.size2,
+                            //grid 세로 간격
+                            mainAxisSpacing: Sizes.size2, // grid 가로 간격
+                          ),
+                          itemBuilder: (context, index) {
+                            return const UserProfileGrid();
+                          }),
+                      const Center(
+                        child: Text("Page Two"),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+    /*
     return SafeArea(
       child: DefaultTabController(
         length: 2,
@@ -216,23 +311,22 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           body: TabBarView(
             children: [
               GridView.builder(
-                itemCount: 20,
-                padding: EdgeInsets.zero,
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                // 드래그 를 수행 하면 키보드 가 사라짐
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: gridRatio,
-                  // 1.0 (정사각형), 1.0 보다 크면 가로 길이가 길어 지고 작아 지면 세로 길이가 길어짐
-                  crossAxisCount: widthBreakPoint.columnCount,
-                  crossAxisSpacing: Sizes.size2,
-                  //grid 세로 간격
-                  mainAxisSpacing: Sizes.size2, // grid 가로 간격
-                ),
-                itemBuilder: (context, index) {
-                  return const UserProfileGrid();
-                }
-              ),
+                  itemCount: 20,
+                  padding: EdgeInsets.zero,
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  // 드래그 를 수행 하면 키보드 가 사라짐
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: gridRatio,
+                    // 1.0 (정사각형), 1.0 보다 크면 가로 길이가 길어 지고 작아 지면 세로 길이가 길어짐
+                    crossAxisCount: widthBreakPoint.columnCount,
+                    crossAxisSpacing: Sizes.size2,
+                    //grid 세로 간격
+                    mainAxisSpacing: Sizes.size2, // grid 가로 간격
+                  ),
+                  itemBuilder: (context, index) {
+                    return const UserProfileGrid();
+                  }),
               const Center(
                 child: Text("Page Two"),
               ),
@@ -241,5 +335,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         ),
       ),
     );
+     */
   }
 }
