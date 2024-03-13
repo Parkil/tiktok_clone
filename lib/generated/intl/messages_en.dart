@@ -27,30 +27,33 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m2(value) => "${value}";
 
-  static String m3(appName) => "Login to your ${appName} account";
+  static String m3(value) => "${value}";
 
-  static String m4(videoCount) =>
+  static String m4(appName) => "Login to your ${appName} account";
+
+  static String m5(videoCount) =>
       "Create a profile, follow other accounts make your own ${Intl.plural(videoCount, zero: 'no videos', one: 'video', other: 'videos')}, and more.";
 
-  static String m5(appName) => "Sign up for ${appName}";
+  static String m6(appName) => "Sign up for ${appName}";
 
-  static String m6(gender) =>
+  static String m7(gender) =>
       "Log in ${Intl.gender(gender, female: 'madam', male: 'sir', other: 'human')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "commentCount": m0,
         "commentTitle": m1,
-        "likeCount": m2,
-        "loginTitle": m3,
+        "formatCount": m2,
+        "likeCount": m3,
+        "loginTitle": m4,
         "signUpAppleTitle":
             MessageLookupByLibrary.simpleMessage("Continue with Apple"),
         "signUpGithubTitle":
             MessageLookupByLibrary.simpleMessage("Continue with Github"),
-        "signUpSubTitle": m4,
-        "signUpTitle": m5,
+        "signUpSubTitle": m5,
+        "signUpTitle": m6,
         "singUpEmailTitle":
             MessageLookupByLibrary.simpleMessage("Use email and password"),
-        "subLogin": m6
+        "subLogin": m7
       };
 }

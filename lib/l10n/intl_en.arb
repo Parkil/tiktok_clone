@@ -52,5 +52,15 @@
         "type": "int"
       }
     }
+  },
+  "formatCount": "{value}",
+  "@formatCount": {
+    "description": "Anything you want",
+    "placeholders" : {
+      "value": {
+        "type": "int",
+        "format": "compact"
+      }
+    }
   }
 }

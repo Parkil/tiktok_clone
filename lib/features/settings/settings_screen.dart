@@ -8,6 +8,9 @@ import 'package:tiktok_clone/features/authentication/views/sign_up_screen.dart';
 import 'package:tiktok_clone/features/video/view_models/playback_config_vm.dart';
 
 class SettingsScreen extends ConsumerWidget {
+  static const routeUrl = "/settings";
+  static const routeName = "settings";
+
   const SettingsScreen({super.key});
 
   void _dateRangePicker(BuildContext context) {

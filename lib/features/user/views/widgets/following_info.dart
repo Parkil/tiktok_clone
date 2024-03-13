@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/generated/l10n.dart';
 
 class FollowingInfo extends StatelessWidget {
-  final String count;
+  final int count;
   final String label;
 
   const FollowingInfo({
@@ -17,7 +18,7 @@ class FollowingInfo extends StatelessWidget {
     return Column(
       children: [
         Text(
-          count,
+          S.of(context).formatCount(count),
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: Sizes.size18,

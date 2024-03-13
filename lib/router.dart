@@ -15,6 +15,7 @@ import 'package:tiktok_clone/features/inbox/chats_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/views/main_navigation_screen.dart';
 import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
+import 'package:tiktok_clone/features/settings/settings_screen.dart';
 import 'package:tiktok_clone/features/user/views/user_profile_screen.dart';
 import 'package:tiktok_clone/features/video/views/video_recording_screen.dart';
 
@@ -156,6 +157,11 @@ final routerProvider = Provider((ref) {
         path: ActivityScreen.routeUrl,
         name: ActivityScreen.routeName,
         builder: (context, state) => const ActivityScreen(),
+      ),
+      GoRoute(
+        path: SettingsScreen.routeUrl,
+        name: SettingsScreen.routeName,
+        builder: (context, state) => const SettingsScreen(),
       ),
       GoRoute(
         path: ChatsScreen.routeUrl,

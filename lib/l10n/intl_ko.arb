@@ -3,6 +3,7 @@
   "loginTitle": "{appName} 로그인",
   "subLogin": "로그인",
   "commentCount": "{value}",
+  "commentTitle": "{count} 개 코멘트",
   "likeCount": "{value}",
-  "commentTitle": "{count} 개 코멘트"
+  "formatCount": "{value}"
 }
