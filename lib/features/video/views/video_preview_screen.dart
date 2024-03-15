@@ -1,10 +1,11 @@
 import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:tiktok_clone/features/video/view_models/video_timeline_vm.dart';
+import 'package:tiktok_clone/features/video/view_models/upload_video_vm.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPreviewScreen extends ConsumerStatefulWidget {
@@ -57,14 +58,16 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
 
     final result = await ImageGallerySaver.saveFile(widget.videoFile.path,
         name: "My Video");
-    debugPrint(result);
+    debugPrint("$result");
 
     _isSaveVideo = true;
     setState(() {});
   }
 
   void _onUploadPressed() {
-    ref.read(videoTimeLineProvider.notifier).uploadVideo();
+    ref
+        .read(uploadVideoAsyncProvider.notifier)
+        .uploadVideo(File(widget.videoFile.path), context);
   }
 
   @override
@@ -81,8 +84,10 @@ class VideoPreviewScreenState extends ConsumerState<VideoPreviewScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: ref.watch(videoTimeLineProvider).isLoading ? () {} : _onUploadPressed,
-            icon: ref.watch(videoTimeLineProvider).isLoading
+            onPressed: ref.watch(uploadVideoAsyncProvider).isLoading
+                ? () {}
+                : _onUploadPressed,
+            icon: ref.watch(uploadVideoAsyncProvider).isLoading
                 ? const CircularProgressIndicator()
                 : const FaIcon(
                     FontAwesomeIcons.cloudArrowUp,
