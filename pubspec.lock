@@ -161,6 +161,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.9.0"
+  cloud_functions:
+    dependency: "direct main"
+    description:
+      name: cloud_functions
+      sha256: ddcc15c16cb2426e4427eb0e1d36b27cbc6a7845c39d859e99125f07d6dff209
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.6.9"
+  cloud_functions_platform_interface:
+    dependency: transitive
+    description:
+      name: cloud_functions_platform_interface
+      sha256: "4a768da43a8c413d371b8ffba306165f0555d2423189b36ee3b76795a054314e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.5.20"
+  cloud_functions_web:
+    dependency: transitive
+    description:
+      name: cloud_functions_web
+      sha256: f425ea172f09128bd336d484676d973854f7189b4f12b940bd63cc0bef69deb7
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.8.0"
   collection:
     dependency: transitive
     description:
@@ -325,10 +349,10 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_core
-      sha256: "96607c0e829a581c2a483c658f04e8b159964c3bae2730f73297070bc85d40bb"
+      sha256: "67bf0d5fd78f12f51c6b54a72f6141314136a1a90e98b1b7c45e7fac883254ed"
       url: "https://pub.dev"
     source: hosted
-    version: "2.24.2"
+    version: "2.27.1"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -341,10 +365,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_core_web
-      sha256: d585bdf3c656c3f7821ba1bd44da5f13365d22fcecaf5eb75c4295246aaa83c0
+      sha256: "5377eaac3b9fe8aaf22638d87f92b62784f23572e132dfc029195e84d6cb37de"
       url: "https://pub.dev"
     source: hosted
-    version: "2.10.0"
+    version: "2.12.0"
   firebase_storage:
     dependency: "direct main"
     description:
@@ -1110,10 +1134,10 @@ packages:
     dependency: transitive
     description:
       name: web
-      sha256: "1d9158c616048c38f712a6646e317a3426da10e884447626167240d45209cbad"
+      sha256: "97da13628db363c635202ad97068d47c5b8aa555808e7a9411963c533b449b27"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.0"
+    version: "0.5.1"
   win32:
     dependency: transitive
     description:
