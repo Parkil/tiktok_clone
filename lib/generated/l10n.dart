@@ -163,6 +163,21 @@ class S {
       args: [count],
     );
   }
+
+  /// `{value}`
+  String formatCount(int value) {
+    final NumberFormat valueNumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String valueString = valueNumberFormat.format(value);
+
+    return Intl.message(
+      '$valueString',
+      name: 'formatCount',
+      desc: 'Anything you want',
+      args: [valueString],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

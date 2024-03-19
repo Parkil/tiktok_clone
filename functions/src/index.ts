@@ -9,11 +9,13 @@
 
 import * as admin from "firebase-admin";
 import {initializeApp} from "firebase-admin/app";
-import {firestore} from "firebase-functions";
+import {region} from "firebase-functions";
 
 initializeApp();
 
-export const onVideoCreated = firestore.document("videos/{videoId}").onCreate(async (snapshot, context) => {
+
+// region 을 지정 하지 않으면 us-central 로 고정 된다
+export const onVideoCreated = region('asia-northeast3').firestore.document("videos/{videoId}").onCreate(async (snapshot, context) => {
   const video = snapshot.data();
 
   const spawn = require('child-process-promise').spawn;
@@ -32,6 +34,7 @@ export const onVideoCreated = firestore.document("videos/{videoId}").onCreate(as
 
   await file.makePublic();
   await snapshot.ref.update({thumbnailUrl: file.publicUrl()});
+  await snapshot.ref.update({id: snapshot.ref.id});
 
   const db = admin.firestore();
   await db.collection("users").doc(video.creatorUid).collection("videos").doc(snapshot.id).set({

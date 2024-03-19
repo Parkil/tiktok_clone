@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok_clone/features/video/models/video_model.dart';
 import 'package:tiktok_clone/features/video/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/features/video/view_models/video_play_vn.dart';
+import 'package:tiktok_clone/features/video/view_models/video_post_vm.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_comment/video_comments.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_post/video_play_button.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_post/video_post_bottom_area.dart';
@@ -12,15 +14,16 @@ import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPost extends ConsumerStatefulWidget {
+  final VideoModel videoData;
   final Function onVideoFinished;
-  final String videoUrl;
   final int index;
 
-  const VideoPost(
-      {super.key,
-      required this.onVideoFinished,
-      required this.videoUrl,
-      required this.index});
+  const VideoPost({
+    super.key,
+    required this.onVideoFinished,
+    required this.index,
+    required this.videoData,
+  });
 
   @override
   VideoPostState createState() => VideoPostState();
@@ -61,7 +64,8 @@ class VideoPostState extends ConsumerState<VideoPost> {
    */
   void _initVideoPlayer() async {
     isOnVideoFinishedCalled = false;
-    _videoPlayerController = VideoPlayerController.asset(widget.videoUrl);
+    _videoPlayerController =
+        VideoPlayerController.networkUrl(Uri.parse(widget.videoData.fileUrl));
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(false);
 
@@ -135,6 +139,10 @@ class VideoPostState extends ConsumerState<VideoPost> {
     await _togglePlay();
   }
 
+  Future<void> _onTapLike() async{
+    await ref.read(videoPostAsyncProvider(widget.videoData.id).notifier).likeVideo();
+  }
+
   void _onVolumeTap() async {
     bool muted = ref.watch(playBackConfigProvider).muted;
     ref.read(playBackConfigProvider.notifier).setMuted(!muted);
@@ -149,6 +157,10 @@ class VideoPostState extends ConsumerState<VideoPost> {
   /*
      VisibilityDetector
      widget 이 이동시 이전-현재 widget 이 이동한 정도를 체크 하는 API
+   */
+  /*
+  todo video 를 업로드 하면 id, thumbnailUrl 이 cloud function 을 통해서 수정 되기 때문에 video 업로드 완료 시점과는 약간의 텀이 있다
+  이때문에 video upload -> home으로 가면 흰 화면만 표시가 되는 문제가 있기 때문에 이를 수정할 필요가 있다
    */
   @override
   Widget build(BuildContext context) {
@@ -165,7 +177,10 @@ class VideoPostState extends ConsumerState<VideoPost> {
                     _videoPlayerController,
                     key: videoKey,
                   )
-                : Container(color: Colors.black),
+                : Image.network(
+                    widget.videoData.thumbnailUrl,
+                    fit: BoxFit.cover,
+                  ),
           ),
           Positioned.fill(
             child: GestureDetector(
@@ -181,13 +196,17 @@ class VideoPostState extends ConsumerState<VideoPost> {
               onTap: _onVolumeTap,
             ),
           ),
-          const VideoPostBottomArea(
-            loginUser: "@로그인한 사람",
-            description: "aaabbbcccdddddddd",
+          VideoPostBottomArea(
+            loginUser: "@${widget.videoData.creator}",
+            description: widget.videoData.description,
             tag:
                 "#123, #3333333, #55555555, #444444444444, #444444444444, #444444444444",
           ),
-          VideoPostRightArea(commentFunction: _onTapComment),
+          VideoPostRightArea(
+            commentFunction: _onTapComment,
+            likeFunction: _onTapLike,
+            videoData: widget.videoData,
+          ),
         ],
       ),
     );

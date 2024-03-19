@@ -28,6 +28,7 @@ class UploadVideoVm extends AsyncNotifier<void> {
 
       if (task.metadata != null) {
         final uploadModel = VideoModel(
+          id: '', // todo id 생성 로직 추가
           title: 'title',
           description: 'desc',
           fileUrl: await task.ref.getDownloadURL(),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tiktok_clone/features/user/view_models/avatar_vm.dart';
+import 'package:tiktok_clone/util/avatar_util.dart';
 
 class Avatar extends ConsumerWidget {
   final String name;
@@ -49,7 +50,7 @@ class Avatar extends ConsumerWidget {
               radius: 50,
               foregroundImage: hasAvatar
                   ? NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/tik-tok-alkain77.appspot.com/o/avatars%2F$uid?alt=media&time=${DateTime.now().toString()}",
+                      avatarImageUrl(uid),
                     )
                   : null,
               child: Text(name),

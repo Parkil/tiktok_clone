@@ -13,7 +13,9 @@ class VideosRepo {
   Future<TaskSnapshot> uploadVideo(File file, String uid) async {
     final fileContentType = lookupMimeType(file.path);
 
-    final fileRef = _fireStorage.ref().child("videos/$uid/${DateTime.now().millisecondsSinceEpoch}");
+    final fileRef = _fireStorage
+        .ref()
+        .child("videos/$uid/${DateTime.now().millisecondsSinceEpoch}");
 
     // UploadTask - 파일 업로드 과정을 관찰, TaskSnapshot - 업로드 완료
     return await fileRef.putFile(
@@ -26,6 +28,27 @@ class VideosRepo {
 
   Future<void> saveVideo(VideoModel model) async {
     await _fireStore.collection("videos").add(model.toJson());
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchVideos({
+      int? lastItemCreatedAt}) {
+    final query = _fireStore
+        .collection("videos")
+        .orderBy(
+          "createdAt",
+          descending: true,
+        )
+        .limit(2);
+
+    if (lastItemCreatedAt == null) {
+      return query.get();
+    } else {
+      return query.startAfter([lastItemCreatedAt]).get();
+    }
+  }
+
+  Future<void> likeVideo(String videoId, String uid) async {
+    await _fireStore.collection("likes").add({"videoId": videoId, "userId": uid});
   }
 }
 
