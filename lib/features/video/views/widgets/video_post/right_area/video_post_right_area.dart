@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/features/user/models/user_profile_model.dart';
 import 'package:tiktok_clone/features/user/view_models/user_profile_vm.dart';
 import 'package:tiktok_clone/features/video/models/video_model.dart';
-import 'package:tiktok_clone/features/video/views/widgets/video_post/icon_text.dart';
-import 'package:tiktok_clone/generated/l10n.dart';
+import 'package:tiktok_clone/features/video/views/widgets/video_post/right_area/comment_icon.dart';
+import 'package:tiktok_clone/features/video/views/widgets/video_post/right_area/like_icon.dart';
+import 'package:tiktok_clone/features/video/views/widgets/video_post/right_area/share_icon.dart';
 import 'package:tiktok_clone/util/avatar_util.dart';
 
 class VideoPostRightArea extends ConsumerWidget {
   final Future<void> Function(BuildContext context) commentFunction;
   final Future<void> Function() likeFunction;
-  final VideoModel videoData;
+  final VideoModel videoModel;
 
   const VideoPostRightArea({
     super.key,
     required this.commentFunction,
-    required this.videoData,
+    required this.videoModel,
     required this.likeFunction,
   });
 
@@ -38,7 +38,7 @@ class VideoPostRightArea extends ConsumerWidget {
               avatarImageUrl(model.uid),
             ),
             child: Text(
-              videoData.creator,
+              videoModel.creator,
               style: Theme.of(context)
                   .textTheme
                   .labelSmall
@@ -46,26 +46,11 @@ class VideoPostRightArea extends ConsumerWidget {
             ),
           ),
           Gaps.v24,
-          GestureDetector(
-            onTap: likeFunction,
-            child: IconText(
-              iconData: FontAwesomeIcons.solidHeart,
-              subText: S.of(context).likeCount(videoData.likes),
-            ),
-          ),
+          LikeIcon(likeFunction: likeFunction, videoModel: videoModel),
           Gaps.v24,
-          GestureDetector(
-            onTap: () => commentFunction(context),
-            child: IconText(
-              iconData: FontAwesomeIcons.solidComment,
-              subText: S.of(context).commentCount(videoData.comments),
-            ),
-          ),
+          CommentIcon(commentFunction: commentFunction, videoModel: videoModel),
           Gaps.v24,
-          const IconText(
-            iconData: FontAwesomeIcons.share,
-            subText: "Share",
-          ),
+          const ShareIcon(),
         ],
       ),
     );

@@ -43,3 +43,19 @@ export const onVideoCreated = region('asia-northeast3').firestore.document("vide
   });
 });
 
+export const onLikeCreated = region('asia-northeast3').firestore.document(`likes/{likeId}`).onCreate(async (snapshot, context) => {
+  // ffmpeg 같은 로직이 포함 되지 않고 단순 firestore 만 조작 하는 경우 거의 실 시간 으로 처리 된다
+  const [videoId, _] = snapshot.id.split("000");
+  const db = admin.firestore();
+  await db.collection("videos").doc(videoId).update({
+    likes: admin.firestore.FieldValue.increment(1)
+  });
+});
+
+export const onLikeDeleted = region('asia-northeast3').firestore.document(`likes/{likeId}`).onDelete(async (snapshot, context) => {
+  const [videoId, _] = snapshot.id.split("000");
+  const db = admin.firestore();
+  await db.collection("videos").doc(videoId).update({
+    likes: admin.firestore.FieldValue.increment(-1)
+  });
+});

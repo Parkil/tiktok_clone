@@ -73,7 +73,7 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
                   return VideoPost(
                     onVideoFinished: _onVideoFinished,
                     index: index,
-                    videoData: videos[index],
+                    videoModel: videos[index],
                   );
                 },
               ),

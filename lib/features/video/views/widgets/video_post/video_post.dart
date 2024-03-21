@@ -8,13 +8,13 @@ import 'package:tiktok_clone/features/video/view_models/video_post_vm.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_comment/video_comments.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_post/video_play_button.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_post/video_post_bottom_area.dart';
-import 'package:tiktok_clone/features/video/views/widgets/video_post/video_post_right_area.dart';
+import 'package:tiktok_clone/features/video/views/widgets/video_post/right_area/video_post_right_area.dart';
 import 'package:tiktok_clone/features/video/views/widgets/video_post/video_volume_button.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPost extends ConsumerStatefulWidget {
-  final VideoModel videoData;
+  final VideoModel videoModel;
   final Function onVideoFinished;
   final int index;
 
@@ -22,7 +22,7 @@ class VideoPost extends ConsumerStatefulWidget {
     super.key,
     required this.onVideoFinished,
     required this.index,
-    required this.videoData,
+    required this.videoModel,
   });
 
   @override
@@ -65,7 +65,7 @@ class VideoPostState extends ConsumerState<VideoPost> {
   void _initVideoPlayer() async {
     isOnVideoFinishedCalled = false;
     _videoPlayerController =
-        VideoPlayerController.networkUrl(Uri.parse(widget.videoData.fileUrl));
+        VideoPlayerController.networkUrl(Uri.parse(widget.videoModel.fileUrl));
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(false);
 
@@ -140,7 +140,7 @@ class VideoPostState extends ConsumerState<VideoPost> {
   }
 
   Future<void> _onTapLike() async{
-    await ref.read(videoPostAsyncProvider(widget.videoData.id).notifier).likeVideo();
+    await ref.read(videoPostAsyncProvider(widget.videoModel).notifier).toggleLikeVideo();
   }
 
   void _onVolumeTap() async {
@@ -178,7 +178,7 @@ class VideoPostState extends ConsumerState<VideoPost> {
                     key: videoKey,
                   )
                 : Image.network(
-                    widget.videoData.thumbnailUrl,
+                    widget.videoModel.thumbnailUrl,
                     fit: BoxFit.cover,
                   ),
           ),
@@ -197,15 +197,15 @@ class VideoPostState extends ConsumerState<VideoPost> {
             ),
           ),
           VideoPostBottomArea(
-            loginUser: "@${widget.videoData.creator}",
-            description: widget.videoData.description,
+            loginUser: "@${widget.videoModel.creator}",
+            description: widget.videoModel.description,
             tag:
                 "#123, #3333333, #55555555, #444444444444, #444444444444, #444444444444",
           ),
           VideoPostRightArea(
             commentFunction: _onTapComment,
             likeFunction: _onTapLike,
-            videoData: widget.videoData,
+            videoModel: widget.videoModel,
           ),
         ],
       ),
