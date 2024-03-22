@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/inbox/widget/activity_list_area.dart';
-import 'package:tiktok_clone/features/inbox/widget/activity_type_panel.dart';
-import 'package:tiktok_clone/features/inbox/widget/dismissible_modal_barrier.dart';
+import 'package:tiktok_clone/features/inbox/views/widget/activity_list_area.dart';
+import 'package:tiktok_clone/features/inbox/views/widget/activity_type_panel.dart';
+import 'package:tiktok_clone/features/inbox/views/widget/dismissible_modal_barrier.dart';
 
 class ActivityScreen extends StatefulWidget {
   static const routeUrl = "/activity";

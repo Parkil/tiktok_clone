@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/inbox/widget/chat_detail/user_active_icon.dart';
+import 'package:tiktok_clone/features/inbox/views/widget/chat_detail/user_active_icon.dart';
 
 class ChatDetailHeader extends StatelessWidget {
   final String id;

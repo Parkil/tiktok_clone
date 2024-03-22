@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/inbox/widget/chat_detail/chat_detail_header.dart';
-import 'package:tiktok_clone/features/inbox/widget/chat_detail/chat_message_box.dart';
-import 'package:tiktok_clone/features/inbox/widget/chat_detail/chat_message_input.dart';
+import 'package:tiktok_clone/features/inbox/views/widget/chat_detail/chat_detail_header.dart';
+import 'package:tiktok_clone/features/inbox/views/widget/chat_detail/chat_message_box.dart';
+import 'package:tiktok_clone/features/inbox/views/widget/chat_detail/chat_message_input.dart';
 import 'package:tiktok_clone/util/utils.dart';
 
 class ChatDetailScreen extends StatefulWidget {

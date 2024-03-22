@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/inbox/widget/activity_tile.dart';
-import 'package:tiktok_clone/features/inbox/widget/blank_icon.dart';
+import 'package:tiktok_clone/features/inbox/views/widget/activity_tile.dart';
+import 'package:tiktok_clone/features/inbox/views/widget/blank_icon.dart';
 
 class DismissibleActivityTile extends StatelessWidget {
   final String id;

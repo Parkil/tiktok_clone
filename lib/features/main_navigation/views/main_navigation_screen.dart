@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/features/discover/discover_screen.dart';
-import 'package:tiktok_clone/features/inbox/inbox_screen.dart';
+import 'package:tiktok_clone/features/inbox/views/inbox_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/view_models/tab_name_vn.dart';
 import 'package:tiktok_clone/features/main_navigation/views/widgets/nav_tab.dart';
 import 'package:tiktok_clone/features/main_navigation/views/widgets/post_video_button.dart';

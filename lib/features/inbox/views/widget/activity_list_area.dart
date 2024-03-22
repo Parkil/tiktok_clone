@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/inbox/widget/dismissible_activity_tile.dart';
+import 'package:tiktok_clone/features/inbox/views/widget/dismissible_activity_tile.dart';
 
 class ActivityListArea extends StatelessWidget {
   final String areaTitle;

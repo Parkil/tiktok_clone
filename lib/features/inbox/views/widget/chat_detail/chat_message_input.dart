@@ -60,11 +60,11 @@ class ChatMessageInput extends StatelessWidget {
             ),
             shape: BoxShape.circle,
           ),
-          child: const Center(
-            child: FaIcon(
-              FontAwesomeIcons.solidPaperPlane,
+          child: Center(
+            child: IconButton(
               color: Colors.white,
-              size: Sizes.size20,
+              onPressed: () {},
+              icon: const FaIcon(FontAwesomeIcons.solidPaperPlane),
             ),
           ),
         )
