@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/inbox/view_models/message_vm.dart';
 import 'package:tiktok_clone/util/utils.dart';
 
-class ChatMessageInput extends StatelessWidget {
+class ChatMessageInput extends ConsumerStatefulWidget {
   const ChatMessageInput({super.key});
+
+  @override
+  ChatMessageInputState createState() => ChatMessageInputState();
+}
+
+class ChatMessageInputState extends ConsumerState<ChatMessageInput> {
+
+  final TextEditingController _textEditingController = TextEditingController();
 
   InputDecoration _textFieldDecoration(bool darkMode) {
     Color hintColor = switchColor(
@@ -39,13 +49,27 @@ class ChatMessageInput extends StatelessWidget {
     );
   }
 
+  void _sendMessage() {
+    String inputMessage = _textEditingController.text;
+
+    if (inputMessage == '') {
+      return;
+    }
+
+    ref.read(messageAsyncProvider.notifier).sendMessage(inputMessage);
+    _textEditingController.text = '';
+  }
+
   @override
   Widget build(BuildContext context) {
     bool darkMode = isDarkMode(context);
+    final isLoading  = ref.watch(messageAsyncProvider).isLoading;
+
     return Row(
       children: [
         Expanded(
           child: TextField(
+            controller: _textEditingController,
             decoration: _textFieldDecoration(darkMode),
           ),
         ),
@@ -63,8 +87,8 @@ class ChatMessageInput extends StatelessWidget {
           child: Center(
             child: IconButton(
               color: Colors.white,
-              onPressed: () {},
-              icon: const FaIcon(FontAwesomeIcons.solidPaperPlane),
+              onPressed: isLoading ? null : _sendMessage,
+              icon: FaIcon(isLoading ? FontAwesomeIcons.solidHourglass : FontAwesomeIcons.solidPaperPlane),
             ),
           ),
         )

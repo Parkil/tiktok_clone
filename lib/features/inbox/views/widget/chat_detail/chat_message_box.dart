@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/inbox/models/message_model.dart';
+import 'package:tiktok_clone/features/user/view_models/user_profile_vm.dart';
 
-class ChatMessageBox extends StatelessWidget {
-  final bool isMyMessage;
+class ChatMessageBox extends ConsumerWidget {
+  final MessageModel model;
 
   const ChatMessageBox({
     super.key,
-    required this.isMyMessage,
+    required this.model,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    String myUid = ref.read(userProfileProvider).value!.uid;
+    bool isMyMessage = model.uid == myUid;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment:
@@ -29,9 +35,9 @@ class ChatMessageBox extends StatelessWidget {
                   Radius.circular(isMyMessage ? Sizes.size5 : Sizes.size20),
             ),
           ),
-          child: const Text(
-            "This is a message",
-            style: TextStyle(
+          child: Text(
+            model.text,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: Sizes.size16,
             ),

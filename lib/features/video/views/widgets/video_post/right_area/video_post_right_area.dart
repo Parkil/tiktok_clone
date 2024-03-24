@@ -24,7 +24,7 @@ class VideoPostRightArea extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     UserProfileModel model = ref.watch(userProfileProvider).value!;
-
+    debugPrint("uid : ${model.name}");
     return Positioned(
       bottom: 20,
       right: 10,
@@ -38,7 +38,7 @@ class VideoPostRightArea extends ConsumerWidget {
               avatarImageUrl(model.uid),
             ),
             child: Text(
-              videoModel.creator,
+              model.name,
               style: Theme.of(context)
                   .textTheme
                   .labelSmall
