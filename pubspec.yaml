@@ -58,6 +58,8 @@ dependencies:
   firebase_storage: ^11.6.0
   mime: ^1.0.5
   cloud_functions: ^4.6.9
+  firebase_messaging: ^14.7.20
+  firebase_analytics: ^10.8.10
 
 dev_dependencies:
   riverpod_lint: ^2.3.9

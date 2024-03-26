@@ -13,6 +13,7 @@ import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/router.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -27,6 +28,7 @@ void main() async {
 
   final preferences = await SharedPreferences.getInstance();
   final repository = PlayBackConfigRepo(preferences);
+
 
   runApp(
     ProviderScope(

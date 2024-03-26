@@ -11,6 +11,7 @@ import 'package:tiktok_clone/features/user/views/user_profile_screen.dart';
 import 'package:tiktok_clone/features/video/views/video_recording_screen.dart';
 import 'package:tiktok_clone/features/video/views/video_timeline_screen.dart';
 import 'package:tiktok_clone/util/utils.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   static const routeUrl = "/:tab(home|discover|inbox|profile)";
@@ -28,6 +29,8 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
+  final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
   void _goOffStage(String tabName) {
     context.go("/$tabName");
   }
