@@ -50,6 +50,28 @@ export const onLikeCreated = region('asia-northeast3').firestore.document(`likes
   await db.collection("videos").doc(videoId).update({
     likes: admin.firestore.FieldValue.increment(1)
   });
+
+  const video = (await db.collection("videos").doc(videoId).get()).data();
+
+  if (video) {
+    const creatorUid = video.creatorUid;
+    const user = (await db.collection("users").doc(creatorUid).get()).data();
+
+    if (user) {
+      const message = {
+        token: user.token,
+        notification: {
+          title: "someone likes your video",
+          body: "Like + 1 ! Congrats!"
+        },
+        data: {
+          "aaa": "bbb",
+          "ccc": "ddd",
+        }
+      };
+      await admin.messaging().send(message);
+    }
+  }
 });
 
 export const onLikeDeleted = region('asia-northeast3').firestore.document(`likes/{likeId}`).onDelete(async (snapshot, context) => {
