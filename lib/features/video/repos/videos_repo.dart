@@ -67,6 +67,7 @@ class VideosRepo {
     }
   }
 
+  // todo 이 부분을 stream provider 로 변경
   Future<void> onLikeToggleEventListener(String videoId,
       void Function(Map<String, dynamic>) callback) async {
     final docRef = _fireStore.collection("videos").doc(videoId);
